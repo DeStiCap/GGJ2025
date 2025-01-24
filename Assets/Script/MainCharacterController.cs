@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -10,6 +11,7 @@ public class MainCharacterController : MonoBehaviour
     public float randomSpeedRange = 0.2f;
     public GameObject bulletPrefab;
     public float bulletSpeed = 100f;
+    public int spreadBulletNumber = 18;
     public float invulnerableTime = 5;
     
     private Rigidbody2D rigidbody;
@@ -26,15 +28,17 @@ public class MainCharacterController : MonoBehaviour
     {
         if (!isInvulnerable)
         {
-            isInvulnerable = true;
-            StartCoroutine(Flash());
             if (other.gameObject.CompareTag("Enemy"))
             {
+                isInvulnerable = true;
+                StartCoroutine(Flash());
                 lastHitTime = Time.time;
                 Debug.Log("Player Take Damage");
             }
             else if (other.gameObject.CompareTag("EnemyBullet"))
             {
+                isInvulnerable = true;
+                StartCoroutine(Flash());
                 lastHitTime = Time.time;
                 Destroy(other.gameObject);
                 Debug.Log("Player Take Damage");
@@ -83,6 +87,7 @@ public class MainCharacterController : MonoBehaviour
 
     private void WeaponControl()
     {
+        // Fire Projectile Bullet
         if (Input.GetMouseButtonDown(0))
         {
             // Shoot from character, direction is determined by character and mouse position
@@ -93,6 +98,25 @@ public class MainCharacterController : MonoBehaviour
             bullet.GetComponent<Rigidbody2D>().linearVelocity = characterToMouseDirection.normalized * bulletSpeed;
             Destroy(bullet, 5f);
         }
+
+        // Fire Spread Bullets
+        if (Input.GetMouseButtonDown(1))
+        {
+            for (int i = 0; i < 360; i += spreadBulletNumber) {
+                double angle1 = Math.Cos(DegreeToRadian(i));
+                double angle2 = Math.Sin(DegreeToRadian(i));
+                Vector2 projposition = new Vector2((float) angle1, (float) angle2);
+                
+                GameObject bullet = GameObject.Instantiate(bulletPrefab,rigidbody.position, Quaternion.identity);
+                bullet.GetComponent<Rigidbody2D>().linearVelocity = projposition.normalized * bulletSpeed;
+                Destroy(bullet, 0.2f);
+            }
+        }
+    }
+    
+    private double DegreeToRadian(double a)
+    {
+        return Math.PI * (a/180.0);
     }
 
     private void UpdateSprite()
