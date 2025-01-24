@@ -44,12 +44,12 @@ namespace GGJ2025
 
                     if (enemy.currentCoroutine == null)
                     {
-                        var testData = (Type1Data)enemy.behaviourData;
-                        testData.moveStartTime = Time.time;
-                        testData.moveEndTime = Time.time + m_PatrolMoveCurve.keys[m_PatrolMoveCurve.length - 1].time;
+                        var behaviourData = (Type1Data)enemy.behaviourData;
+                        behaviourData.moveStartTime = Time.time;
+                        behaviourData.moveEndTime = Time.time + m_PatrolMoveCurve.keys[m_PatrolMoveCurve.length - 1].time;
                         var direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
 
-                        testData.moveDirection = direction;
+                        behaviourData.moveDirection = direction;
                         enemy.currentCoroutine = enemy.StartCoroutine(PatrolMoveCoroutine(enemy));
                     }
                     break;
@@ -59,12 +59,12 @@ namespace GGJ2025
 
                     if (enemy.currentCoroutine == null && enemy.target != null)
                     {
-                        var testData = (Type1Data)enemy.behaviourData;
-                        testData.moveStartTime = Time.time;
-                        testData.moveEndTime = Time.time + m_PatrolMoveCurve.keys[m_PatrolMoveCurve.length - 1].time;
+                        var behaviourData = (Type1Data)enemy.behaviourData;
+                        behaviourData.moveStartTime = Time.time;
+                        behaviourData.moveEndTime = Time.time + m_PatrolMoveCurve.keys[m_PatrolMoveCurve.length - 1].time;
                         var direction = (enemy.target.position - enemy.transform.position).normalized;
 
-                        testData.moveDirection = direction;
+                        behaviourData.moveDirection = direction;
                         enemy.currentCoroutine = enemy.StartCoroutine(PatrolMoveCoroutine(enemy));
                     }
                     break;
@@ -103,6 +103,7 @@ namespace GGJ2025
                 {
                     enemy.StopCoroutine(enemy.currentCoroutine);
                     enemy.currentCoroutine = null;
+                    enemy.aiState = EnemyAIState.Patrol;
                     break;
                 }
 

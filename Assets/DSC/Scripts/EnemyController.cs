@@ -27,6 +27,9 @@ namespace GGJ2025
 
         public BehaviourData behaviourData { get { return m_BehaviourData; } set { m_BehaviourData = value; } }
 
+        public Animator animator { get { return m_Animator; } }
+
+        Animator m_Animator;
         Transform m_Player;
 
         Coroutine m_CurrentCoroutine;
@@ -39,6 +42,8 @@ namespace GGJ2025
 
         private void Awake()
         {
+            m_Animator = GetComponent<Animator>();
+
             if (m_BehaviourTypeSO)
             {
                 m_BehaviourTypeSO.InitBehaviour(this);
