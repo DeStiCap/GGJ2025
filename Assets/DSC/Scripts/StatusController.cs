@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace GGJ2025
 {
-    public class StatusController : MonoBehaviour
+    public class StatusController : MonoBehaviour, IDamageable
     {
         #region Variable
 
@@ -24,7 +24,8 @@ namespace GGJ2025
             if(m_Status.hp <= 0)
             {
                 m_Status.hp = 0;
-                Debug.Log("Death");
+                
+                Destroy(gameObject);
             }
         }
 

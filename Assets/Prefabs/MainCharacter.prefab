@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2982991120324273762}
   m_Layer: 0
   m_Name: MainCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -79,15 +79,15 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -9019208025046560064, guid: 1a91a16e8ce9e4f1e96624eda3c35bb4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1a91a16e8ce9e4f1e96624eda3c35bb4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 2}
+  m_Size: {x: 0.41, y: 0.4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &2525985739355026564
@@ -134,6 +134,7 @@ MonoBehaviour:
   randomSpeedRange: 0.6
   bulletPrefab: {fileID: 0}
   bulletSpeed: 100
+  invulnerableTime: 5
 --- !u!70 &2982991120324273762
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
