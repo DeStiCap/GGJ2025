@@ -75,6 +75,15 @@ namespace GGJ2025
             }
         }
 
+        public void StopBehaviourCoroutine()
+        {
+            if (m_CurrentCoroutine == null)
+                return;
+
+            StopCoroutine(m_CurrentCoroutine);
+            m_CurrentCoroutine = null;
+        }
+
         #endregion
     }
 }

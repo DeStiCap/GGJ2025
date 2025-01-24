@@ -101,24 +101,20 @@ namespace GGJ2025
             {
                 if(enemy.target == null)
                 {
-                    enemy.StopCoroutine(enemy.currentCoroutine);
-                    enemy.currentCoroutine = null;
+                    enemy.StopBehaviourCoroutine();
                     enemy.aiState = EnemyAIState.Patrol;
                     break;
                 }
 
-                if (enemy.behaviourData is Type1Data)
+                if(enemy.behaviourData.TryGetType(out Type1Data behaviourData))
                 {
-                    var behaviourData = (Type1Data)enemy.behaviourData;
-
                     var movePos = enemy.moveSpeed * behaviourData.moveDirection * m_PatrolMoveCurve.Evaluate(Time.time - behaviourData.moveStartTime) * Time.deltaTime;
                     enemy.transform.position += movePos;
 
 
                     if (Time.time >= behaviourData.moveEndTime)
                     {
-                        enemy.StopCoroutine(enemy.currentCoroutine);
-                        enemy.currentCoroutine = null;
+                        enemy.StopBehaviourCoroutine();
                     }
                 }
 

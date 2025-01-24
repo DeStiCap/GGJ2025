@@ -44,7 +44,8 @@ namespace GGJ2025
                 case EnemyAIState.Chase:
                     if(enemy.currentCoroutine == null && enemy.target != null)
                     {
-                        var behaviourData = (Type2Data)enemy.behaviourData;
+                        if (!enemy.behaviourData.TryGetType(out Type2Data behaviourData))
+                            return;
 
                         behaviourData.startMoveTime = Time.time;
                         behaviourData.endMoveTime = Time.time + m_ChaseMoveDuration;
@@ -65,24 +66,20 @@ namespace GGJ2025
             {
                 if(enemy.target == null)
                 {
-                    enemy.StopCoroutine(enemy.currentCoroutine);
-                    enemy.currentCoroutine = null;
+                    enemy.StopBehaviourCoroutine();
                     enemy.aiState = EnemyAIState.Patrol;
                     break;
                 }
 
-
-                if(enemy.behaviourData is Type2Data)
+                if(enemy.behaviourData.TryGetType(out Type2Data behaviourData))
                 {
-                    var behaviourData = (Type2Data) enemy.behaviourData;
-
                     if (Time.time < behaviourData.endMoveTime)
                     {
                         var movePos = enemy.moveSpeed * behaviourData.direction * Time.deltaTime;
                         enemy.transform.position += movePos;
 
                     }
-                    else if(Time.time < behaviourData.endAttackTime)
+                    else if (Time.time < behaviourData.endAttackTime)
                     {
                         enemy.animator.SetBool("Attacking", true);
                     }
@@ -90,11 +87,9 @@ namespace GGJ2025
                     {
                         enemy.animator.SetBool("Attacking", false);
 
-                        enemy.StopCoroutine(enemy.currentCoroutine);
-                        enemy.currentCoroutine = null;
+                        enemy.StopBehaviourCoroutine();
                     }
                 }
-
 
                 yield return null;
 
