@@ -1,5 +1,6 @@
+using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
+using Random = UnityEngine.Random;
 
 public class MainCharacterController : MonoBehaviour
 {
@@ -9,8 +10,11 @@ public class MainCharacterController : MonoBehaviour
     public float randomSpeedRange = 0.2f;
     public GameObject bulletPrefab;
     public float bulletSpeed = 100f;
+    public float invulnerableTime = 5;
     
     private Rigidbody2D rigidbody;
+    private float lastHitTime;
+    private bool isInvulnerable;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,12 +22,37 @@ public class MainCharacterController : MonoBehaviour
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
     }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (!isInvulnerable)
+        {
+            isInvulnerable = true;
+            StartCoroutine(Flash());
+            if (other.gameObject.CompareTag("Enemy"))
+            {
+                lastHitTime = Time.time;
+                Debug.Log("Player Take Damage");
+            }
+            else if (other.gameObject.CompareTag("EnemyBullet"))
+            {
+                lastHitTime = Time.time;
+                Destroy(other.gameObject);
+                Debug.Log("Player Take Damage");
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (Time.time - lastHitTime > invulnerableTime)
+        {
+            isInvulnerable = false;
+        }
+        
         MovementControl();
         WeaponControl();
-        UpdateSpriteDirection();
+        UpdateSprite();
     }
 
     private void MovementControl()
@@ -66,8 +95,9 @@ public class MainCharacterController : MonoBehaviour
         }
     }
 
-    private void UpdateSpriteDirection()
+    private void UpdateSprite()
     {
+        // Update facing direction
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 characterToMouseDirection = mousePosition - rigidbody.position;
 
@@ -78,6 +108,18 @@ public class MainCharacterController : MonoBehaviour
         else
         {
             transform.localScale = new Vector3(spriteScale, spriteScale, 1);
+        }
+    }
+    
+    private IEnumerator Flash() {
+        SpriteRenderer playerSprite =  gameObject.GetComponent<SpriteRenderer>();
+
+        for (int i = 0; i < invulnerableTime * 10; i++)
+        {
+            playerSprite.color = new Color(1, 1, 1, 0.5f);
+            yield return new WaitForSeconds(0.05f);
+            playerSprite.color = new Color(1, 1, 1, 1);;
+            yield return new WaitForSeconds(0.05f);
         }
     }
 }
