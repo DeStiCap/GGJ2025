@@ -8,6 +8,8 @@ namespace GGJ2025
 
         [SerializeField] Status m_Status;
 
+        [SerializeField] GameObject m_DamageParticle;
+
         #endregion
 
         #region Main
@@ -20,6 +22,11 @@ namespace GGJ2025
         public void TakeDamage(int damage)
         {
             m_Status.hp -= damage;
+
+            if(m_DamageParticle != null)
+            {
+                Instantiate(m_DamageParticle, transform.position, Quaternion.identity);
+            }
 
             if(m_Status.hp <= 0)
             {

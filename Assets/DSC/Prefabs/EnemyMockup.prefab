@@ -217,3 +217,4 @@ MonoBehaviour:
   m_Status:
     hp: 0
     maxHp: 5
+  m_DamageParticle: {fileID: 1728697658925164743, guid: d6999ad59a145794f806fd660c5ebf21, type: 3}
