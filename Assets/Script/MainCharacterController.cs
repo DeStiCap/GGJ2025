@@ -1,27 +1,76 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class MainCharacterController : MonoBehaviour
 {
-    
+
     public float spriteScale = 5;
     public float moveSpeed = 5;
     public float randomSpeedRange = 0.2f;
-    public GameObject bulletPrefab;
-    public float bulletSpeed = 100f;
-    public int spreadBulletNumber = 18;
     public float invulnerableTime = 5;
+    public float maxHealth = 100;
+    public GameObject healthBar;
+    public GameObject cooldownBar;
+
+    [System.Serializable]
+    public class WeaponGunProperty
+    {
+        public bool isActive = true;
+        public GameObject bulletPrefab;
+        public float bulletSpeed = 100f;
+        public float cooldownTime = 0.5f;
+
+        public float lastFireTime;
+        public bool isOnCooldown = false;
+    }
+
+    [System.Serializable]
+    public class WeaponSpreadProperty
+    {
+        public bool isActive = false;
+        public GameObject bulletPrefab;
+        public int spreadBulletNumber = 18;
+        public float bulletSpeed = 70f;
+        public float cooldownTime = 1f;
+
+        public float lastFireTime;
+        public bool isOnCooldown = false;
+    }
     
+    [System.Serializable]
+    public class WeaponLandmineProperty
+    {
+        public bool isActive = false;
+        public GameObject bulletPrefab;
+        public float cooldownTime = 5f;
+
+        public float lastFireTime;
+        public bool isOnCooldown = false;
+    }
+
+    public WeaponGunProperty weaponGun;
+    public WeaponSpreadProperty weaponSpread;
+    [FormerlySerializedAs("WeaponLandmine")] public WeaponLandmineProperty weaponLandmine;
+
     private Rigidbody2D rigidbody;
+    private float health;
     private float lastHitTime;
     private bool isInvulnerable;
+    private Slider healthBarSlider;
+    private Slider cooldownBarSlider;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
+        healthBarSlider = healthBar.GetComponent<Slider>();
+        cooldownBarSlider = cooldownBar.GetComponent<Slider>();
+
+        health = maxHealth;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -33,7 +82,7 @@ public class MainCharacterController : MonoBehaviour
                 isInvulnerable = true;
                 StartCoroutine(Flash());
                 lastHitTime = Time.time;
-                Debug.Log("Player Take Damage");
+                health -= 20;
             }
             else if (other.gameObject.CompareTag("EnemyBullet"))
             {
@@ -41,7 +90,7 @@ public class MainCharacterController : MonoBehaviour
                 StartCoroutine(Flash());
                 lastHitTime = Time.time;
                 Destroy(other.gameObject);
-                Debug.Log("Player Take Damage");
+                health -= 20;
             }
         }
     }
@@ -54,9 +103,39 @@ public class MainCharacterController : MonoBehaviour
             isInvulnerable = false;
         }
         
+        UpdateUIElement();
         MovementControl();
         WeaponControl();
         UpdateSprite();
+    }
+
+    private void UpdateUIElement()
+    {
+        healthBarSlider.value = health * (healthBarSlider.maxValue / maxHealth);
+        
+        cooldownBar.SetActive(false);
+        
+        // if (weaponSpread.isOnCooldown)
+        // {
+        //     cooldownBar.SetActive(true);
+        //     cooldownBarSlider.value = (weaponSpread.lastFireTime + weaponSpread.cooldownTime - Time.time) / 
+        //                               weaponSpread.cooldownTime;
+        // }
+        // else
+        // {
+        //     cooldownBar.SetActive(false);
+        // }
+
+        // if (weaponLandmine.isOnCooldown)
+        // {
+        //     cooldownBar.SetActive(true);
+        //     cooldownBarSlider.value = (weaponLandmine.lastFireTime + weaponLandmine.cooldownTime - Time.time) /
+        //                               weaponLandmine.cooldownTime;
+        // }
+        // else
+        // {
+        //     cooldownBar.SetActive(false);
+        // }
     }
 
     private void MovementControl()
@@ -87,30 +166,63 @@ public class MainCharacterController : MonoBehaviour
 
     private void WeaponControl()
     {
+        UpdateWeaponCooldownState();
+        
         // Fire Projectile Bullet
-        if (Input.GetMouseButtonDown(0))
+        if (weaponGun.isActive && !weaponGun.isOnCooldown && Input.GetMouseButtonDown(0))
         {
             // Shoot from character, direction is determined by character and mouse position
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 characterToMouseDirection = mousePosition - rigidbody.position;
 
-            GameObject bullet = GameObject.Instantiate(bulletPrefab, rigidbody.position, Quaternion.identity);
-            bullet.GetComponent<Rigidbody2D>().linearVelocity = characterToMouseDirection.normalized * bulletSpeed;
+            GameObject bullet = GameObject.Instantiate(weaponGun.bulletPrefab, rigidbody.position, Quaternion.identity);
+            bullet.GetComponent<Rigidbody2D>().linearVelocity = characterToMouseDirection.normalized * weaponGun.bulletSpeed;
             Destroy(bullet, 5f);
+            weaponGun.lastFireTime = Time.time;
+            weaponGun.isOnCooldown = true;
         }
 
         // Fire Spread Bullets
-        if (Input.GetMouseButtonDown(1))
+        if (weaponSpread.isActive && !weaponSpread.isOnCooldown && Input.GetMouseButtonDown(1))
         {
-            for (int i = 0; i < 360; i += spreadBulletNumber) {
+            for (int i = 0; i < 360; i += weaponSpread.spreadBulletNumber) {
                 double angle1 = Math.Cos(DegreeToRadian(i));
                 double angle2 = Math.Sin(DegreeToRadian(i));
                 Vector2 projposition = new Vector2((float) angle1, (float) angle2);
                 
-                GameObject bullet = GameObject.Instantiate(bulletPrefab,rigidbody.position, Quaternion.identity);
-                bullet.GetComponent<Rigidbody2D>().linearVelocity = projposition.normalized * bulletSpeed;
+                GameObject bullet = GameObject.Instantiate(weaponSpread.bulletPrefab,rigidbody.position, Quaternion.identity);
+                bullet.GetComponent<Rigidbody2D>().linearVelocity = projposition.normalized * weaponSpread.bulletSpeed;
                 Destroy(bullet, 0.2f);
+                weaponSpread.lastFireTime = Time.time;
+                weaponSpread.isOnCooldown = true;
             }
+        }
+        
+        // Landmine
+        if (weaponLandmine.isActive && !weaponLandmine.isOnCooldown && Input.GetMouseButtonDown(2))
+        {
+            GameObject landmine = GameObject.Instantiate(weaponGun.bulletPrefab, rigidbody.position, Quaternion.identity);
+            Destroy(landmine, 5f);
+            weaponLandmine.lastFireTime = Time.time;
+            weaponLandmine.isOnCooldown = true;
+        }
+    }
+
+    private void UpdateWeaponCooldownState()
+    {
+        if (Time.time - weaponGun.lastFireTime > weaponGun.cooldownTime)
+        {
+            weaponGun.isOnCooldown = false;
+        }
+
+        if (Time.time - weaponSpread.lastFireTime > weaponSpread.cooldownTime)
+        {
+            weaponSpread.isOnCooldown = false;
+        }
+
+        if (Time.time - weaponLandmine.lastFireTime > weaponLandmine.cooldownTime)
+        {
+            weaponLandmine.isOnCooldown = false;
         }
     }
     
