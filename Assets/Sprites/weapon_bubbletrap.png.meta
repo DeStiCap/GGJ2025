@@ -184,7 +184,10 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      weapon_bubbletrap_0: 7014951103998826110
+      weapon_bubbletrap_1: 1725124471419522978
+      weapon_bubbletrap_2: -9190877726001637010
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

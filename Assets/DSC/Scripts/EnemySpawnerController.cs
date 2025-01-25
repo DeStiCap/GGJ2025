@@ -34,7 +34,8 @@ namespace GGJ2025
         {
             if (m_InitSpawn)
             {
-                for(int i = 0; i < m_SpawnCountPerRound; i++)
+                m_NextSpawnTime = Time.time + Random.Range(m_LoopDelay.x, m_LoopDelay.y);
+                for (int i = 0; i < m_SpawnCountPerRound; i++)
                 {
                     RandomSpawnEnemyInList();
                 }
