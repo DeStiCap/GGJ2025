@@ -6,11 +6,14 @@ public class ItemController : MonoBehaviour
 {
     public enum ItemType { WEAPON_GUN, WEAPON_SPREAD, WEAPON_LANDMINE, ITEM_PROTECT_STUN, ITEM_ATK_BOOST, ITEM_DEF_DEBUFF }
     public ItemType itemType;
+    public AudioClip collectSoundEffect;
 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            AudioSource.PlayClipAtPoint(collectSoundEffect, transform.position);
+            
             if (itemType == ItemType.WEAPON_GUN)
             {
                 other.gameObject.GetComponent<MainCharacterController>().weaponGun.isActive = true;

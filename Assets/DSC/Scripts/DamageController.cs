@@ -22,6 +22,7 @@ namespace GGJ2025
         [SerializeField] FactionType ownerFactionType;
         [SerializeField] bool m_DestroyAfterDoDamage = true;
         [SerializeField] UnityEvent<int> m_OnDoDamageEvent;
+        [SerializeField] AudioClip onHitSoundEffect;
 
         #endregion
 
@@ -39,6 +40,11 @@ namespace GGJ2025
 
                     if(collision.TryGetComponent(out IDamageable damageable))
                     {
+                        if (onHitSoundEffect)
+                        {
+                            AudioSource.PlayClipAtPoint(onHitSoundEffect, transform.position);
+                        }
+                        
                         damageable.TakeDamage(m_Damage);
 
                         m_OnDoDamageEvent?.Invoke(m_Damage);
