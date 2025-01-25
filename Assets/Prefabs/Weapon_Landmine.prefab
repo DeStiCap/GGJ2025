@@ -103,6 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 2
+  collectSoundEffect: {fileID: 8300000, guid: 32329dc728a6b4cebb1b60d5e3968069, type: 3}
 --- !u!50 &3815060244625120032
 Rigidbody2D:
   serializedVersion: 5

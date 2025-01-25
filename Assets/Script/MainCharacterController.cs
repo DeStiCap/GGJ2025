@@ -28,6 +28,7 @@ public class MainCharacterController : MonoBehaviour
         public GameObject bulletPrefab;
         public float bulletSpeed = 100f;
         public float cooldownTime = 0.5f;
+        public AudioClip fireSound;
 
         public float lastFireTime;
         public bool isOnCooldown = false;
@@ -41,6 +42,7 @@ public class MainCharacterController : MonoBehaviour
         public int spreadBulletNumber = 18;
         public float bulletSpeed = 70f;
         public float cooldownTime = 1f;
+        public AudioClip fireSound;
 
         public float lastFireTime;
         public bool isOnCooldown = false;
@@ -52,6 +54,7 @@ public class MainCharacterController : MonoBehaviour
         public bool isActive = false;
         public GameObject bulletPrefab;
         public float cooldownTime = 5f;
+        public AudioClip fireSound;
 
         public float lastFireTime;
         public bool isOnCooldown = false;
@@ -79,6 +82,7 @@ public class MainCharacterController : MonoBehaviour
     public BuffDebuffProperty buffDebuff;
 
     private Rigidbody2D rigidbody;
+    private AudioSource audio;
     private float health;
     private float lastHitTime;
     private bool isInvulnerable;
@@ -94,6 +98,7 @@ public class MainCharacterController : MonoBehaviour
     void Start()
     {
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
+        audio = gameObject.GetComponent<AudioSource>();
         healthBarSlider = healthBar.GetComponent<Slider>();
         buffProtectStunBarSlider = buffProtectStunBar.GetComponent<Slider>();
         buffAtkBarSlider = buffAtkBar.GetComponent<Slider>();
@@ -296,6 +301,11 @@ public class MainCharacterController : MonoBehaviour
             Destroy(bullet, 5f);
             weaponGun.lastFireTime = Time.time;
             weaponGun.isOnCooldown = true;
+
+            if (weaponGun.fireSound)
+            {
+                audio.PlayOneShot(weaponGun.fireSound);
+            }
         }
 
         // Fire Spread Bullets
@@ -312,6 +322,11 @@ public class MainCharacterController : MonoBehaviour
                 weaponSpread.lastFireTime = Time.time;
                 weaponSpread.isOnCooldown = true;
             }
+
+            if (weaponSpread.fireSound)
+            {
+                audio.PlayOneShot(weaponSpread.fireSound);
+            }
         }
         
         // Landmine
@@ -321,6 +336,11 @@ public class MainCharacterController : MonoBehaviour
             Destroy(landmine, 5f);
             weaponLandmine.lastFireTime = Time.time;
             weaponLandmine.isOnCooldown = true;
+
+            if (weaponLandmine.fireSound)
+            {
+                audio.PlayOneShot(weaponLandmine.fireSound);
+            }
         }
     }
 

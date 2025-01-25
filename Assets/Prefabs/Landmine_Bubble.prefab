@@ -171,3 +171,4 @@ MonoBehaviour:
   m_OnDoDamageEvent:
     m_PersistentCalls:
       m_Calls: []
+  onHitSoundEffect: {fileID: 8300000, guid: 2cceebc041f2d4dc1a953451a619ca2f, type: 3}
