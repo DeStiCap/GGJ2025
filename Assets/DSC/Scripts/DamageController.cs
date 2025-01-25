@@ -21,7 +21,7 @@ namespace GGJ2025
         [SerializeField] int m_Damage = 1;
         [SerializeField] FactionType ownerFactionType;
         [SerializeField] bool m_DestroyAfterDoDamage = true;
-        [SerializeField] UnityEvent<int> m_DoDamageEvent;
+        [SerializeField] UnityEvent<int> m_OnDoDamageEvent;
 
         #endregion
 
@@ -41,7 +41,7 @@ namespace GGJ2025
                     {
                         damageable.TakeDamage(m_Damage);
 
-                        m_DoDamageEvent?.Invoke(m_Damage);
+                        m_OnDoDamageEvent?.Invoke(m_Damage);
 
                         if (m_DestroyAfterDoDamage)
                         {

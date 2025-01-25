@@ -11,7 +11,8 @@ namespace GGJ2025
 
         [SerializeField] GameObject m_DamageParticle;
 
-        [SerializeField] UnityEvent<int> m_TakeDamageEvent;
+        [SerializeField] UnityEvent<int> m_OnTakeDamageEvent;
+        [SerializeField] UnityEvent m_OnDeathEvent;
 
         #endregion
 
@@ -26,7 +27,7 @@ namespace GGJ2025
         {
             m_Status.hp -= damage;
 
-            m_TakeDamageEvent?.Invoke(damage);
+            m_OnTakeDamageEvent?.Invoke(damage);
 
             if(m_DamageParticle != null)
             {
@@ -38,6 +39,8 @@ namespace GGJ2025
                 m_Status.hp = 0;
                 
                 Destroy(gameObject);
+
+                m_OnDeathEvent?.Invoke();
             }
         }
 

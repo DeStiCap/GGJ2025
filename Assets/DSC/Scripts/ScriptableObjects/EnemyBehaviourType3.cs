@@ -35,8 +35,7 @@ namespace GGJ2025
 
         public override void InitBehaviour(EnemyController enemy)
         {
-            var behaviourData = new Type3Data();
-            enemy.behaviourData = behaviourData;
+            enemy.ChangeBehaviourData(new Type3Data());
 
             enemy.ChangeAIState(EnemyAIState.Chase);
         }
@@ -46,7 +45,7 @@ namespace GGJ2025
             switch (enemy.aiState)
             {
                 case EnemyAIState.Chase:
-                    if(enemy.currentCoroutine == null)
+                    if(!enemy.hasBehaviourCoroutine)
                     {
                         if (!enemy.behaviourData.TryGetType(out Type3Data behaviourData))
                             return;
@@ -87,7 +86,7 @@ namespace GGJ2025
 
                 yield return null;
 
-            }while(enemy.currentCoroutine != null);
+            }while(enemy.hasBehaviourCoroutine);
         }
 
         #endregion
