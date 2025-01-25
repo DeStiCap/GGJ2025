@@ -63,7 +63,9 @@ namespace GGJ2025
             if (m_Instance == null)
                 return;
 
-            Debug.Log("GameOver");
+            // Test
+            Time.timeScale = 0;
+
             m_Instance.m_OnGameOver?.Invoke();
         }
 
