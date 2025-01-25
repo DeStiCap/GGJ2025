@@ -54,6 +54,7 @@ namespace GGJ2025
 
             var distance = (m_Instance.m_Player.transform.position - position).sqrMagnitude;
 
+            Debug.Log(distance + " : " + searchDistance);
             if(distance <= Mathf.Pow(searchDistance, 2))
             {
                 player = m_Instance.m_Player;

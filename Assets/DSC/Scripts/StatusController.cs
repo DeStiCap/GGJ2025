@@ -15,8 +15,13 @@ namespace GGJ2025
         [SerializeField] GameObject m_DamageParticle;
         [SerializeField] bool m_DestroyOnDeath = true;
 
+        [Header("Events")]
+        [SerializeField] UnityEvent<int, int> m_OnHpChanged;
         [SerializeField] UnityEvent<int> m_OnTakeDamageEvent;
         [SerializeField] UnityEvent m_OnDeadEvent;
+
+        public int currentHp { get { return m_Status.hp; } }
+        public int maxHp { get { return m_Status.maxHp; } }
 
         bool m_IsDead;
 
@@ -38,8 +43,11 @@ namespace GGJ2025
                 || Time.time < m_CanTakeDamageTime)
                 return;
 
+            var previousHp = m_Status.hp;
 
             m_Status.hp -= damage;
+
+            m_OnHpChanged?.Invoke(previousHp, m_Status.hp);
 
             m_CanTakeDamageTime = Time.time + m_DamageIFrameDuration;
             m_OnTakeDamageEvent?.Invoke(damage);
