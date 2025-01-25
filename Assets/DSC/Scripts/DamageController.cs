@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace GGJ2025
 {
@@ -19,6 +20,8 @@ namespace GGJ2025
         [Min(0)]
         [SerializeField] int m_Damage = 1;
         [SerializeField] FactionType ownerFactionType;
+        [SerializeField] bool m_DestroyAfterDoDamage = true;
+        [SerializeField] UnityEvent<int> m_OnDoDamageEvent;
 
         #endregion
 
@@ -37,7 +40,13 @@ namespace GGJ2025
                     if(collision.TryGetComponent(out IDamageable damageable))
                     {
                         damageable.TakeDamage(m_Damage);
-                        Destroy(gameObject);
+
+                        m_OnDoDamageEvent?.Invoke(m_Damage);
+
+                        if (m_DestroyAfterDoDamage)
+                        {
+                            Destroy(gameObject);
+                        }
                     }
 
                     break;

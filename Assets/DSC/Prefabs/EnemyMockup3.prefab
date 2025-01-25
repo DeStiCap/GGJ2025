@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &6191357885244579313
+--- !u!1001 &5372615992657931354
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -50,20 +50,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5285278892559249611, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
       propertyPath: m_Name
-      value: EnemyMockup2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8624845894085420785, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
-      propertyPath: m_Color.g
-      value: 0.46155447
-      objectReference: {fileID: 0}
-    - target: {fileID: 8772048084508808051, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
-      propertyPath: m_MoveSpeed
-      value: 4
+      value: EnemyMockup3 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8772048084508808051, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
       propertyPath: m_BehaviourTypeSO
       value: 
-      objectReference: {fileID: 11400000, guid: 77d9d7b02469ee848850d887a13f2790, type: 2}
+      objectReference: {fileID: 11400000, guid: 8812603d339c617499a03b53f2cc9df8, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

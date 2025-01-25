@@ -21,18 +21,20 @@ namespace GGJ2025
 
         public Transform target { get { return m_Player; } }
 
-        public EnemyAIState aiState { get { return m_AIState; } set { m_AIState = value; } }
+        public EnemyAIState aiState { get { return m_AIState; } }
 
-        public Coroutine currentCoroutine {  get { return m_CurrentCoroutine; } set { m_CurrentCoroutine = value; } }
+        public bool hasBehaviourCoroutine { get { return m_BehaviourCoroutine != null; } }
 
-        public BehaviourData behaviourData { get { return m_BehaviourData; } set { m_BehaviourData = value; } }
+        public BehaviourData behaviourData { get { return m_BehaviourData; } }
 
         public Animator animator { get { return m_Animator; } }
+        public new Rigidbody2D rigidbody { get { return m_Rigidbody; } }
 
         Animator m_Animator;
+        Rigidbody2D m_Rigidbody;
         Transform m_Player;
 
-        Coroutine m_CurrentCoroutine;
+        Coroutine m_BehaviourCoroutine;
 
         BehaviourData m_BehaviourData;
 
@@ -43,6 +45,7 @@ namespace GGJ2025
         private void Awake()
         {
             m_Animator = GetComponent<Animator>();
+            m_Rigidbody = GetComponent<Rigidbody2D>();
 
             if (m_BehaviourTypeSO)
             {
@@ -75,13 +78,28 @@ namespace GGJ2025
             }
         }
 
+        public void ChangeAIState(EnemyAIState aiState)
+        {
+            m_AIState = aiState;
+        }
+
+        public void ChangeBehaviourData(BehaviourData behaviourData)
+        {
+            m_BehaviourData = behaviourData;
+        }
+
+        public void StartBehaviourCoroutine(IEnumerator coroutine)
+        {
+            m_BehaviourCoroutine = StartCoroutine(coroutine);
+        }
+
         public void StopBehaviourCoroutine()
         {
-            if (m_CurrentCoroutine == null)
+            if (m_BehaviourCoroutine == null)
                 return;
 
-            StopCoroutine(m_CurrentCoroutine);
-            m_CurrentCoroutine = null;
+            StopCoroutine(m_BehaviourCoroutine);
+            m_BehaviourCoroutine = null;
         }
 
         #endregion
