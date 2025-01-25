@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace GGJ2025
 {
@@ -19,6 +20,9 @@ namespace GGJ2025
         [Min(0f)]
         [SerializeField] Vector2 m_LoopDelay;
         [SerializeField] bool m_LoopSpawn;
+
+        [Header("Events")]
+        [SerializeField] UnityEvent<EnemyController> m_OnSpawnEnemy;
 
         float m_NextSpawnTime;
 
@@ -65,7 +69,10 @@ namespace GGJ2025
             var randomID = Random.Range(0, m_EnemyPrefabs.Length);
 
             var prefab= m_EnemyPrefabs[randomID];
-            Instantiate(prefab, GetRandomSpawnLocation(), prefab.transform.rotation);
+
+            var enemy = Instantiate(prefab, GetRandomSpawnLocation(), prefab.transform.rotation);
+
+            m_OnSpawnEnemy?.Invoke(enemy);
         }
 
         Vector3 GetRandomSpawnLocation()

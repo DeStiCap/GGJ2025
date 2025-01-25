@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7275585436522311576}
   - component: {fileID: 5210486311498418531}
+  - component: {fileID: 9110639671282009978}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -53,3 +54,30 @@ MonoBehaviour:
   m_RandomAreaSize: {x: 1, y: 1}
   m_LoopDelay: {x: 1, y: 2}
   m_LoopSpawn: 0
+  m_OnSpawnEnemy:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 9110639671282009978}
+        m_TargetAssemblyTypeName: GGJ2025.EnemyGroupController, Assembly-CSharp
+        m_MethodName: OnEnemySpawn
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &9110639671282009978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8175061691581336400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0b397ca53c49c54f85c7f69d130eb87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -877,7 +877,7 @@ MonoBehaviour:
   m_OnTakeDamageEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_OnDeathEvent:
+  m_OnDeadEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11400000, guid: 99e64c0e40ab9c84fbff44952e0c2fc2, type: 2}

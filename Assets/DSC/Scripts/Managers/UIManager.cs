@@ -12,6 +12,17 @@ namespace GGJ2025
 
         static UIManager m_Instance;
 
+        public static MainCanvasController mainCanvas
+        {
+            get
+            {
+                if (m_Instance == null)
+                    return null;
+
+                return m_Instance.m_MainCanvas;
+            }
+        }
+
         MainCanvasController m_MainCanvas;
 
         #endregion

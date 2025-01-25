@@ -16,9 +16,9 @@ namespace GGJ2025
         [SerializeField] bool m_DestroyOnDeath = true;
 
         [SerializeField] UnityEvent<int> m_OnTakeDamageEvent;
-        [SerializeField] UnityEvent m_OnDeathEvent;
+        [SerializeField] UnityEvent m_OnDeadEvent;
 
-        bool m_IsDeath;
+        bool m_IsDead;
 
         float m_CanTakeDamageTime;
 
@@ -33,7 +33,7 @@ namespace GGJ2025
 
         public void TakeDamage(int damage)
         {
-            if (m_IsDeath 
+            if (m_IsDead 
                 || damage <= 0
                 || Time.time < m_CanTakeDamageTime)
                 return;
@@ -58,8 +58,8 @@ namespace GGJ2025
                     Destroy(gameObject);
                 }
 
-                m_IsDeath = true;
-                m_OnDeathEvent?.Invoke();
+                m_IsDead = true;
+                m_OnDeadEvent?.Invoke();
             }
         }
 

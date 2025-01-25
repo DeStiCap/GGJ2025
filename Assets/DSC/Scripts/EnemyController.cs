@@ -87,6 +87,8 @@ namespace GGJ2025
 
         BehaviourData m_BehaviourData;
 
+        EnemyGroupController m_GroupController;
+
         Action<EnemyController, Collider2D> m_OnTriggerEnterEvent;
         Action<EnemyController, Collider2D> m_OnTriggerStayEvent;
         Action<EnemyController, Collider2D> m_OnTriggerExitEvent;
@@ -173,6 +175,19 @@ namespace GGJ2025
         public void SetTarget(Transform target)
         {
             m_Target = target;
+        }
+
+        public void RegisterGroup(EnemyGroupController group)
+        {
+            m_GroupController = group;
+        }
+
+        public void OnDead()
+        {
+            if (m_GroupController)
+            {
+                m_GroupController.EnemyDead(this);
+            }
         }
 
         #endregion

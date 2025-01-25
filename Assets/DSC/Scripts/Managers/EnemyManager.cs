@@ -66,6 +66,13 @@ namespace GGJ2025
             return false;
         }
 
+        public static void RegisterEnemy(string groupName, EnemyController enemy)
+        {
+
+        }
+
+  
+
         #endregion
     }
 }
