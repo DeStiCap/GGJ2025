@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace GGJ2025
 {
@@ -9,6 +10,8 @@ namespace GGJ2025
         [SerializeField] Status m_Status;
 
         [SerializeField] GameObject m_DamageParticle;
+
+        [SerializeField] UnityEvent<int> m_TakeDamageEvent;
 
         #endregion
 
@@ -22,6 +25,8 @@ namespace GGJ2025
         public void TakeDamage(int damage)
         {
             m_Status.hp -= damage;
+
+            m_TakeDamageEvent?.Invoke(damage);
 
             if(m_DamageParticle != null)
             {

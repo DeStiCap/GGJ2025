@@ -21,15 +21,17 @@ namespace GGJ2025
 
         public Transform target { get { return m_Player; } }
 
-        public EnemyAIState aiState { get { return m_AIState; } set { m_AIState = value; } }
+        public EnemyAIState aiState { get { return m_AIState; } }
 
         public Coroutine currentCoroutine {  get { return m_CurrentCoroutine; } set { m_CurrentCoroutine = value; } }
 
         public BehaviourData behaviourData { get { return m_BehaviourData; } set { m_BehaviourData = value; } }
 
         public Animator animator { get { return m_Animator; } }
+        public new Rigidbody2D rigidbody { get { return m_Rigidbody; } }
 
         Animator m_Animator;
+        Rigidbody2D m_Rigidbody;
         Transform m_Player;
 
         Coroutine m_CurrentCoroutine;
@@ -43,6 +45,7 @@ namespace GGJ2025
         private void Awake()
         {
             m_Animator = GetComponent<Animator>();
+            m_Rigidbody = GetComponent<Rigidbody2D>();
 
             if (m_BehaviourTypeSO)
             {
@@ -73,6 +76,11 @@ namespace GGJ2025
                     statusController.TakeDamage(1);
                 }
             }
+        }
+
+        public void ChangeAIState(EnemyAIState aiState)
+        {
+            m_AIState = aiState;
         }
 
         public void StopBehaviourCoroutine()

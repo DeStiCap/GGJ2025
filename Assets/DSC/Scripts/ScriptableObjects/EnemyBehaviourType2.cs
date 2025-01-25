@@ -6,16 +6,6 @@ namespace GGJ2025
     [CreateAssetMenu(fileName = "EnemyBehaviourType2", menuName = "DSC/Enemy Behaviour/Type 2")]
     public class EnemyBehaviourType2 : EnemyBehaviourSO
     {
-        #region Variable
-
-        [Min(0.01f)]
-        [SerializeField] float m_ChaseMoveDuration = 1;
-
-        [Min(0.01f)]
-        [SerializeField] float m_AttackDuration = 1;
-
-        #endregion
-
         #region Data
 
         public class Type2Data : BehaviourData
@@ -29,12 +19,22 @@ namespace GGJ2025
 
         #endregion
 
+        #region Variable
+
+        [Min(0.01f)]
+        [SerializeField] float m_ChaseMoveDuration = 1;
+
+        [Min(0.01f)]
+        [SerializeField] float m_AttackDuration = 1;
+
+        #endregion        
+
         public override void InitBehaviour(EnemyController enemy)
         {
             var behaviorData = new Type2Data();
             enemy.behaviourData = behaviorData;
 
-            enemy.aiState = EnemyAIState.Chase;
+            enemy.ChangeAIState(EnemyAIState.Chase);        
         }
 
         public override void UpdateBehaviour(EnemyController enemy)
@@ -54,20 +54,20 @@ namespace GGJ2025
 
                         behaviourData.direction = (enemy.target.position - enemy.transform.position).normalized;
 
-                        enemy.currentCoroutine = enemy.StartCoroutine(ChaseMovementCoroutine(enemy));
+                        enemy.currentCoroutine = enemy.StartCoroutine(ChaseBehaviourCoroutine(enemy));
                     }
                     break;
             }
         }
 
-        public IEnumerator ChaseMovementCoroutine(EnemyController enemy)
+        public IEnumerator ChaseBehaviourCoroutine(EnemyController enemy)
         {
             do
             {
                 if(enemy.target == null)
                 {
                     enemy.StopBehaviourCoroutine();
-                    enemy.aiState = EnemyAIState.Patrol;
+                    enemy.ChangeAIState(EnemyAIState.Patrol);
                     break;
                 }
 
@@ -75,8 +75,9 @@ namespace GGJ2025
                 {
                     if (Time.time < behaviourData.endMoveTime)
                     {
-                        var movePos = enemy.moveSpeed * behaviourData.direction * Time.deltaTime;
-                        enemy.transform.position += movePos;
+                        Vector3 pos = enemy.rigidbody.position;
+                        var movePos = pos + enemy.moveSpeed * behaviourData.direction * Time.fixedDeltaTime;
+                        enemy.rigidbody.MovePosition(movePos);
 
                     }
                     else if (Time.time < behaviourData.endAttackTime)

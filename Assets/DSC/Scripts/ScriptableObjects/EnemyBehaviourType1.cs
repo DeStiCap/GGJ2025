@@ -32,7 +32,7 @@ namespace GGJ2025
 
             enemy.behaviourData = testData;
 
-            enemy.aiState = EnemyAIState.Chase;
+            enemy.ChangeAIState(EnemyAIState.Chase);
         }
 
         public override void UpdateBehaviour(EnemyController enemy)
@@ -102,14 +102,15 @@ namespace GGJ2025
                 if(enemy.target == null)
                 {
                     enemy.StopBehaviourCoroutine();
-                    enemy.aiState = EnemyAIState.Patrol;
+                    enemy.ChangeAIState(EnemyAIState.Patrol);
                     break;
                 }
 
                 if(enemy.behaviourData.TryGetType(out Type1Data behaviourData))
                 {
-                    var movePos = enemy.moveSpeed * behaviourData.moveDirection * m_PatrolMoveCurve.Evaluate(Time.time - behaviourData.moveStartTime) * Time.deltaTime;
-                    enemy.transform.position += movePos;
+                    Vector3 pos = enemy.rigidbody.position;
+                    var movePos = pos + enemy.moveSpeed * behaviourData.moveDirection * m_PatrolMoveCurve.Evaluate(Time.time - behaviourData.moveStartTime) * Time.fixedDeltaTime;
+                    enemy.rigidbody.MovePosition(movePos);
 
 
                     if (Time.time >= behaviourData.moveEndTime)
