@@ -102,15 +102,20 @@ namespace GGJ2025
             m_Animator = GetComponent<Animator>();
             m_Rigidbody = GetComponent<Rigidbody2D>();
 
-            if (m_BehaviourTypeSO)
-            {
-                m_BehaviourTypeSO.InitBehaviour(this);
-            }
+            
 
             var playerGO = GameObject.FindGameObjectWithTag("Player");
             if (playerGO)
             {
                 m_Target = playerGO.transform;
+            }
+        }
+
+        private void Start()
+        {
+            if (m_BehaviourTypeSO)
+            {
+                m_BehaviourTypeSO.InitBehaviour(this);
             }
         }
 
