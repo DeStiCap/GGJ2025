@@ -12,7 +12,9 @@ public class ItemController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            AudioSource.PlayClipAtPoint(collectSoundEffect, transform.position);
+            if (collectSoundEffect) {
+                AudioSource.PlayClipAtPoint(collectSoundEffect, transform.position);
+            }
             
             if (itemType == ItemType.WEAPON_GUN)
             {

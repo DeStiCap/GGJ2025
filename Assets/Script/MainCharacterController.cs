@@ -301,8 +301,11 @@ public class MainCharacterController : MonoBehaviour
             Destroy(bullet, 5f);
             weaponGun.lastFireTime = Time.time;
             weaponGun.isOnCooldown = true;
-            
-            audio.PlayOneShot(weaponGun.fireSound);
+
+            if (weaponGun.fireSound)
+            {
+                audio.PlayOneShot(weaponGun.fireSound);
+            }
         }
 
         // Fire Spread Bullets
@@ -319,7 +322,11 @@ public class MainCharacterController : MonoBehaviour
                 weaponSpread.lastFireTime = Time.time;
                 weaponSpread.isOnCooldown = true;
             }
-            audio.PlayOneShot(weaponSpread.fireSound);
+
+            if (weaponSpread.fireSound)
+            {
+                audio.PlayOneShot(weaponSpread.fireSound);
+            }
         }
         
         // Landmine
@@ -329,8 +336,11 @@ public class MainCharacterController : MonoBehaviour
             Destroy(landmine, 5f);
             weaponLandmine.lastFireTime = Time.time;
             weaponLandmine.isOnCooldown = true;
-            
-            audio.PlayOneShot(weaponLandmine.fireSound);
+
+            if (weaponLandmine.fireSound)
+            {
+                audio.PlayOneShot(weaponLandmine.fireSound);
+            }
         }
     }
 
