@@ -33,6 +33,8 @@ namespace GGJ2025
 
         public override void InitBehaviour(EnemyController enemy)
         {
+            enemy.onTriggerStayEvent += OnTriggerStayEvent;
+
             enemy.ChangeBehaviourData(new AnglerFishTypeData());
 
             enemy.ChangeAIState(EnemyAIState.Chase);
@@ -76,8 +78,20 @@ namespace GGJ2025
 
         public override void DestroyBehaviour(EnemyController enemy)
         {
-
+            enemy.onTriggerStayEvent -= OnTriggerStayEvent;
         }
+
+        void OnTriggerStayEvent(EnemyController enemy, Collider2D col)
+        {
+            if (col.CompareTag("Player"))
+            {
+                if (col.TryGetComponent(out StatusController statusController))
+                {
+                    statusController.TakeDamage(1);
+                }
+            }
+        }
+
 
         public IEnumerator PatrolBehaviourCoroutine(EnemyController enemy)
         {

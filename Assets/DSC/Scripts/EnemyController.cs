@@ -128,13 +128,6 @@ namespace GGJ2025
         private void OnTriggerStay2D(Collider2D collision)
         {
             m_OnTriggerStayEvent?.Invoke(this, collision);
-            if (collision.CompareTag("Player"))
-            {
-                if(collision.TryGetComponent(out StatusController statusController))
-                {
-                    statusController.TakeDamage(1);
-                }
-            }
         }
 
         private void OnTriggerExit2D(Collider2D collision)
