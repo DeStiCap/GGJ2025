@@ -1,6 +1,7 @@
 using System.Collections;
 using System.ComponentModel;
 using UnityEngine;
+using System;
 
 namespace GGJ2025
 {
@@ -39,6 +40,45 @@ namespace GGJ2025
         public Animator animator { get { return m_Animator; } }
         public new Rigidbody2D rigidbody { get { return m_Rigidbody; } }
 
+        public event Action<EnemyController, Collider2D> onTriggerEnterEvent
+        {
+            add
+            {
+                m_OnTriggerEnterEvent += value;
+            }
+
+            remove
+            {
+                m_OnTriggerEnterEvent -= value;
+            }
+        }
+
+        public event Action<EnemyController, Collider2D> onTriggerStayEvent
+        {
+            add
+            {
+                m_OnTriggerStayEvent += value;
+            }
+
+            remove
+            {
+                m_OnTriggerStayEvent -= value;
+            }
+        }
+        
+        public event Action<EnemyController, Collider2D> onTriggerExitEvent
+        {
+            add
+            {
+                m_OnTriggerExitEvent += value;
+            }
+
+            remove
+            {
+                m_OnTriggerExitEvent -= value;
+            }
+        }
+
         Animator m_Animator;
         Rigidbody2D m_Rigidbody;
         Transform m_Target;
@@ -46,6 +86,10 @@ namespace GGJ2025
         Coroutine m_BehaviourCoroutine;
 
         BehaviourData m_BehaviourData;
+
+        Action<EnemyController, Collider2D> m_OnTriggerEnterEvent;
+        Action<EnemyController, Collider2D> m_OnTriggerStayEvent;
+        Action<EnemyController, Collider2D> m_OnTriggerExitEvent;
 
         #endregion
 
@@ -76,8 +120,14 @@ namespace GGJ2025
             m_BehaviourTypeSO.UpdateBehaviour(this);
         }
 
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            m_OnTriggerEnterEvent?.Invoke(this, collision);
+        }
+
         private void OnTriggerStay2D(Collider2D collision)
         {
+            m_OnTriggerStayEvent?.Invoke(this, collision);
             if (collision.CompareTag("Player"))
             {
                 if(collision.TryGetComponent(out StatusController statusController))
@@ -85,6 +135,11 @@ namespace GGJ2025
                     statusController.TakeDamage(1);
                 }
             }
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            m_OnTriggerExitEvent?.Invoke(this, collision);
         }
 
         public void ChangeAIState(EnemyAIState aiState)

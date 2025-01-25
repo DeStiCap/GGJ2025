@@ -65,11 +65,7 @@ PrefabInstance:
       value: 0.5377358
       objectReference: {fileID: 0}
     - target: {fileID: 8772048084508808051, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
-      propertyPath: m_GiveUpDistance
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 8772048084508808051, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
-      propertyPath: m_SearchDistance
+      propertyPath: m_MoveSpeed
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8772048084508808051, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}

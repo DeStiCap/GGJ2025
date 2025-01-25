@@ -59,6 +59,12 @@ namespace GGJ2025
             }
         }
 
+
+        public override void DestroyBehaviour(EnemyController enemy)
+        {
+
+        }
+
         public IEnumerator ChaseBehaviourCoroutine(EnemyController enemy)
         {
             do
@@ -95,5 +101,6 @@ namespace GGJ2025
 
             }while(enemy.hasBehaviourCoroutine);
         }
+
     }
 }

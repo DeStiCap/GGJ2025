@@ -200,6 +200,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MoveSpeed: 10
+  m_SearchDistance: 10
+  m_GiveUpDistance: 25
   m_BehaviourTypeSO: {fileID: 11400000, guid: 092812c8ebe091e4b9b514414b83d8d0, type: 2}
   m_AIState: 0
 --- !u!114 &6373027599477464779
@@ -218,3 +220,9 @@ MonoBehaviour:
     hp: 0
     maxHp: 5
   m_DamageParticle: {fileID: 1728697658925164743, guid: d6999ad59a145794f806fd660c5ebf21, type: 3}
+  m_OnTakeDamageEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []

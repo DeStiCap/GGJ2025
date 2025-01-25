@@ -52,6 +52,19 @@ namespace GGJ2025
 
         #region Main
 
+        [RuntimeInitializeOnLoadMethod()]
+        static void InitOnLoad()
+        {
+            if(m_Instance == null)
+            {
+                var prefab = Resources.Load<GameObject>("Prefabs/VisualManager");
+                if (prefab)
+                {
+                    var go = Instantiate(prefab);                    
+                }
+            }
+        }
+
         private void Awake()
         {
             if(m_Instance == null)
