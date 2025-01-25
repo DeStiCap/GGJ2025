@@ -4,8 +4,8 @@ public class CameraFollow : MonoBehaviour
 {
     public GameObject player;
     public Vector3 offset;
-    public Vector3 minValue;
-    public Vector3 maxValue;
+    public Vector3 minValue = new Vector3(-51.4f, -32.6f, 0f);
+    public Vector3 maxValue = new Vector3(55.1f, 24.4f, 0f);
     
     void Update()
     {
