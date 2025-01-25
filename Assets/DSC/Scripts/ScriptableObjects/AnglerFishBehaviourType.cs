@@ -51,24 +51,35 @@ namespace GGJ2025
         [Min(1f)]
         [SerializeField] float m_RushAttackSpeedMultiplier = 2f;
 
+        WaitForSeconds m_WaitForSearchAgain;
+
         #endregion
 
         #region Main
 
         public override void InitBehaviour(EnemyController enemy)
         {
+            m_WaitForSearchAgain = new WaitForSeconds(1f);
+
             var behaviourData = new AnglerFishTypeData();
             behaviourData.darkMask = Instantiate(m_DarkMaskPrefab, enemy.transform);
             behaviourData.darkMask.SetActive(false);
             enemy.ChangeBehaviourData(behaviourData);
 
-            enemy.ChangeAIState(EnemyAIState.Chase);
+            //enemy.ChangeAIState(EnemyAIState.Chase);
         }
 
         public override void UpdateBehaviour(EnemyController enemy)
         {
             switch (enemy.aiState)
             {
+                case EnemyAIState.Patrol:
+                    if (!enemy.hasBehaviourCoroutine)
+                    {
+                        enemy.StartBehaviourCoroutine(PatrolBehaviourCoroutine(enemy));
+                    }
+                    break;
+
                 case EnemyAIState.Chase:
                     if(!enemy.hasBehaviourCoroutine)
                     {
@@ -86,11 +97,29 @@ namespace GGJ2025
             }
         }
 
+        public IEnumerator PatrolBehaviourCoroutine(EnemyController enemy)
+        {
+            do
+            {
+                yield return m_WaitForSearchAgain;
+
+                if(EnemyManager.TrySearchPlayerNearby(enemy.transform.position, enemy.searchDistance, out var player))
+                {
+                    enemy.SetTarget(player);
+                    enemy.ChangeAIState(EnemyAIState.Chase);
+                    enemy.StopBehaviourCoroutine();
+                    break;
+                }
+
+            }while (enemy.hasBehaviourCoroutine);
+        }
+
         public IEnumerator ChaseBehaviourCoroutine(EnemyController enemy)
         {
             do
             {
-                if(enemy.target == null)
+                if(enemy.target == null 
+                    || (enemy.IsTargetOutOfRange()))
                 {
                     enemy.StopBehaviourCoroutine();
                     enemy.ChangeAIState(EnemyAIState.Patrol);

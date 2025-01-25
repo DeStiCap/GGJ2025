@@ -11,6 +11,11 @@ namespace GGJ2025
         [Min(0)]
         [SerializeField] float m_MoveSpeed = 5f;
 
+        [Min(0.01f)]
+        [SerializeField] float m_SearchDistance = 15f;
+
+        [Min(0.01f)]
+        [SerializeField] float m_GiveUpDistance = 40f;
 
         [SerializeField] EnemyBehaviourSO m_BehaviourTypeSO;
 
@@ -19,7 +24,11 @@ namespace GGJ2025
 
         public float moveSpeed { get { return m_MoveSpeed; } }
 
-        public Transform target { get { return m_Player; } }
+        public float searchDistance { get { return m_SearchDistance; } }
+
+        public float giveUpDistance { get { return m_GiveUpDistance; } }
+
+        public Transform target { get { return m_Target; } }
 
         public EnemyAIState aiState { get { return m_AIState; } }
 
@@ -32,7 +41,7 @@ namespace GGJ2025
 
         Animator m_Animator;
         Rigidbody2D m_Rigidbody;
-        Transform m_Player;
+        Transform m_Target;
 
         Coroutine m_BehaviourCoroutine;
 
@@ -55,13 +64,13 @@ namespace GGJ2025
             var playerGO = GameObject.FindGameObjectWithTag("Player");
             if (playerGO)
             {
-                m_Player = playerGO.transform;
+                m_Target = playerGO.transform;
             }
         }
 
         private void FixedUpdate()
         {
-            if (m_Player == null || m_BehaviourTypeSO == null)
+            if (m_Target == null || m_BehaviourTypeSO == null)
                 return;
 
             m_BehaviourTypeSO.UpdateBehaviour(this);
@@ -88,6 +97,16 @@ namespace GGJ2025
             m_BehaviourData = behaviourData;
         }
 
+        public bool IsTargetOutOfRange()
+        {
+            if (m_Target == null)
+                return true;
+
+            var distance = (m_Target.position - transform.position).sqrMagnitude;
+
+            return distance > Mathf.Pow(m_GiveUpDistance, 2);
+        }
+
         public void StartBehaviourCoroutine(IEnumerator coroutine)
         {
             m_BehaviourCoroutine = StartCoroutine(coroutine);
@@ -100,6 +119,11 @@ namespace GGJ2025
 
             StopCoroutine(m_BehaviourCoroutine);
             m_BehaviourCoroutine = null;
+        }
+
+        public void SetTarget(Transform target)
+        {
+            m_Target = target;
         }
 
         #endregion
