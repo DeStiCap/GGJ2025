@@ -298,7 +298,7 @@ public class MainCharacterController : MonoBehaviour
         // Landmine
         if (weaponLandmine.isActive && !weaponLandmine.isOnCooldown && Input.GetMouseButtonDown(2))
         {
-            GameObject landmine = GameObject.Instantiate(weaponGun.bulletPrefab, rigidbody.position, Quaternion.identity);
+            GameObject landmine = GameObject.Instantiate(weaponLandmine.bulletPrefab, rigidbody.position, Quaternion.identity);
             Destroy(landmine, 5f);
             weaponLandmine.lastFireTime = Time.time;
             weaponLandmine.isOnCooldown = true;
