@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd64b0d01f0b27c4f9f5299a6045626d, type: 3}
-  m_Name: AnglerFishBehaviourType
+  m_Script: {fileID: 11500000, guid: c3fbdf25e0f2ddb4d8629d5528a84d26, type: 3}
+  m_Name: AnglerFishBehaviourType2
   m_EditorClassIdentifier: 
   m_PatrolMoveCurve:
     serializedVersion: 2
@@ -18,24 +18,24 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 8.937962
-      outSlope: 8.937962
+      inSlope: 4.7711735
+      outSlope: 4.7711735
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.11188233
+      time: 0.20959204
       value: 1
-      inSlope: -0.020334138
-      outSlope: -0.020334138
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0.72104514
+      outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.5945343
-      value: 0.0124048665
+      time: 0.4
+      value: 0.05
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -45,19 +45,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 1.5
       value: 0
-      inSlope: -0.013699985
-      outSlope: -0.013699985
-      tangentMode: 34
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
-      outWeight: 0
+      outWeight: 0.33333334
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_DarkRayPrefab: {fileID: 6353775787080118865, guid: 23d3b85a319a64747989cc42f8ebc863, type: 3}
-  m_DarkMaskPrefab: {fileID: 4363371518601203040, guid: 9343c732fc17011409096ef1a36949c2, type: 3}
-  m_DarkRayDelay: 2
-  m_RushAttackAlertDelay: 0.7
   m_RushAttackDelay: 1
   m_RushAttackDuration: 0.3
-  m_RushAttackSpeedMultiplier: 3
+  m_RushAttackSpeedMultiplier: 4
