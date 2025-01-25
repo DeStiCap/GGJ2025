@@ -259,6 +259,25 @@ public class MainCharacterController : MonoBehaviour
         {
             rigidbody.linearVelocityX += actualMoveSpeed;
         }
+        
+        // Limit speed cap
+        if (rigidbody.linearVelocityX > moveSpeed/2f)
+        {
+            rigidbody.linearVelocityX = moveSpeed/2f;
+        }
+        else if (rigidbody.linearVelocityX < -(moveSpeed/2f))
+        {
+            rigidbody.linearVelocityX = -(moveSpeed/2f);
+        }
+
+        if (rigidbody.linearVelocityY > moveSpeed/2f)
+        {
+            rigidbody.linearVelocityY = moveSpeed/2f;
+        }
+        else if (rigidbody.linearVelocityY < -(moveSpeed/2f))
+        {
+            rigidbody.linearVelocityY = -(moveSpeed/2f);
+        }
     }
 
     private void WeaponControl()
