@@ -103,6 +103,11 @@ namespace GGJ2025
 
         }
 
+        public override void OnStopCoroutine(EnemyController enemy)
+        {
+
+        }
+
 
         public IEnumerator PatrolBehaviourCoroutine(EnemyController enemy)
         {
@@ -194,6 +199,8 @@ namespace GGJ2025
 
             } while (enemy.hasBehaviourCoroutine);
         }
+
+
 
         #endregion
     }

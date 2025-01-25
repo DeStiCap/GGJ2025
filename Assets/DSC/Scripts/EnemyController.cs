@@ -165,6 +165,7 @@ namespace GGJ2025
             if (m_BehaviourCoroutine == null)
                 return;
 
+            m_BehaviourTypeSO.OnStopCoroutine(this);
             StopCoroutine(m_BehaviourCoroutine);
             m_BehaviourCoroutine = null;
         }

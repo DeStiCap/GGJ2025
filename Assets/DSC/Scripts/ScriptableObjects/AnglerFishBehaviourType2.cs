@@ -29,6 +29,8 @@ namespace GGJ2025
             public RushAttackState rushAttackState;
             public float rushAttackTime;
             public float endRushAttackTime;
+
+            public float nextMoveTime;
         }
 
         #endregion
@@ -36,6 +38,8 @@ namespace GGJ2025
         #region Variable
 
         [SerializeField] AnimationCurve m_PatrolMoveCurve;
+        [Min(0)]
+        [SerializeField] Vector2 m_NextMoveDelay = new Vector2(0.25f, 1f);
 
         [Min(0.01f)]
         [SerializeField] float m_RushAttackDelay = 1f;
@@ -63,13 +67,18 @@ namespace GGJ2025
 
         public override void UpdateBehaviour(EnemyController enemy)
         {
+            if (!enemy.behaviourData.TryGetType(out AnglerFishTypeData behaviourData))
+                return;
+
+            if (Time.time < behaviourData.nextMoveTime)
+                return;
+
             switch (enemy.aiState)
             {
                 case EnemyAIState.Patrol:
                     if (!enemy.hasBehaviourCoroutine)
                     {
-                        if (!enemy.behaviourData.TryGetType(out AnglerFishTypeData behaviourData))
-                            break;
+                        
 
                         behaviourData.moveStartTime = Time.time;
                         behaviourData.moveEndTime = Time.time + m_PatrolMoveCurve.keys[m_PatrolMoveCurve.length - 1].time;
@@ -86,9 +95,6 @@ namespace GGJ2025
                 case EnemyAIState.Chase:
                     if (!enemy.hasBehaviourCoroutine)
                     {
-                        if (!enemy.behaviourData.TryGetType(out AnglerFishTypeData behaviourData))
-                            return;
-
                         behaviourData.direction = (enemy.target.position - enemy.transform.position).normalized;
                         behaviourData.rushAttackState = RushAttackState.Ready;
 
@@ -102,6 +108,15 @@ namespace GGJ2025
         {
             enemy.onTriggerEnterEvent -= OnTriggerEnterEvent;
         }
+
+        public override void OnStopCoroutine(EnemyController enemy)
+        {
+            if (!enemy.behaviourData.TryGetType(out AnglerFishTypeData behaviourData))
+                return;
+
+            behaviourData.nextMoveTime = Time.time + Random.Range(m_NextMoveDelay.x, m_NextMoveDelay.y);
+        }
+
 
         void OnTriggerEnterEvent(EnemyController enemy, Collider2D col)
         {
@@ -214,6 +229,7 @@ namespace GGJ2025
                     break;
             }
         }
+
 
 
 

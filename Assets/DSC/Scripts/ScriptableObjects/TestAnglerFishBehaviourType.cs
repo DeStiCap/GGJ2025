@@ -124,6 +124,12 @@ namespace GGJ2025
             enemy.onTriggerEnterEvent -= OnTriggerEnterEvent;
         }
 
+
+        public override void OnStopCoroutine(EnemyController enemy)
+        {
+
+        }
+
         void OnTriggerEnterEvent(EnemyController enemy, Collider2D col)
         {
             if (col.CompareTag("Player"))
@@ -286,6 +292,7 @@ namespace GGJ2025
 
             return randomID;
         }
+
 
 
         #endregion

@@ -11,16 +11,13 @@ namespace GGJ2025
         [Min(1)]
         [SerializeField] int m_SpawnCountPerRound = 1;
         [SerializeField] bool m_InitSpawn = true;
-        [Min(0f)]
-        [SerializeField] float m_RandomAreaSizeX = 1f;
-        [Min(0f)]
-        [SerializeField] float m_RandomAreaSizeY = 1f;
+
+        [Min(0)]
+        [SerializeField] Vector2 m_RandomAreaSize;
 
         [Header("Loop Spawn")]
-        [Min(0.01f)]
-        [SerializeField] float m_LoopDelayMin = 1f;
-        [Min(0.01f)]
-        [SerializeField] float m_LoopDelayMax = 2f;
+        [Min(0f)]
+        [SerializeField] Vector2 m_LoopDelay;
         [SerializeField] bool m_LoopSpawn;
 
         float m_NextSpawnTime;
@@ -52,7 +49,9 @@ namespace GGJ2025
         {
             if (Time.time >= m_NextSpawnTime)
             {
-                m_NextSpawnTime = Time.time + Random.Range(m_LoopDelayMin, m_LoopDelayMax);
+                var loopDelay = Random.Range(m_LoopDelay.x, m_LoopDelay.y);
+
+                m_NextSpawnTime = Time.time + loopDelay;
 
                 for (int i = 0; i < m_SpawnCountPerRound; i++)
                 {
@@ -73,8 +72,8 @@ namespace GGJ2025
         {
             var pos = transform.position;
 
-            pos.x += Random.Range(-m_RandomAreaSizeX, m_RandomAreaSizeX);
-            pos.y += Random.Range(-m_RandomAreaSizeY, m_RandomAreaSizeY);
+            pos.x += Random.Range(-m_RandomAreaSize.x, m_RandomAreaSize.x);
+            pos.y += Random.Range(-m_RandomAreaSize.y, m_RandomAreaSize.y);
 
 
             return pos;

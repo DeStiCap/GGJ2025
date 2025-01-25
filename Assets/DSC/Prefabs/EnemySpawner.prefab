@@ -50,8 +50,6 @@ MonoBehaviour:
   - {fileID: 8997323929155471417, guid: 76c3e00e1f3641b4d808034c2b8695af, type: 3}
   m_SpawnCountPerRound: 10
   m_InitSpawn: 1
-  m_RandomAreaSizeX: 1
-  m_RandomAreaSizeY: 1
-  m_LoopDelayMin: 1
-  m_LoopDelayMax: 2
+  m_RandomAreaSize: {x: 1, y: 1}
+  m_LoopDelay: {x: 1, y: 2}
   m_LoopSpawn: 0

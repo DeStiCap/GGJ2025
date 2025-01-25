@@ -65,6 +65,12 @@ namespace GGJ2025
 
         }
 
+
+        public override void OnStopCoroutine(EnemyController enemy)
+        {
+
+        }
+
         public IEnumerator ChaseBehaviourCoroutine(EnemyController enemy)
         {
             do

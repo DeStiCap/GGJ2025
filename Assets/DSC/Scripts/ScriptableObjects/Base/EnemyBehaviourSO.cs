@@ -8,5 +8,6 @@ namespace GGJ2025
         public abstract void UpdateBehaviour(EnemyController enemy);
 
         public abstract void DestroyBehaviour(EnemyController enemy);
+        public abstract void OnStopCoroutine(EnemyController enemy);
     }
 }

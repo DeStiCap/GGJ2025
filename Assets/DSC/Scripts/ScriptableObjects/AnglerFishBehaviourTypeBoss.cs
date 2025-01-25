@@ -23,10 +23,17 @@ namespace GGJ2025
 
         }
 
+        public override void OnStopCoroutine(EnemyController enemy)
+        {
+
+        }
+
         IEnumerator PatrolBehaviourCoroutine(EnemyController enemy)
         {
             yield return null;
         }
+
+
 
         #endregion
     }

@@ -17,6 +17,8 @@ namespace GGJ2025
 
             public Vector3 direction;
             public float endAttackPatternTime;
+
+            public float nextMoveTime;
         }
 
         #endregion
@@ -24,6 +26,9 @@ namespace GGJ2025
         #region Variable
 
         [SerializeField] AnimationCurve m_PatrolMoveCurve;
+
+        [Min(0)]
+        [SerializeField] Vector2 m_NextMoveDelay = new Vector2(1f,2f);
 
         float m_SearchInterval = 1f;
 
@@ -42,13 +47,18 @@ namespace GGJ2025
 
         public override void UpdateBehaviour(EnemyController enemy)
         {
+            if (!enemy.behaviourData.TryGetType(out AnglerFishTypeData behaviourData))
+                return;
+
+            if (Time.time < behaviourData.nextMoveTime)
+                return;
+
             switch (enemy.aiState)
             {
                 case EnemyAIState.Patrol:
                     if (!enemy.hasBehaviourCoroutine)
                     {
-                        if (!enemy.behaviourData.TryGetType(out AnglerFishTypeData behaviourData))
-                            break;
+                        
 
                         behaviourData.moveStartTime = Time.time;
                         behaviourData.moveEndTime = Time.time + m_PatrolMoveCurve.keys[m_PatrolMoveCurve.length - 1].time;
@@ -65,9 +75,6 @@ namespace GGJ2025
                 case EnemyAIState.Chase:
                     if (!enemy.hasBehaviourCoroutine)
                     {
-                        if (!enemy.behaviourData.TryGetType(out AnglerFishTypeData behaviourData))
-                            return;
-
                         behaviourData.endAttackPatternTime = Time.time + 3f;
 
                         enemy.StartBehaviourCoroutine(ChaseBehaviourCoroutine(enemy));
@@ -79,6 +86,15 @@ namespace GGJ2025
         public override void DestroyBehaviour(EnemyController enemy)
         {
             enemy.onTriggerStayEvent -= OnTriggerStayEvent;
+        }
+
+
+        public override void OnStopCoroutine(EnemyController enemy)
+        {
+            if (!enemy.behaviourData.TryGetType(out AnglerFishTypeData behaviourData))
+                return;
+
+            behaviourData.nextMoveTime = Time.time + Random.Range(m_NextMoveDelay.x, m_NextMoveDelay.y);
         }
 
         void OnTriggerStayEvent(EnemyController enemy, Collider2D col)
@@ -161,6 +177,7 @@ namespace GGJ2025
                 enemy.StopBehaviourCoroutine();
             }
         }
+
 
         #endregion
     }

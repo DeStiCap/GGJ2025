@@ -54,10 +54,4 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  m_DarkRayPrefab: {fileID: 6353775787080118865, guid: 23d3b85a319a64747989cc42f8ebc863, type: 3}
-  m_DarkMaskPrefab: {fileID: 4363371518601203040, guid: 9343c732fc17011409096ef1a36949c2, type: 3}
-  m_DarkRayDelay: 2
-  m_RushAttackAlertDelay: 0.7
-  m_RushAttackDelay: 1
-  m_RushAttackDuration: 0.3
-  m_RushAttackSpeedMultiplier: 3
+  m_NextMoveDelay: {x: 0.25, y: 1}
