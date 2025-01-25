@@ -1625,6 +1625,8 @@ GameObject:
   - component: {fileID: 6454515414699167812}
   - component: {fileID: 2982991120324273762}
   - component: {fileID: -6384594458733997460}
+  - component: {fileID: 6511530500841103917}
+  - component: {fileID: 4667833962037336166}
   m_Layer: 0
   m_Name: MainCharacter
   m_TagString: Player
@@ -1843,6 +1845,55 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6511530500841103917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5286601639352114984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef8c2bb4a4d95f84f8bf00103d4e4ccb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DarkMaskPrefab: {fileID: 6992522317299079736, guid: 63ea2c92605342945bef858ae4f0e5ee, type: 3}
+--- !u!114 &4667833962037336166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5286601639352114984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c945e9e1e52caa419f28cb5f12da352, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Status:
+    hp: 0
+    maxHp: 10
+  m_DamageIFrameDuration: 0.2
+  m_DamageParticle: {fileID: 1728697658925164743, guid: db7cbd2940c88aa468610f4b53ae2086, type: 3}
+  m_DestroyOnDeath: 0
+  m_OnTakeDamageEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnDeadEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 99e64c0e40ab9c84fbff44952e0c2fc2, type: 2}
+        m_TargetAssemblyTypeName: GGJ2025.GameEventSO, Assembly-CSharp
+        m_MethodName: GameOver
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5922438002999669180
 GameObject:
   m_ObjectHideFlags: 0

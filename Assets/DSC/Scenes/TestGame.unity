@@ -843,55 +843,6 @@ MonoBehaviour:
   - {fileID: 3942010905082901096, guid: 376cfccc429134f56ba6fb159d1e300f, type: 3}
   - {fileID: 3942010905082901096, guid: 376cfccc429134f56ba6fb159d1e300f, type: 3}
   frequency: 2.5
---- !u!114 &1500407730
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1500407717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef8c2bb4a4d95f84f8bf00103d4e4ccb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_DarkMaskPrefab: {fileID: 6992522317299079736, guid: 63ea2c92605342945bef858ae4f0e5ee, type: 3}
---- !u!114 &1500407736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1500407717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c945e9e1e52caa419f28cb5f12da352, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Status:
-    hp: 0
-    maxHp: 10
-  m_DamageIFrameDuration: 0.2
-  m_DamageParticle: {fileID: 1728697658925164743, guid: db7cbd2940c88aa468610f4b53ae2086, type: 3}
-  m_DestroyOnDeath: 0
-  m_OnTakeDamageEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnDeadEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 11400000, guid: 99e64c0e40ab9c84fbff44952e0c2fc2, type: 2}
-        m_TargetAssemblyTypeName: GGJ2025.GameEventSO, Assembly-CSharp
-        m_MethodName: GameOver
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1001 &1534310871
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1458,17 +1409,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5286601639352114984, guid: 088da3a96b2144724892afb88fdc068b, type: 3}
-      insertIndex: -1
+      insertIndex: 6
       addedObject: {fileID: 1500407723}
     - targetCorrespondingSourceObject: {fileID: 5286601639352114984, guid: 088da3a96b2144724892afb88fdc068b, type: 3}
-      insertIndex: -1
+      insertIndex: 7
       addedObject: {fileID: 1500407729}
-    - targetCorrespondingSourceObject: {fileID: 5286601639352114984, guid: 088da3a96b2144724892afb88fdc068b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1500407730}
-    - targetCorrespondingSourceObject: {fileID: 5286601639352114984, guid: 088da3a96b2144724892afb88fdc068b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1500407736}
   m_SourcePrefab: {fileID: 100100000, guid: 088da3a96b2144724892afb88fdc068b, type: 3}
 --- !u!1 &2034231067
 GameObject:
