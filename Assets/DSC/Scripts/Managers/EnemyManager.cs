@@ -14,6 +14,17 @@ namespace GGJ2025
 
         #region Main
 
+        [RuntimeInitializeOnLoadMethod()]
+        static void InitOnLoad()
+        {
+            if(m_Instance == null)
+            {
+                var go = new GameObject();
+                go.AddComponent<EnemyManager>();
+                go.name = "EnemyManager";
+            }
+        }
+
         private void Awake()
         {
             if(m_Instance == null)
