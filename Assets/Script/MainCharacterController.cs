@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -10,11 +9,17 @@ public class MainCharacterController : MonoBehaviour
 
     public float spriteScale = 5;
     public float moveSpeed = 5;
+    public float stunSpeedDebuff = 0.4f;
     public float randomSpeedRange = 0.2f;
     public float invulnerableTime = 5;
     public float maxHealth = 100;
+    
     public GameObject healthBar;
-    public GameObject cooldownBar;
+    public GameObject buffProtectStunBar;
+    public GameObject buffAtkBar;
+    public GameObject debuffDefBar;
+    public GameObject cooldownBar1;
+    public GameObject cooldownBar2;
 
     [System.Serializable]
     public class WeaponGunProperty
@@ -52,23 +57,49 @@ public class MainCharacterController : MonoBehaviour
         public bool isOnCooldown = false;
     }
 
+    [System.Serializable]
+    public class BuffDebuffProperty
+    {
+        public bool isProectedFromStun;
+        public bool isStunned;
+        public float lastStunTime;
+        public float protectedStunTime;
+
+        public bool isAtkBoosted;
+        public float lastAtkBoosted;
+
+        public bool isDefDebuff;
+        public float lastDefDebuff;
+    }
+
     public WeaponGunProperty weaponGun;
     public WeaponSpreadProperty weaponSpread;
-    [FormerlySerializedAs("WeaponLandmine")] public WeaponLandmineProperty weaponLandmine;
+    public WeaponLandmineProperty weaponLandmine;
+    
+    public BuffDebuffProperty buffDebuff;
 
     private Rigidbody2D rigidbody;
     private float health;
     private float lastHitTime;
     private bool isInvulnerable;
+    
     private Slider healthBarSlider;
-    private Slider cooldownBarSlider;
+    private Slider buffProtectStunBarSlider;
+    private Slider buffAtkBarSlider;
+    private Slider debuffDefBarSlider;
+    private Slider cooldownBarSlider1;
+    private Slider cooldownBarSlider2;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
         healthBarSlider = healthBar.GetComponent<Slider>();
-        cooldownBarSlider = cooldownBar.GetComponent<Slider>();
+        buffProtectStunBarSlider = buffProtectStunBar.GetComponent<Slider>();
+        buffAtkBarSlider = buffAtkBar.GetComponent<Slider>();
+        debuffDefBarSlider = debuffDefBar.GetComponent<Slider>();
+        cooldownBarSlider1 = cooldownBar1.GetComponent<Slider>();
+        cooldownBarSlider2 = cooldownBar2.GetComponent<Slider>();
 
         health = maxHealth;
     }
@@ -80,17 +111,27 @@ public class MainCharacterController : MonoBehaviour
             if (other.gameObject.CompareTag("Enemy"))
             {
                 isInvulnerable = true;
-                StartCoroutine(Flash());
+                StartCoroutine(Flash(new Color(0,0.4f,0.4f,0)));
                 lastHitTime = Time.time;
                 health -= 20;
             }
             else if (other.gameObject.CompareTag("EnemyBullet"))
             {
                 isInvulnerable = true;
-                StartCoroutine(Flash());
+                StartCoroutine(Flash(new Color(0,0.4f,0.4f,0)));
                 lastHitTime = Time.time;
                 Destroy(other.gameObject);
                 health -= 20;
+            }
+        }
+
+        if (!buffDebuff.isStunned && !buffDebuff.isProectedFromStun)
+        {
+            if (other.gameObject.CompareTag("Trash"))
+            {
+                buffDebuff.isStunned = true;
+                StartCoroutine(Flash(new Color(0,0,0,0.6f)));
+                buffDebuff.lastStunTime = Time.time;
             }
         }
     }
@@ -102,46 +143,102 @@ public class MainCharacterController : MonoBehaviour
         {
             isInvulnerable = false;
         }
-        
+
+        UpdateBuffDebuffStatus();
         UpdateUIElement();
         MovementControl();
         WeaponControl();
         UpdateSprite();
     }
 
+    private void UpdateBuffDebuffStatus()
+    {
+        if (Time.time - buffDebuff.lastStunTime > invulnerableTime)
+        {
+            buffDebuff.isStunned = false;
+        }
+
+        if (Time.time - buffDebuff.protectedStunTime >= 10)
+        {
+            buffDebuff.isProectedFromStun = false;
+        }
+
+        if (Time.time - buffDebuff.lastAtkBoosted >= 10)
+        {
+            buffDebuff.isAtkBoosted = false;
+        }
+
+        if (Time.time - buffDebuff.lastDefDebuff >= 10)
+        {
+            buffDebuff.isDefDebuff = false;
+        }
+    }
+
     private void UpdateUIElement()
     {
         healthBarSlider.value = health * (healthBarSlider.maxValue / maxHealth);
         
-        cooldownBar.SetActive(false);
-        
-        // if (weaponSpread.isOnCooldown)
-        // {
-        //     cooldownBar.SetActive(true);
-        //     cooldownBarSlider.value = (weaponSpread.lastFireTime + weaponSpread.cooldownTime - Time.time) / 
-        //                               weaponSpread.cooldownTime;
-        // }
-        // else
-        // {
-        //     cooldownBar.SetActive(false);
-        // }
+        if (weaponSpread.isOnCooldown)
+        {
+            cooldownBar1.SetActive(true);
+            cooldownBarSlider1.value = (weaponSpread.lastFireTime + weaponSpread.cooldownTime - Time.time) / 
+                                      weaponSpread.cooldownTime;
+        }
+        else
+        {
+            cooldownBar1.SetActive(false);
+        }
 
-        // if (weaponLandmine.isOnCooldown)
-        // {
-        //     cooldownBar.SetActive(true);
-        //     cooldownBarSlider.value = (weaponLandmine.lastFireTime + weaponLandmine.cooldownTime - Time.time) /
-        //                               weaponLandmine.cooldownTime;
-        // }
-        // else
-        // {
-        //     cooldownBar.SetActive(false);
-        // }
+        if (weaponLandmine.isOnCooldown)
+        {
+            cooldownBar2.SetActive(true);
+            cooldownBarSlider2.value = (weaponLandmine.lastFireTime + weaponLandmine.cooldownTime - Time.time) /
+                                      weaponLandmine.cooldownTime;
+        }
+        else
+        {
+            cooldownBar2.SetActive(false);
+        }
+
+        if (buffDebuff.isProectedFromStun)
+        {
+            buffProtectStunBar.SetActive(true);
+            buffProtectStunBarSlider.value = (buffDebuff.protectedStunTime + 10.0f - Time.time) / 10.0f;
+        }
+        else
+        {
+            buffProtectStunBar.SetActive(false);
+        }
+
+        if (buffDebuff.isAtkBoosted)
+        {
+            buffAtkBar.SetActive(true);
+            buffAtkBarSlider.value = (buffDebuff.lastAtkBoosted + 10.0f - Time.time) / 10.0f;
+        }
+        else
+        {
+            buffAtkBar.SetActive(false);
+        }
+        
+        if (buffDebuff.isDefDebuff)
+        {
+            debuffDefBar.SetActive(true);
+            debuffDefBarSlider.value = (buffDebuff.lastDefDebuff + 10.0f - Time.time) / 10.0f;
+        }
+        else
+        {
+            debuffDefBar.SetActive(false);
+        }
     }
 
     private void MovementControl()
     {
         float randomModifier = Random.Range(1 - randomSpeedRange, 1 + randomSpeedRange);
         float actualMoveSpeed = moveSpeed * randomModifier * Time.deltaTime;
+        if (buffDebuff.isStunned)
+        {
+            actualMoveSpeed *= stunSpeedDebuff;
+        }
         
         if (Input.GetKey(KeyCode.W))
         {
@@ -247,14 +344,22 @@ public class MainCharacterController : MonoBehaviour
         }
     }
     
-    private IEnumerator Flash() {
+    private IEnumerator Flash(Color toColor) {
         SpriteRenderer playerSprite =  gameObject.GetComponent<SpriteRenderer>();
 
         for (int i = 0; i < invulnerableTime * 10; i++)
         {
-            playerSprite.color = new Color(1, 1, 1, 0.5f);
+            playerSprite.color = new Color(
+                playerSprite.color.r - toColor.r, 
+                playerSprite.color.g - toColor.g,
+                playerSprite.color.b - toColor.b, 
+                playerSprite.color.a - toColor.a);
             yield return new WaitForSeconds(0.05f);
-            playerSprite.color = new Color(1, 1, 1, 1);;
+            playerSprite.color = new Color(
+                playerSprite.color.r + toColor.r, 
+                playerSprite.color.g + toColor.g, 
+                playerSprite.color.b + toColor.b, 
+                playerSprite.color.a + toColor.a);;
             yield return new WaitForSeconds(0.05f);
         }
     }
