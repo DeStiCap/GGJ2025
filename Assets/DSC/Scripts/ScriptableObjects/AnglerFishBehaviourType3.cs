@@ -87,9 +87,8 @@ namespace GGJ2025
                 {
                     var behaviourData = (AnglerFishBehaviourData)enemy.behaviourData;
 
-                    var movePos = enemy.moveSpeed * behaviourData.direction * m_PatrolMoveCurve.Evaluate(Time.time - behaviourData.moveStartTime) * Time.deltaTime;
-                    enemy.transform.position += movePos;
-
+                    var move = enemy.moveSpeed * behaviourData.direction * m_PatrolMoveCurve.Evaluate(Time.time - behaviourData.moveStartTime) * Time.deltaTime;
+                    enemy.Move(move);
 
                     if (Time.time >= behaviourData.moveEndTime)
                     {
@@ -115,9 +114,8 @@ namespace GGJ2025
 
                 if (enemy.behaviourData.TryGetType(out AnglerFishBehaviourData behaviourData))
                 {
-                    Vector3 pos = enemy.rigidbody.position;
-                    var movePos = pos + enemy.moveSpeed * behaviourData.direction * m_PatrolMoveCurve.Evaluate(Time.time - behaviourData.moveStartTime) * Time.fixedDeltaTime;
-                    enemy.rigidbody.MovePosition(movePos);
+                    var move = enemy.moveSpeed * behaviourData.direction * m_PatrolMoveCurve.Evaluate(Time.time - behaviourData.moveStartTime) * Time.fixedDeltaTime;
+                    enemy.Move(move);
 
 
                     if (Time.time >= behaviourData.moveEndTime)

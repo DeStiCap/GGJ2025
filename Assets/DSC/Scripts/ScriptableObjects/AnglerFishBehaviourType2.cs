@@ -49,7 +49,7 @@ namespace GGJ2025
         [Min(1f)]
         [SerializeField] float m_RushAttackSpeedMultiplier = 2f;
 
-        float m_SearchInterval = 1f;
+        float m_SearchInterval = 0.2f;
 
         #endregion
 
@@ -140,8 +140,8 @@ namespace GGJ2025
             {
                 if (enemy.behaviourData.TryGetType(out AnglerFishTypeData behaviourData))
                 {
-                    var movePos = (Vector3)enemy.rigidbody.position + behaviourData.direction * m_PatrolMoveCurve.Evaluate(Time.time - behaviourData.moveStartTime) * enemy.moveSpeed * Time.fixedDeltaTime;
-                    enemy.rigidbody.MovePosition(movePos);
+                    var move = behaviourData.direction * m_PatrolMoveCurve.Evaluate(Time.time - behaviourData.moveStartTime) * enemy.moveSpeed * Time.fixedDeltaTime;
+                    enemy.Move(move);
 
                     if (Time.time >= behaviourData.searchNextTime)
                     {
@@ -212,8 +212,8 @@ namespace GGJ2025
 
                         if (Time.time < behaviourData.endRushAttackTime)
                         {
-                            var movePos = (Vector3)enemy.rigidbody.position + behaviourData.direction * enemy.moveSpeed * m_RushAttackSpeedMultiplier * Time.fixedDeltaTime;
-                            enemy.rigidbody.MovePosition(movePos);
+                            var move = behaviourData.direction * enemy.moveSpeed * m_RushAttackSpeedMultiplier * Time.fixedDeltaTime;
+                            enemy.Move(move);
                         }
                         else
                         {

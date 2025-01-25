@@ -18,10 +18,10 @@ namespace GGJ2025
         #region Variable
 
         [Min(0)]
-        [SerializeField] int m_Damage = 1;
+        [SerializeField] float m_Damage = 1;
         [SerializeField] FactionType ownerFactionType;
         [SerializeField] bool m_DestroyAfterDoDamage = true;
-        [SerializeField] UnityEvent<int> m_OnDoDamageEvent;
+        [SerializeField] UnityEvent<float> m_OnDoDamageEvent;
 
         #endregion
 
@@ -53,6 +53,11 @@ namespace GGJ2025
             }
             
 
+        }
+
+        public void SetDamage(float damage)
+        {
+            m_Damage = damage;
         }
 
         #endregion

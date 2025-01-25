@@ -1,5 +1,4 @@
 using System.Collections;
-using System.ComponentModel;
 using UnityEngine;
 using System;
 
@@ -20,7 +19,8 @@ namespace GGJ2025
 
         [SerializeField] EnemyBehaviourSO m_BehaviourTypeSO;
 
-        
+        [SerializeField] SpriteRenderer m_SpriteRenderer;
+
         [SerializeField] EnemyAIState m_AIState;
 
         public float moveSpeed { get { return m_MoveSpeed; } }
@@ -81,6 +81,8 @@ namespace GGJ2025
 
         Animator m_Animator;
         Rigidbody2D m_Rigidbody;
+       
+
         Transform m_Target;
 
         Coroutine m_BehaviourCoroutine;
@@ -101,7 +103,6 @@ namespace GGJ2025
         {
             m_Animator = GetComponent<Animator>();
             m_Rigidbody = GetComponent<Rigidbody2D>();
-
             
 
             var playerGO = GameObject.FindGameObjectWithTag("Player");
@@ -175,6 +176,22 @@ namespace GGJ2025
             m_BehaviourTypeSO.OnStopCoroutine(this);
             StopCoroutine(m_BehaviourCoroutine);
             m_BehaviourCoroutine = null;
+        }
+
+        public void Move(Vector2 move)
+        {
+            if (move.x > 0)
+            {
+                m_SpriteRenderer.flipX = true;
+            }
+            else if (move.x < 0)
+            {
+                m_SpriteRenderer.flipX = false;
+            }
+
+            move += m_Rigidbody.position;
+
+            m_Rigidbody.MovePosition(move);            
         }
 
         public void SetTarget(Transform target)

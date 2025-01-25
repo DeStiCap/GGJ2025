@@ -16,12 +16,12 @@ namespace GGJ2025
         [SerializeField] bool m_DestroyOnDeath = true;
 
         [Header("Events")]
-        [SerializeField] UnityEvent<int, int> m_OnHpChanged;
-        [SerializeField] UnityEvent<int> m_OnTakeDamageEvent;
+        [SerializeField] UnityEvent<float, float> m_OnHpChanged;
+        [SerializeField] UnityEvent<float> m_OnTakeDamageEvent;
         [SerializeField] UnityEvent m_OnDeadEvent;
 
-        public int currentHp { get { return m_Status.hp; } }
-        public int maxHp { get { return m_Status.maxHp; } }
+        public float currentHp { get { return m_Status.hp; } }
+        public float maxHp { get { return m_Status.maxHp; } }
 
         bool m_IsDead;
 
@@ -36,7 +36,7 @@ namespace GGJ2025
             m_Status.hp = m_Status.maxHp;
         }
 
-        public void TakeDamage(int damage)
+        public void TakeDamage(float damage)
         {
             if (m_IsDead 
                 || damage <= 0

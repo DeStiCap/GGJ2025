@@ -5,8 +5,8 @@ namespace GGJ2025
     [System.Serializable]
     public struct Status
     {
-        public int hp;
+        public float hp;
         [Min(1)]
-        public int maxHp;
+        public float maxHp;
     }
 }

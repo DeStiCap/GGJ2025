@@ -89,7 +89,7 @@ namespace GGJ2025
                         {
                             var maxHp = statusController.maxHp;
                             var damage = maxHp * behaviourData.nextAuraDamage / 100;
-                            statusController.TakeDamage(Mathf.RoundToInt(damage));
+                            statusController.TakeDamage(damage);
 
                             behaviourData.nextAuraDamageTime = Time.time + m_AuraDamageInterval;
                             behaviourData.nextAuraDamage = behaviourData.nextAuraDamage + m_AuraDamageHpPer;

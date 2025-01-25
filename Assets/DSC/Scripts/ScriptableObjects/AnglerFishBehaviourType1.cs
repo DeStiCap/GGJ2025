@@ -30,7 +30,7 @@ namespace GGJ2025
         [Min(0)]
         [SerializeField] Vector2 m_NextMoveDelay = new Vector2(1f,2f);
 
-        float m_SearchInterval = 1f;
+        float m_SearchInterval = 0.2f;
 
         #endregion
 
@@ -115,8 +115,10 @@ namespace GGJ2025
             {
                 if (enemy.behaviourData.TryGetType(out AnglerFishTypeData behaviourData))
                 {
-                    var movePos = (Vector3)enemy.rigidbody.position + behaviourData.direction * m_PatrolMoveCurve.Evaluate(Time.time - behaviourData.moveStartTime) * enemy.moveSpeed * Time.fixedDeltaTime;
-                    enemy.rigidbody.MovePosition(movePos);
+                    var move = behaviourData.direction * m_PatrolMoveCurve.Evaluate(Time.time - behaviourData.moveStartTime) * enemy.moveSpeed * Time.fixedDeltaTime;
+
+                    enemy.Move(move);
+                                   
 
                     if (Time.time >= behaviourData.searchNextTime)
                     {
@@ -168,8 +170,9 @@ namespace GGJ2025
         void AttackPattern(EnemyController enemy, AnglerFishTypeData behaviourData)
         {
             var direction = (enemy.target.position - enemy.transform.position).normalized;
-            var movePos = (Vector3)enemy.rigidbody.position + direction * enemy.moveSpeed * Time.fixedDeltaTime;
-            enemy.rigidbody.MovePosition(movePos);
+            var move = direction * enemy.moveSpeed * Time.fixedDeltaTime;
+
+            enemy.Move(move);
 
 
             if (Time.time >= behaviourData.endAttackPatternTime)
