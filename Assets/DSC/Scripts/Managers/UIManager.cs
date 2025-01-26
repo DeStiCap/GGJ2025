@@ -54,12 +54,12 @@ namespace GGJ2025
 
         void Init()
         {
-            m_MainCanvas = Instantiate(m_MainCanvasPrefab);
+            m_MainCanvas = Instantiate(m_MainCanvasPrefab, transform);
 
             var eventSystem = FindAnyObjectByType<EventSystem>();
             if(eventSystem == null)
             {
-                Instantiate(m_MainEventSystemPrefab);
+                Instantiate(m_MainEventSystemPrefab , transform);
             }
         }
 

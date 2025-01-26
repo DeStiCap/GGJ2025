@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace GGJ2025
 {
@@ -80,8 +81,17 @@ namespace GGJ2025
             m_Dark = Instantiate(m_DarkPrefab, transform);
             SetDarkActive(false);
 
+            SceneManager.sceneLoaded += OnSceneLoaded;
 
             DontDestroyOnLoad(this);
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode)
+        {
+            if (m_Dark)
+            {
+                m_Dark.SetActive(false);
+            }
         }
 
         private void Start()

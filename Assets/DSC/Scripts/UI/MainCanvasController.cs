@@ -1,5 +1,7 @@
+using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace GGJ2025
 {
@@ -19,12 +21,26 @@ namespace GGJ2025
         private void OnEnable()
         {
             GameManager.onGameOver += OnGameOver;
+
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
+        
         private void OnDisable()
         {
             GameManager.onGameOver -= OnGameOver;
+
+            SceneManager.sceneLoaded -= OnSceneLoaded;
         }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode)
+        {
+            if (m_GameOverUI)
+            {
+                m_GameOverUI.SetActive(false);
+            }
+        }
+
 
         private void Update()
         {
@@ -46,6 +62,8 @@ namespace GGJ2025
             m_PopupText.SetText(text);
             m_endPopupTextTime = Time.time + showDuration;
         }
+
+
 
         #endregion
     }

@@ -40,18 +40,12 @@ namespace GGJ2025
             DontDestroyOnLoad(this);
         }
 
-        private void Start()
-        {
-            var playerGO = GameObject.FindGameObjectWithTag("Player");
-            if (playerGO != null)
-            {
-                m_Player = playerGO.transform;
-            }
-        }
-
         public static bool TrySearchPlayerNearby(Vector3 position, float searchDistance, out Transform player)
         {
-            if (m_Instance == null || m_Instance.m_Player == null)
+            if (m_Instance == null)
+                goto Fail;
+
+            if(m_Instance.m_Player == null && !m_Instance.TryFindPlayer())
                 goto Fail;
 
             var distance = (m_Instance.m_Player.transform.position - position).sqrMagnitude;
@@ -71,6 +65,21 @@ namespace GGJ2025
         public static void RegisterEnemy(string groupName, EnemyController enemy)
         {
 
+        }
+
+        bool TryFindPlayer()
+        {
+            if (m_Player)
+                return true;
+
+            var playerGO = GameObject.FindGameObjectWithTag("Player");
+            if (playerGO != null)
+            {
+                m_Player = playerGO.transform;
+                return true;
+            }
+
+            return false;
         }
 
   
