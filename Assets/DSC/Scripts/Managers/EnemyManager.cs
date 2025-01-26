@@ -162,7 +162,7 @@ namespace GGJ2025
 
             if (mainCanvas)
             {
-                mainCanvas.ShowPopupText("BOSS APPEAR!!", 5f);
+                mainCanvas.ShowPopupText("BOSS APPEARED!!", 5f);
             }
         }
 

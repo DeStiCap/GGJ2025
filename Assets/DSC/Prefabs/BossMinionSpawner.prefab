@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_RandomAreaSize.x
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_RandomAreaSize.y
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_SpawnCountPerRound
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7275585436522311576, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_LocalPosition.x
@@ -70,19 +70,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9110639671282009978, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_PatrolOffsetLimitX.x
-      value: -5
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 9110639671282009978, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_PatrolOffsetLimitX.y
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9110639671282009978, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_PatrolOffsetLimitY.x
-      value: -5
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 9110639671282009978, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_PatrolOffsetLimitY.y
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

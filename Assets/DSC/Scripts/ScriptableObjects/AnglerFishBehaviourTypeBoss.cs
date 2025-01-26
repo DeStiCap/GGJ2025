@@ -85,13 +85,19 @@ namespace GGJ2025
                     break;
                 }
 
+                if (enemy.IsTargetOutOfRange())
+                    continue;
+
 
                 if (enemy.behaviourData.TryGetType(out AnglerBossData behaviourData))
                 {
-                    if(Time.time >= behaviourData.nextAuraDamageTime)
+                    MovePattern(enemy, behaviourData);
+
+                    if (Time.time >= behaviourData.nextAuraDamageTime)
                     {
                         if(enemy.target.TryGetComponent(out StatusController statusController))
                         {
+
                             var maxHp = statusController.maxHp;
                             var damage = maxHp * behaviourData.nextAuraDamage / 100;
                             statusController.TakeDamage(damage);
@@ -106,6 +112,14 @@ namespace GGJ2025
                 yield return null;
 
             } while (enemy.hasBehaviourCoroutine);
+        }
+
+        void MovePattern(EnemyController enemy, AnglerBossData behaviourData)
+        {
+            var direction = (enemy.target.position - enemy.transform.position).normalized;
+            var move = direction * enemy.moveSpeed * Time.fixedDeltaTime;
+
+            enemy.Move(move);
         }
 
         #endregion

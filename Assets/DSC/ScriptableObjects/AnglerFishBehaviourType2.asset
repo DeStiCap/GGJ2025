@@ -54,6 +54,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  m_NextMoveDelay: {x: 0.25, y: 1}
   m_RushAttackDelay: 1
-  m_RushAttackDuration: 0.3
+  m_RushAttackDuration: 0.5
   m_RushAttackSpeedMultiplier: 4
