@@ -109,10 +109,10 @@ TextureImporter:
       name: weapon_bubbletrap_0
       rect:
         serializedVersion: 2
-        x: 22
-        y: 55
-        width: 449
-        height: 394
+        x: 9
+        y: 15
+        width: 491
+        height: 439
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,10 +131,10 @@ TextureImporter:
       name: weapon_bubbletrap_1
       rect:
         serializedVersion: 2
-        x: 149
-        y: 42
-        width: 9
-        height: 10
+        x: 97
+        y: 10
+        width: 6
+        height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -149,33 +149,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: weapon_bubbletrap_2
-      rect:
-        serializedVersion: 2
-        x: 95
-        y: 9
-        width: 9
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e695f9f4761737080800000000000000
-      internalID: -9190877726001637010
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: a8e173d5f62374dac906361899c3fded
     internalID: 0
     vertices: []
     indices: 
@@ -187,7 +165,6 @@ TextureImporter:
     nameFileIdTable:
       weapon_bubbletrap_0: 7014951103998826110
       weapon_bubbletrap_1: 1725124471419522978
-      weapon_bubbletrap_2: -9190877726001637010
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
