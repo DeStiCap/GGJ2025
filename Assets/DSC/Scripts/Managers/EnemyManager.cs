@@ -1,4 +1,6 @@
 using UnityEngine;
+using System;
+
 
 namespace GGJ2025
 {
@@ -10,11 +12,62 @@ namespace GGJ2025
 
         Transform m_Player;
 
+        public static int enemyGroupCount
+        {
+            get
+            {
+                if (m_Instance == null)
+                    return 0;
+
+                return m_Instance.m_EnemyGroupCount;
+            }
+
+            set
+            {
+                if (m_Instance == null)
+                    return;
+
+                if (value < 0)
+                    value++;
+
+                if(value <= 0
+                    && value < m_Instance.m_EnemyGroupCount)
+                {
+                    m_Instance.AllEnemyGroupAreDead();
+                }
+
+                m_Instance.m_EnemyGroupCount = value;
+            }
+        }
+
+        int m_EnemyGroupCount;
+
+        public static event Action onAllEnemyGroupDead
+        {
+            add
+            {
+                if (m_Instance == null)
+                    return;
+
+                m_Instance.m_OnAllEnemyGroupDead += value;
+            }
+
+            remove
+            {
+                if (m_Instance == null)
+                    return;
+
+                m_Instance.m_OnAllEnemyGroupDead -= value;
+            }
+        }
+
+        Action m_OnAllEnemyGroupDead;
+
         #endregion
 
         #region Main
 
-        [RuntimeInitializeOnLoadMethod()]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void InitOnLoad()
         {
             if(m_Instance == null)
@@ -62,10 +115,7 @@ namespace GGJ2025
             return false;
         }
 
-        public static void RegisterEnemy(string groupName, EnemyController enemy)
-        {
-
-        }
+        
 
         bool TryFindPlayer()
         {
@@ -82,7 +132,18 @@ namespace GGJ2025
             return false;
         }
 
-  
+        void AllEnemyGroupAreDead()
+        {
+
+            m_OnAllEnemyGroupDead?.Invoke();
+
+            var mainCanvas = UIManager.mainCanvas;
+
+            if (mainCanvas)
+            {
+                mainCanvas.ShowPopupText("BOSS APPEAR!!", 5f);
+            }
+        }
 
         #endregion
     }

@@ -19,6 +19,11 @@ namespace GGJ2025
 
         public void OnEnemySpawn(EnemyController enemy)
         {
+            if(m_EnemyList.Count <= 0)
+            {
+                EnemyManager.enemyGroupCount++;
+            }
+
             m_EnemyList.Add(enemy);
 
             var limitX = new Vector2(transform.position.x + m_PatrolOffsetLimitX.x, transform.position.x + m_PatrolOffsetLimitX.y);
@@ -39,8 +44,10 @@ namespace GGJ2025
 
                 if (mainCanvas)
                 {
-                    mainCanvas.ShowPopupText("KILL ALL!!", 4f);
+                    //mainCanvas.ShowPopupText("KILL ALL!!", 4f);
                 }
+
+                EnemyManager.enemyGroupCount--;
             }
         }
 

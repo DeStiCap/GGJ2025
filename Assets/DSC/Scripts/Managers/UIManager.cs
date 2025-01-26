@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 namespace GGJ2025
 {
@@ -50,7 +52,25 @@ namespace GGJ2025
 
             Init();
 
+            SceneManager.sceneLoaded += OnSceneLoaded;
             DontDestroyOnLoad(this);
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode)
+        {
+            if (m_MainEventSystem)
+            {                
+                var eventSystems = FindObjectsByType<EventSystem>(FindObjectsSortMode.None);
+
+                if (eventSystems.Length > 1)
+                {
+                    m_MainEventSystem.gameObject.SetActive(false);
+                }
+                else
+                {
+                    m_MainEventSystem.gameObject.SetActive(true);
+                }
+            }
         }
 
         void Init()
@@ -58,6 +78,13 @@ namespace GGJ2025
             m_MainCanvas = Instantiate(m_MainCanvasPrefab, transform);
 
             m_MainEventSystem = Instantiate(m_MainEventSystemPrefab, transform);
+
+            var eventSystems = FindObjectsByType<EventSystem>(FindObjectsSortMode.None);
+
+            if(eventSystems.Length > 1)
+            {
+                m_MainEventSystem.gameObject.SetActive(false);
+            }
         }
 
         #endregion

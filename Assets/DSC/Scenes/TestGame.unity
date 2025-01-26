@@ -786,6 +786,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1177463411}
     m_Modifications:
+    - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
+      propertyPath: m_InitSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
+      propertyPath: m_SpawnCountPerRound
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
+      propertyPath: m_EnemyPrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
+      propertyPath: 'm_EnemyPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 7970264939092584979, guid: a30e94941ef17f1439cf942cbb221847, type: 3}
+    - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
+      propertyPath: 'm_EnemyPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8997323929155471417, guid: 76c3e00e1f3641b4d808034c2b8695af, type: 3}
+    - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
+      propertyPath: m_OnSpawnEnemy.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7275585436522311576, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_LocalPosition.x
       value: 49.6
@@ -828,12 +852,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8175061691581336400, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_Name
-      value: EnemySpawner (4)
+      value: BossSpawner
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 9110639671282009978, guid: f365d85e1d264d44099d042afc313963, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8175061691581336400, guid: f365d85e1d264d44099d042afc313963, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1638741122}
   m_SourcePrefab: {fileID: 100100000, guid: f365d85e1d264d44099d042afc313963, type: 3}
 --- !u!1 &1048695760 stripped
 GameObject:
@@ -930,9 +958,9 @@ Transform:
   - {fileID: 1821820421}
   - {fileID: 1668924004}
   - {fileID: 249110531}
-  - {fileID: 1638741120}
   - {fileID: 363026536}
   - {fileID: 20811272}
+  - {fileID: 1638741120}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1431717010
@@ -1150,6 +1178,11 @@ MonoBehaviour:
   - {fileID: 3942010905082901096, guid: 376cfccc429134f56ba6fb159d1e300f, type: 3}
   - {fileID: 3942010905082901096, guid: 376cfccc429134f56ba6fb159d1e300f, type: 3}
   frequency: 2.5
+--- !u!1 &1532297068 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8175061691581336400, guid: f365d85e1d264d44099d042afc313963, type: 3}
+  m_PrefabInstance: {fileID: 1027060252}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1549588770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1366,6 +1399,44 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7275585436522311576, guid: f365d85e1d264d44099d042afc313963, type: 3}
   m_PrefabInstance: {fileID: 1027060252}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1638741121 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
+  m_PrefabInstance: {fileID: 1027060252}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532297068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1b80c64c2dcc0b439531478342784ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1638741122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1532297068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac2e35214955ad642950d7100e09d2a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OnAllEnemyGroupDead:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1638741121}
+        m_TargetAssemblyTypeName: GGJ2025.EnemySpawnerController, Assembly-CSharp
+        m_MethodName: SpawnEnemies
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1668924004 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7275585436522311576, guid: f365d85e1d264d44099d042afc313963, type: 3}
