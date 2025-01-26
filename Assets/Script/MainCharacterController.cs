@@ -12,9 +12,7 @@ public class MainCharacterController : MonoBehaviour
     public float stunSpeedDebuff = 0.4f;
     public float randomSpeedRange = 0.2f;
     public float invulnerableTime = 5;
-    public float maxHealth = 100;
     
-    public GameObject healthBar;
     public GameObject buffProtectStunBar;
     public GameObject buffAtkBar;
     public GameObject debuffDefBar;
@@ -99,14 +97,11 @@ public class MainCharacterController : MonoBehaviour
     {
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
         audio = gameObject.GetComponent<AudioSource>();
-        healthBarSlider = healthBar.GetComponent<Slider>();
         buffProtectStunBarSlider = buffProtectStunBar.GetComponent<Slider>();
         buffAtkBarSlider = buffAtkBar.GetComponent<Slider>();
         debuffDefBarSlider = debuffDefBar.GetComponent<Slider>();
         cooldownBarSlider1 = cooldownBar1.GetComponent<Slider>();
         cooldownBarSlider2 = cooldownBar2.GetComponent<Slider>();
-
-        health = maxHealth;
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -181,8 +176,6 @@ public class MainCharacterController : MonoBehaviour
 
     private void UpdateUIElement()
     {
-        healthBarSlider.value = health * (healthBarSlider.maxValue / maxHealth);
-        
         if (weaponSpread.isOnCooldown)
         {
             cooldownBar1.SetActive(true);
