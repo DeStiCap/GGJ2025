@@ -32,14 +32,7 @@ namespace GGJ2025
         [RuntimeInitializeOnLoadMethod()]
         static void InitOnLoad()
         {
-            if(m_Instance == null)
-            {
-                var prefab = Resources.Load<GameObject>("Prefabs/UIManager");
-                if(prefab != null)
-                {
-                    Instantiate(prefab);
-                }
-            }
+            SpawnIfNull();
         }
 
         private void Awake()
@@ -55,6 +48,8 @@ namespace GGJ2025
             }
 
             Init();
+
+            DontDestroyOnLoad(this);
         }
 
         void Init()
@@ -65,6 +60,22 @@ namespace GGJ2025
             if(eventSystem == null)
             {
                 Instantiate(m_MainEventSystemPrefab);
+            }
+        }
+
+        #endregion
+
+        #region Helper
+
+        static void SpawnIfNull()
+        {
+            if (m_Instance == null)
+            {
+                var prefab = Resources.Load<GameObject>("Prefabs/UIManager");
+                if (prefab != null)
+                {
+                    Instantiate(prefab);
+                }
             }
         }
 

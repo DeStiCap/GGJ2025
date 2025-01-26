@@ -117,7 +117,7 @@ namespace GGJ2025
                 {
                     var move = behaviourData.direction * m_PatrolMoveCurve.Evaluate(Time.time - behaviourData.moveStartTime) * enemy.moveSpeed * Time.fixedDeltaTime;
 
-                    enemy.Move(move);
+                    enemy.MoveLimit(move);
                                    
 
                     if (Time.time >= behaviourData.searchNextTime)

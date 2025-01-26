@@ -8,7 +8,8 @@ namespace GGJ2025
     {
         #region Variable
 
-
+        [SerializeField] Vector2 m_PatrolOffsetLimitX = new Vector2(-1,1);
+        [SerializeField] Vector2 m_PatrolOffsetLimitY = new Vector2(-1,1);
 
         List<EnemyController> m_EnemyList = new List<EnemyController>();
 
@@ -19,6 +20,11 @@ namespace GGJ2025
         public void OnEnemySpawn(EnemyController enemy)
         {
             m_EnemyList.Add(enemy);
+
+            var limitX = new Vector2(transform.position.x + m_PatrolOffsetLimitX.x, transform.position.x + m_PatrolOffsetLimitX.y);
+            var limitY = new Vector2(transform.position.y + m_PatrolOffsetLimitY.x, transform.position.y + m_PatrolOffsetLimitY.y);
+
+            enemy.SetPatrolLimit(limitX, limitY);
 
             enemy.RegisterGroup(this);
         }

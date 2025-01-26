@@ -81,3 +81,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b397ca53c49c54f85c7f69d130eb87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_PatrolOffsetLimitX: {x: -4, y: 4}
+  m_PatrolOffsetLimitY: {x: -4, y: 4}

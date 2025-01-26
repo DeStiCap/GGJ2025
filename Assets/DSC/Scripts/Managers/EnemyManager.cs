@@ -36,6 +36,8 @@ namespace GGJ2025
                 Destroy(this);
                 return;
             }
+
+            DontDestroyOnLoad(this);
         }
 
         private void Start()

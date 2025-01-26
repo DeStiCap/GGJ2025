@@ -141,7 +141,7 @@ namespace GGJ2025
                 if (enemy.behaviourData.TryGetType(out AnglerFishTypeData behaviourData))
                 {
                     var move = behaviourData.direction * m_PatrolMoveCurve.Evaluate(Time.time - behaviourData.moveStartTime) * enemy.moveSpeed * Time.fixedDeltaTime;
-                    enemy.Move(move);
+                    enemy.MoveLimit(move);
 
                     if (Time.time >= behaviourData.searchNextTime)
                     {

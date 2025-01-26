@@ -56,6 +56,8 @@ namespace GGJ2025
                 Destroy(this);
                 return;
             }
+
+            DontDestroyOnLoad(this);
         }
 
         public static void GameOver()

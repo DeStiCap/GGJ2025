@@ -77,8 +77,11 @@ namespace GGJ2025
                 return;
             }
 
-            m_Dark = Instantiate(m_DarkPrefab);
+            m_Dark = Instantiate(m_DarkPrefab, transform);
             SetDarkActive(false);
+
+
+            DontDestroyOnLoad(this);
         }
 
         private void Start()

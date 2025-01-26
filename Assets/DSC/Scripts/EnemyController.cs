@@ -79,6 +79,9 @@ namespace GGJ2025
             }
         }
 
+        public Vector2? patrolLimitX { get { return m_PatrolLimitX; } }
+        public Vector2? patrolLimitY { get { return m_PatrolLimitY; } }
+
         Animator m_Animator;
         Rigidbody2D m_Rigidbody;
        
@@ -94,6 +97,9 @@ namespace GGJ2025
         Action<EnemyController, Collider2D> m_OnTriggerEnterEvent;
         Action<EnemyController, Collider2D> m_OnTriggerStayEvent;
         Action<EnemyController, Collider2D> m_OnTriggerExitEvent;
+
+        Vector2? m_PatrolLimitX;
+        Vector2? m_PatrolLimitY;
 
         #endregion
 
@@ -194,6 +200,18 @@ namespace GGJ2025
             m_Rigidbody.MovePosition(move);            
         }
 
+        public void MoveLimit(Vector2 move)
+        {
+            var movePos = new Vector2(transform.position.x + move.x, transform.position.y + move.y);
+
+            movePos.x = patrolLimitX.HasValue ? Mathf.Clamp(movePos.x, patrolLimitX.Value.x, patrolLimitX.Value.y) : movePos.x;
+            movePos.y = patrolLimitY.HasValue ? Mathf.Clamp(movePos.y, patrolLimitY.Value.x, patrolLimitY.Value.y) : movePos.y;
+
+            move = new Vector2(movePos.x - transform.position.x, movePos.y - transform.position.y);
+
+            Move(move);
+        }
+
         public void SetTarget(Transform target)
         {
             m_Target = target;
@@ -202,6 +220,12 @@ namespace GGJ2025
         public void RegisterGroup(EnemyGroupController group)
         {
             m_GroupController = group;
+        }
+
+        public void SetPatrolLimit(Vector2 limitX, Vector2 limitY)
+        {
+            m_PatrolLimitX = limitX;
+            m_PatrolLimitY = limitY;
         }
 
         public void OnDead()
