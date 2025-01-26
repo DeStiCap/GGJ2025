@@ -233,8 +233,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MoveSpeed: 5
-  m_SearchDistance: 10
-  m_GiveUpDistance: 25
+  m_SearchDistance: 15
+  m_GiveUpDistance: 30
   m_BehaviourTypeSO: {fileID: 11400000, guid: 092812c8ebe091e4b9b514414b83d8d0, type: 2}
   m_SpriteRenderer: {fileID: 1536454710437960452}
   m_AIState: 0
@@ -256,6 +256,7 @@ MonoBehaviour:
   m_DamageIFrameDuration: 0.2
   m_DamageParticle: {fileID: 1728697658925164743, guid: d6999ad59a145794f806fd660c5ebf21, type: 3}
   m_DestroyOnDeath: 1
+  m_healthBarUi: {fileID: 0}
   m_OnHpChanged:
     m_PersistentCalls:
       m_Calls: []
