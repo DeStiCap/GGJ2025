@@ -9,7 +9,7 @@ public class UIFollow : MonoBehaviour
     {
         Vector2 relatedPostion = Camera.main.WorldToScreenPoint(target.transform.position);
         ((RectTransform)transform).anchoredPosition = new Vector2(
-            (relatedPostion.x - Screen.width/2) / 4 + offset.x, 
-            (relatedPostion.y - Screen.height/2) / 4 + offset.y);
+            (relatedPostion.x - Screen.width/2) / 2 + offset.x, 
+            (relatedPostion.y - Screen.height/2) / 2 + offset.y);
     }
 }
