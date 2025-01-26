@@ -30,7 +30,9 @@ namespace GGJ2025
 
         public override void InitBehaviour(EnemyController enemy)
         {
-            if(enemy.TryGetComponent(out StatusController statusController))
+            enemy.onTriggerStayEvent += OnTriggerStayEvent;
+
+            if (enemy.TryGetComponent(out StatusController statusController))
             {
                 statusController.AddOnDeadCallBack(OnDead);
             }
@@ -71,13 +73,25 @@ namespace GGJ2025
 
         public override void DestroyBehaviour(EnemyController enemy)
         {
-            
+            enemy.onTriggerStayEvent -= OnTriggerStayEvent;
         }
 
         public override void OnStopCoroutine(EnemyController enemy)
         {
 
         }
+
+        void OnTriggerStayEvent(EnemyController enemy, Collider2D col)
+        {
+            if (col.CompareTag("Player"))
+            {
+                if (col.TryGetComponent(out StatusController statusController))
+                {
+                    statusController.TakeDamage(3);
+                }
+            }
+        }
+
 
         IEnumerator ChaseBehaviourCoroutine(EnemyController enemy)
         {
