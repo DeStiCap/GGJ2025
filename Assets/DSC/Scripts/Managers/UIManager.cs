@@ -24,6 +24,7 @@ namespace GGJ2025
         }
 
         MainCanvasController m_MainCanvas;
+        EventSystem m_MainEventSystem;
 
         #endregion
 
@@ -56,11 +57,7 @@ namespace GGJ2025
         {
             m_MainCanvas = Instantiate(m_MainCanvasPrefab, transform);
 
-            var eventSystem = FindAnyObjectByType<EventSystem>();
-            if(eventSystem == null)
-            {
-                Instantiate(m_MainEventSystemPrefab , transform);
-            }
+            m_MainEventSystem = Instantiate(m_MainEventSystemPrefab, transform);
         }
 
         #endregion
