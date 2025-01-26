@@ -30,6 +30,11 @@ namespace GGJ2025
 
         public override void InitBehaviour(EnemyController enemy)
         {
+            if(enemy.TryGetComponent(out StatusController statusController))
+            {
+                statusController.AddOnDeadCallBack(OnDead);
+            }
+
             // Test only
             Instantiate(m_AuraParticlePrefab, enemy.transform);
 
@@ -66,7 +71,7 @@ namespace GGJ2025
 
         public override void DestroyBehaviour(EnemyController enemy)
         {
-            EnemyManager.BossDead();
+            
         }
 
         public override void OnStopCoroutine(EnemyController enemy)
@@ -120,6 +125,11 @@ namespace GGJ2025
             var move = direction * enemy.moveSpeed * Time.fixedDeltaTime;
 
             enemy.Move(move);
+        }
+
+        void OnDead()
+        {
+            EnemyManager.BossDead();
         }
 
         #endregion

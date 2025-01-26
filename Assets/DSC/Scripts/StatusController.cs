@@ -84,6 +84,16 @@ namespace GGJ2025
             }
         }
 
+        public void AddOnDeadCallBack(UnityAction callback)
+        {
+            m_OnDeadEvent?.AddListener(callback);
+        }
+
+        public void RemoveOnDeadCallBack(UnityAction callback)
+        {
+            m_OnDeadEvent?.RemoveListener(callback);
+        }
+
         #endregion
     }
 }
