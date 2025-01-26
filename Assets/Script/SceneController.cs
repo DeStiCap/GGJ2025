@@ -25,7 +25,7 @@ public class SceneController : MonoBehaviour
     
     public void GotoMainGame()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("TestGame");
     }
 
     public void GotoTitleScreen()

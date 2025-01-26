@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace GGJ2025
 {
@@ -14,6 +15,7 @@ namespace GGJ2025
 
         [SerializeField] GameObject m_DamageParticle;
         [SerializeField] bool m_DestroyOnDeath = true;
+        [SerializeField] private GameObject m_healthBarUi;
 
         [Header("Events")]
         [SerializeField] UnityEvent<float, float> m_OnHpChanged;
@@ -26,6 +28,7 @@ namespace GGJ2025
         bool m_IsDead;
 
         float m_CanTakeDamageTime;
+        Slider healthBar;
 
         #endregion
 
@@ -34,6 +37,10 @@ namespace GGJ2025
         private void Awake()
         {
             m_Status.hp = m_Status.maxHp;
+            if (m_healthBarUi != null)
+            {
+                healthBar = m_healthBarUi.GetComponent<Slider>();
+            }
         }
 
         public void TakeDamage(float damage)
@@ -48,6 +55,12 @@ namespace GGJ2025
             m_Status.hp -= damage;
 
             m_OnHpChanged?.Invoke(previousHp, m_Status.hp);
+
+            if (healthBar != null)
+            {
+                
+                healthBar.value = m_Status.hp * (healthBar.maxValue / m_Status.maxHp);
+            }
 
             m_CanTakeDamageTime = Time.time + m_DamageIFrameDuration;
             m_OnTakeDamageEvent?.Invoke(damage);
