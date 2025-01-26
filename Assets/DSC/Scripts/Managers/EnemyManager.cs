@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 
 namespace GGJ2025
@@ -111,7 +112,13 @@ namespace GGJ2025
                 return;
             }
 
+            SceneManager.sceneLoaded += OnSceneLoaded;
             DontDestroyOnLoad(this);
+        }
+
+        private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+        {
+            m_EnemyGroupCount = 0;
         }
 
         public static bool TrySearchPlayerNearby(Vector3 position, float searchDistance, out Transform player)

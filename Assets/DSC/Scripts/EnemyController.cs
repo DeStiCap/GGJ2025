@@ -126,6 +126,16 @@ namespace GGJ2025
             }
         }
 
+        private void OnEnable()
+        {
+            EnemyManager.onBossDead += OnBossDead;
+        }
+
+        private void OnDisable()
+        {
+            EnemyManager.onBossDead -= OnBossDead;
+        }
+
         private void OnDestroy()
         {
             if (m_BehaviourTypeSO)
@@ -155,6 +165,11 @@ namespace GGJ2025
         private void OnTriggerExit2D(Collider2D collision)
         {
             m_OnTriggerExitEvent?.Invoke(this, collision);
+        }
+
+        void OnBossDead()
+        {
+            Destroy(gameObject);
         }
 
         public void ChangeAIState(EnemyAIState aiState)

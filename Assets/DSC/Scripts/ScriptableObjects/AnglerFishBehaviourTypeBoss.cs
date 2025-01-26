@@ -143,6 +143,11 @@ namespace GGJ2025
 
         void OnDead()
         {
+            var mainCanvas = UIManager.mainCanvas;
+            if (mainCanvas)
+            {
+                mainCanvas.ShowPopupText("GATE OPENED!", 5f);
+            }
             EnemyManager.BossDead();
         }
 

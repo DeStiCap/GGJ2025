@@ -9,6 +9,7 @@ namespace GGJ2025
     {
         #region Variable
 
+        [SerializeField] GameObject m_Gate;
 
         #endregion
 
@@ -28,9 +29,23 @@ namespace GGJ2025
             GameManager.onGameWin -= OnGameWin;
         }
 
+        private void Update()
+        {
+            if (m_Gate)
+            {
+                var rot = m_Gate.transform.eulerAngles;
+                rot.z -= Time.deltaTime * 30;
+                m_Gate.transform.eulerAngles = rot;
+            }
+        }
+
         void OnBossDead()
         {
-            GameManager.GameWin();
+            if (m_Gate)
+            {
+                m_Gate.SetActive(true);
+            }
+            //GameManager.GameWin();
         }
 
         void OnGameWin()
@@ -39,6 +54,13 @@ namespace GGJ2025
             SceneManager.LoadScene("EndingCutscene");
         }
 
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Player"))
+            {
+                GameManager.GameWin();
+            }
+        }
 
 
         #endregion

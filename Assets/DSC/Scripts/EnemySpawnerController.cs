@@ -30,7 +30,7 @@ namespace GGJ2025
 
         #region Main
 
-        private void Awake()
+        private void Start()
         {
             if (m_InitSpawn)
             {
