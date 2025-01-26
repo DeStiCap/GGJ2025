@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1495806631661739517}
+  - component: {fileID: 4181345100855503001}
   - component: {fileID: 1536454710437960452}
   m_Layer: 0
   m_Name: Body
@@ -32,6 +33,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 670626243665743999}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &4181345100855503001
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4034880376306763730}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 670aa49f67c27e546b9df639823c6309, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!212 &1536454710437960452
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -98,7 +121,6 @@ GameObject:
   - component: {fileID: 670626243665743999}
   - component: {fileID: 1340171151882508043}
   - component: {fileID: 2141774783501989049}
-  - component: {fileID: 4337058251120467330}
   - component: {fileID: 8772048084508808051}
   - component: {fileID: 6373027599477464779}
   m_Layer: 31
@@ -198,28 +220,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!95 &4337058251120467330
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5285278892559249611}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 547b86bc8f7e6114c89bf695fd0a4255, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &8772048084508808051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,6 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460e7c3d2ee80944cabe39d135c43b91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Animator: {fileID: 4181345100855503001}
   m_MoveSpeed: 5
   m_SearchDistance: 15
   m_GiveUpDistance: 30

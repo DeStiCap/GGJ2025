@@ -8,6 +8,7 @@ namespace GGJ2025
     {
         #region Variable
 
+        [SerializeField] Animator m_Animator;
         [Min(0)]
         [SerializeField] float m_MoveSpeed = 5f;
 
@@ -82,7 +83,6 @@ namespace GGJ2025
         public Vector2? patrolLimitX { get { return m_PatrolLimitX; } }
         public Vector2? patrolLimitY { get { return m_PatrolLimitY; } }
 
-        Animator m_Animator;
         Rigidbody2D m_Rigidbody;
        
 
