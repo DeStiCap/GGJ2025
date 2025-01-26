@@ -8,6 +8,7 @@ namespace GGJ2025
     {
         #region Variable
 
+        [SerializeField] EnemySpawnerController m_GroupSpawner;
         [SerializeField] GameObject m_AuraParticlePrefab;
         [SerializeField] float m_AuraDamageInterval = 10f;
         [SerializeField] float m_AuraDamageHpPer = 5f;
@@ -30,12 +31,16 @@ namespace GGJ2025
         public override void InitBehaviour(EnemyController enemy)
         {
             // Test only
-            //Instantiate(m_AuraParticlePrefab, enemy.transform.position, m_AuraParticlePrefab.transform.rotation);
+            Instantiate(m_AuraParticlePrefab, enemy.transform);
 
             enemy.ChangeAIState(EnemyAIState.Chase);
 
             enemy.ChangeBehaviourData(new AnglerBossData());
-            
+
+            if (m_GroupSpawner)
+            {
+                Instantiate(m_GroupSpawner, enemy.transform);
+            }
         }
 
         public override void UpdateBehaviour(EnemyController enemy)

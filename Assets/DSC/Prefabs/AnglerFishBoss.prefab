@@ -80,6 +80,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.5755791
       objectReference: {fileID: 0}
+    - target: {fileID: 2141774783501989049, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
+      propertyPath: m_Constraints
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5285278892559249611, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
       propertyPath: m_Name
       value: AnglerFishBoss

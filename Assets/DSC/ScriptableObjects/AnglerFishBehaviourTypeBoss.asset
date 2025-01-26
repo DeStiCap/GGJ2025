@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29bb011ea4c6fee40a3d40118811a7c1, type: 3}
   m_Name: AnglerFishBehaviourTypeBoss
   m_EditorClassIdentifier: 
+  m_GroupSpawner: {fileID: 1271011042777478392, guid: 650f9d303234eaa43b60836e974bd744, type: 3}
   m_AuraParticlePrefab: {fileID: 3539291525707138761, guid: 4dc94bd38a205d941948770d08edbc43, type: 3}
   m_AuraDamageInterval: 10
   m_AuraDamageHpPer: 5

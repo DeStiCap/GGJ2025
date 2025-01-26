@@ -11,6 +11,8 @@ namespace GGJ2025
         [SerializeField] Vector2 m_PatrolOffsetLimitX = new Vector2(-1,1);
         [SerializeField] Vector2 m_PatrolOffsetLimitY = new Vector2(-1,1);
 
+        [SerializeField] bool m_RegisterGroupCount = true;
+
         List<EnemyController> m_EnemyList = new List<EnemyController>();
 
         #endregion
@@ -19,7 +21,7 @@ namespace GGJ2025
 
         public void OnEnemySpawn(EnemyController enemy)
         {
-            if(m_EnemyList.Count <= 0)
+            if(m_EnemyList.Count <= 0 && m_RegisterGroupCount)
             {
                 EnemyManager.enemyGroupCount++;
             }
