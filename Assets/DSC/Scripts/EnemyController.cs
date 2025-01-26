@@ -126,6 +126,14 @@ namespace GGJ2025
             }
         }
 
+        private void OnDestroy()
+        {
+            if (m_BehaviourTypeSO)
+            {
+                m_BehaviourTypeSO.DestroyBehaviour(this);
+            }
+        }
+
         private void FixedUpdate()
         {
             if (m_Target == null || m_BehaviourTypeSO == null)

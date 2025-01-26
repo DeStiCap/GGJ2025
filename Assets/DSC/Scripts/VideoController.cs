@@ -23,22 +23,28 @@ namespace GGJ2025
             m_VideoPlayer = GetComponent<VideoPlayer>();
 
             m_VideoPlayer.loopPointReached += M_VideoPlayer_loopPointReached;
+
+            PlayVideo();
         }
 
         private void M_VideoPlayer_loopPointReached(VideoPlayer source)
         {
-            m_VideoPlayer.Stop();
-
-            var clip = m_Clip;
+            
             if (m_Index > 0)
-            {
-                clip = m_Clip2;
-            }
+                return;
+            //m_VideoPlayer.Stop();
+
+            var clip = m_Clip2;
             m_VideoPlayer.clip = clip;
             m_VideoPlayer.Play();
 
             m_Index++;
-            m_Index %= 2;
+        }
+
+        public void PlayVideo()
+        {
+            m_VideoPlayer.clip = m_Clip;
+            m_VideoPlayer.Play();
         }
 
         #endregion

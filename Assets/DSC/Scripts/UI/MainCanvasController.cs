@@ -9,6 +9,7 @@ namespace GGJ2025
     {
         #region Variable
 
+        [SerializeField] GameObject m_GameWinUI;
         [SerializeField] GameObject m_GameOverUI;
         [SerializeField] TextMeshProUGUI m_PopupText;
 
@@ -20,6 +21,7 @@ namespace GGJ2025
 
         private void OnEnable()
         {
+            GameManager.onGameWin += OnGameWin;
             GameManager.onGameOver += OnGameOver;
 
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -28,6 +30,7 @@ namespace GGJ2025
         
         private void OnDisable()
         {
+            GameManager.onGameWin -= OnGameWin;
             GameManager.onGameOver -= OnGameOver;
 
             SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -50,6 +53,11 @@ namespace GGJ2025
                 m_endPopupTextTime = null;
                 m_PopupText.SetText("");
             }
+        }
+
+        void OnGameWin()
+        {
+            m_GameWinUI.SetActive(true);
         }
 
         void OnGameOver()

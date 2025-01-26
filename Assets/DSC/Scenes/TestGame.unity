@@ -371,6 +371,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySpawner (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8175061691581336400, guid: f365d85e1d264d44099d042afc313963, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -773,11 +777,59 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 8175061691581336400, guid: f365d85e1d264d44099d042afc313963, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f365d85e1d264d44099d042afc313963, type: 3}
+--- !u!1 &949226574
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 949226576}
+  - component: {fileID: 949226575}
+  m_Layer: 0
+  m_Name: EndGate
+  m_TagString: Untagged
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &949226575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949226574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f20e373ab20e7e94180a4441d7d87de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &949226576
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949226574}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1027060252
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -920,6 +972,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySpawner (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8175061691581336400, guid: f365d85e1d264d44099d042afc313963, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -963,6 +1019,11 @@ Transform:
   - {fileID: 1638741120}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1217901125 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4469782556666550204, guid: 088da3a96b2144724892afb88fdc068b, type: 3}
+  m_PrefabInstance: {fileID: 1885349987}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1431717010
 GameObject:
   m_ObjectHideFlags: 0
@@ -1235,6 +1296,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySpawner (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 8175061691581336400, guid: f365d85e1d264d44099d042afc313963, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1437,6 +1502,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  m_OnBossDead:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1668924004 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7275585436522311576, guid: f365d85e1d264d44099d042afc313963, type: 3}
@@ -1637,6 +1705,10 @@ PrefabInstance:
     - target: {fileID: 8175061691581336400, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_Name
       value: EnemySpawner (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8175061691581336400, guid: f365d85e1d264d44099d042afc313963, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1839,6 +1911,10 @@ PrefabInstance:
       propertyPath: weaponLandmine.bulletPrefab
       value: 
       objectReference: {fileID: 6536668622600627704, guid: d7a430cdc0d944921810fbddf3ee9b4b, type: 3}
+    - target: {fileID: 6511530500841103917, guid: 088da3a96b2144724892afb88fdc068b, type: 3}
+      propertyPath: m_PlayerCanvas
+      value: 
+      objectReference: {fileID: 1217901125}
     - target: {fileID: 6794717703730847160, guid: 088da3a96b2144724892afb88fdc068b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1903,3 +1979,4 @@ SceneRoots:
   - {fileID: 288108371}
   - {fileID: 1177463411}
   - {fileID: 1463705208}
+  - {fileID: 949226576}

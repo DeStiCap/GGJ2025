@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/DSC/Scenes/TestGame.unity
     guid: a4a799c0c9907114bacdaf337fbfa8fc
+  - enabled: 1
+    path: Assets/DSC/Scenes/EndingCutscene.unity
+    guid: f8dd0ca1544512c45b6a235ea0a31d29
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

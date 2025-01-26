@@ -8,6 +8,8 @@ namespace GGJ2025
 
         [SerializeField] GameObject m_DarkMaskPrefab;
 
+        [SerializeField] GameObject m_PlayerCanvas;
+
         GameObject m_DarkMask;
 
         #endregion
@@ -23,16 +25,28 @@ namespace GGJ2025
         private void Start()
         {
             VisualManager.onDarkChangeActive += OnDarkChangeActive;
+
+            GameManager.onGameWin += OnGameWin;
         }
 
         private void OnDestroy()
         {
             VisualManager.onDarkChangeActive -= OnDarkChangeActive;
+
+            GameManager.onGameWin -= OnGameWin;
         }
 
         private void OnDarkChangeActive(bool active)
         {
             m_DarkMask.SetActive(active);
+        }
+
+        void OnGameWin()
+        {
+            if (m_PlayerCanvas)
+            {
+                m_PlayerCanvas.SetActive(false);
+            }
         }
 
         #endregion

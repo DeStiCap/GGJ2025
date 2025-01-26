@@ -28,13 +28,34 @@ namespace GGJ2025
             }
         }
 
+        public static event Action onGameWin
+        {
+            add
+            {
+                if (m_Instance == null)
+                    return;
+
+                m_Instance.m_OnGameWin += value;
+            }
+
+            remove
+            {
+                if (m_Instance == null)
+                    return;
+
+                m_Instance.m_OnGameWin -= value;
+            }
+        }
+
         Action m_OnGameOver;
 
+        Action m_OnGameWin;
+        
         #endregion
 
         #region Main
 
-        [RuntimeInitializeOnLoadMethod()]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void InitOnLoad()
         {
             if(m_Instance == null)
@@ -58,6 +79,17 @@ namespace GGJ2025
             }
 
             DontDestroyOnLoad(this);
+        }
+
+        public static void GameWin()
+        {
+            if (m_Instance == null)
+                return;
+
+            Time.timeScale = 0;
+
+            m_Instance.m_OnGameWin?.Invoke();
+
         }
 
         public static void GameOver()

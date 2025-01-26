@@ -32,7 +32,7 @@ namespace GGJ2025
 
         #region Main
 
-        [RuntimeInitializeOnLoadMethod()]
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void InitOnLoad()
         {
             SpawnIfNull();

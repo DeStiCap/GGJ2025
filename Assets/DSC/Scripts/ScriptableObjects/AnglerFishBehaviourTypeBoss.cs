@@ -61,7 +61,7 @@ namespace GGJ2025
 
         public override void DestroyBehaviour(EnemyController enemy)
         {
-
+            EnemyManager.BossDead();
         }
 
         public override void OnStopCoroutine(EnemyController enemy)
