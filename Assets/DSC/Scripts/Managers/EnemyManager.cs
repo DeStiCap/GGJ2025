@@ -29,7 +29,7 @@ namespace GGJ2025
                     return;
 
                 if (value < 0)
-                    value++;
+                    value = 0;
 
                 if(value <= 0
                     && value < m_Instance.m_EnemyGroupCount)
@@ -41,7 +41,33 @@ namespace GGJ2025
             }
         }
 
-        int m_EnemyGroupCount;
+        public static int aiGroupCount
+        {
+            get
+            {
+                if (m_Instance == null)
+                    return 0;
+
+                return m_Instance.m_AIGroupCount;
+            }
+
+            set
+            {
+                if(m_Instance == null)
+                {
+                    if (value < 0)
+                        value = 0;
+
+                    if(value <= 0
+                        && value < m_Instance.m_AIGroupCount)
+                    {
+                        m_Instance.AllEnemyGroupAreDead();
+                    }
+
+                    m_Instance.m_AIGroupCount = value;
+                }
+            }
+        }
 
         public static event Action onAllEnemyGroupDead
         {
@@ -84,6 +110,9 @@ namespace GGJ2025
 
         Action m_OnBossDead;
         Action m_OnAllEnemyGroupDead;
+
+        int m_EnemyGroupCount;
+        int m_AIGroupCount;
 
         #endregion
 

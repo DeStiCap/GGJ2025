@@ -73,14 +73,14 @@ namespace GGJ2025
         {
             switch (enemy.aiState)
             {
-                case EnemyAIState.Patrol:
+                case AIState.Patrol:
                     if (!enemy.hasBehaviourCoroutine)
                     {
                         enemy.StartBehaviourCoroutine(PatrolBehaviourCoroutine(enemy));
                     }
                     break;
 
-                case EnemyAIState.Chase:
+                case AIState.Chase:
                     if (!enemy.hasBehaviourCoroutine)
                     {
                         if (!enemy.behaviourData.TryGetType(out AnglerFishTypeData behaviourData))
@@ -118,7 +118,7 @@ namespace GGJ2025
                 if (EnemyManager.TrySearchPlayerNearby(enemy.transform.position, enemy.searchDistance, out var player))
                 {
                     enemy.SetTarget(player);
-                    enemy.ChangeAIState(EnemyAIState.Chase);
+                    enemy.ChangeAIState(AIState.Chase);
                     enemy.StopBehaviourCoroutine();
                     break;
                 }
@@ -134,7 +134,7 @@ namespace GGJ2025
                     || (enemy.IsTargetOutOfRange()))
                 {
                     enemy.StopBehaviourCoroutine();
-                    enemy.ChangeAIState(EnemyAIState.Patrol);
+                    enemy.ChangeAIState(AIState.Patrol);
                     break;
                 }
 

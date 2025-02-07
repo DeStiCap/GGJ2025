@@ -29,14 +29,14 @@ namespace GGJ2025
         {
             enemy.ChangeBehaviourData(new AnglerFishBehaviourData());
 
-            enemy.ChangeAIState(EnemyAIState.Chase);
+            enemy.ChangeAIState(AIState.Chase);
         }
 
         public override void UpdateBehaviour(EnemyController enemy)
         {
             switch (enemy.aiState)
             {
-                case EnemyAIState.Patrol:
+                case AIState.Patrol:
 
 
                     if (!enemy.hasBehaviourCoroutine)
@@ -51,7 +51,7 @@ namespace GGJ2025
                     }
                     break;
 
-                case EnemyAIState.Chase:
+                case AIState.Chase:
 
 
                     if (!enemy.hasBehaviourCoroutine && enemy.target != null)
@@ -108,7 +108,7 @@ namespace GGJ2025
                     || enemy.IsTargetOutOfRange())
                 {
                     enemy.StopBehaviourCoroutine();
-                    enemy.ChangeAIState(EnemyAIState.Patrol);
+                    enemy.ChangeAIState(AIState.Patrol);
                     break;
                 }
 

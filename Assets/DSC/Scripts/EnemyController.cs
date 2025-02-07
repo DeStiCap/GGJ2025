@@ -22,7 +22,7 @@ namespace GGJ2025
 
         [SerializeField] SpriteRenderer m_SpriteRenderer;
 
-        [SerializeField] EnemyAIState m_AIState;
+        [SerializeField] AIState m_AIState;
 
         public float moveSpeed { get { return m_MoveSpeed; } }
 
@@ -32,7 +32,7 @@ namespace GGJ2025
 
         public Transform target { get { return m_Target; } }
 
-        public EnemyAIState aiState { get { return m_AIState; } }
+        public AIState aiState { get { return m_AIState; } }
 
         public bool hasBehaviourCoroutine { get { return m_BehaviourCoroutine != null; } }
 
@@ -172,7 +172,7 @@ namespace GGJ2025
             Destroy(gameObject);
         }
 
-        public void ChangeAIState(EnemyAIState aiState)
+        public void ChangeAIState(AIState aiState)
         {
             m_AIState = aiState;
         }

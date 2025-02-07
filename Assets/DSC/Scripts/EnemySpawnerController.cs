@@ -1,3 +1,4 @@
+using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,6 +9,7 @@ namespace GGJ2025
         #region Variable
 
         [SerializeField] EnemyController[] m_EnemyPrefabs;
+        [SerializeField] BehaviorGraphAgent[] m_EnemyAgents;
 
         [Min(1)]
         [SerializeField] int m_SpawnCountPerRound = 1;
@@ -23,6 +25,7 @@ namespace GGJ2025
 
         [Header("Events")]
         [SerializeField] UnityEvent<EnemyController> m_OnSpawnEnemy;
+        [SerializeField] UnityEvent<BehaviorGraphAgent> m_OnSpwnEnemyNew;
 
         float m_NextSpawnTime;
 
@@ -61,6 +64,9 @@ namespace GGJ2025
 
         void RandomSpawnEnemyInList()
         {
+            if (m_EnemyPrefabs.Length <= 0)
+                return;
+
             var randomID = Random.Range(0, m_EnemyPrefabs.Length);
 
             var prefab= m_EnemyPrefabs[randomID];
@@ -68,6 +74,20 @@ namespace GGJ2025
             var enemy = Instantiate(prefab, GetRandomSpawnLocation(), prefab.transform.rotation);
 
             m_OnSpawnEnemy?.Invoke(enemy);
+        }
+
+        void NewRandomSpawnEnemyInList()
+        {
+            if (m_EnemyAgents.Length <= 0)
+                return;
+
+            var randomID = Random.Range(0, m_EnemyAgents.Length);
+
+            var prefab = m_EnemyAgents[randomID];
+
+            var enemy = Instantiate(prefab, GetRandomSpawnLocation(), prefab.transform.rotation);
+
+            m_OnSpwnEnemyNew?.Invoke(enemy);
         }
 
         Vector3 GetRandomSpawnLocation()
@@ -86,6 +106,8 @@ namespace GGJ2025
             for (int i = 0; i < m_SpawnCountPerRound; i++)
             {
                 RandomSpawnEnemyInList();
+
+                NewRandomSpawnEnemyInList();
             }
         }
 

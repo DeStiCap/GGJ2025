@@ -1,10 +1,11 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using Unity.Behavior;
 using UnityEngine;
 
 namespace GGJ2025
 {
-    public class EnemyGroupController : MonoBehaviour
+    public class EnemyGroupController : AIGroupMB
     {
         #region Variable
 
@@ -14,6 +15,35 @@ namespace GGJ2025
         [SerializeField] bool m_RegisterGroupCount = true;
 
         List<EnemyController> m_EnemyList = new List<EnemyController>();
+        List<BehaviorGraphAgent> m_AIList = new List<BehaviorGraphAgent>();
+
+        public override Vector2 areaRangeX
+        {
+            get
+            {
+                var result = Vector2.zero;
+                Vector3 position = transform.position;
+
+                result.x = transform.position.x + m_PatrolOffsetLimitX.x;
+                result.y = transform.position.x + m_PatrolOffsetLimitX.y;
+
+                return result;
+            }
+        }
+
+        public override Vector2 areaRangeY
+        {
+            get
+            {
+                var result = Vector2.zero;
+                Vector3 position = transform.position;
+
+                result.x = transform.position.y + m_PatrolOffsetLimitY.x;
+                result.y = transform.position.y + m_PatrolOffsetLimitY.y;
+
+                return result;
+            }
+        }
 
         #endregion
 
@@ -34,6 +64,20 @@ namespace GGJ2025
             enemy.SetPatrolLimit(limitX, limitY);
 
             enemy.RegisterGroup(this);
+        }
+
+        public void OnAISpawn(BehaviorGraphAgent ai)
+        {
+            
+
+            if(m_AIList.Count <= 0 && m_RegisterGroupCount)
+            {
+                EnemyManager.aiGroupCount++;
+            }
+
+            m_AIList.Add(ai);
+
+            ai.SetVariableValue("AIGroupMB", (AIGroupMB)this);
         }
 
         public void EnemyDead(EnemyController enemy)

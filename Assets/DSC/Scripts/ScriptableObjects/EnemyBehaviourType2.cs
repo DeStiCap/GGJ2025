@@ -33,14 +33,14 @@ namespace GGJ2025
         {
             enemy.ChangeBehaviourData(new Type2Data());
 
-            enemy.ChangeAIState(EnemyAIState.Chase);        
+            enemy.ChangeAIState(AIState.Chase);        
         }
 
         public override void UpdateBehaviour(EnemyController enemy)
         {
             switch (enemy.aiState)
             {
-                case EnemyAIState.Chase:
+                case AIState.Chase:
                     if(!enemy.hasBehaviourCoroutine && enemy.target != null)
                     {
                         if (!enemy.behaviourData.TryGetType(out Type2Data behaviourData))
@@ -78,7 +78,7 @@ namespace GGJ2025
                 if(enemy.target == null)
                 {
                     enemy.StopBehaviourCoroutine();
-                    enemy.ChangeAIState(EnemyAIState.Patrol);
+                    enemy.ChangeAIState(AIState.Patrol);
                     break;
                 }
 

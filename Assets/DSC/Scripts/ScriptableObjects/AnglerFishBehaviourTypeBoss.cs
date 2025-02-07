@@ -40,7 +40,7 @@ namespace GGJ2025
             // Test only
             Instantiate(m_AuraParticlePrefab, enemy.transform);
 
-            enemy.ChangeAIState(EnemyAIState.Chase);
+            enemy.ChangeAIState(AIState.Chase);
 
             enemy.ChangeBehaviourData(new AnglerBossData());
 
@@ -57,7 +57,7 @@ namespace GGJ2025
 
             switch (enemy.aiState)
             {
-                case EnemyAIState.Chase:
+                case AIState.Chase:
                     if (!enemy.hasBehaviourCoroutine)
                     {
                         behaviourData.nextAuraDamageTime = Time.time + m_AuraDamageInterval;
@@ -99,7 +99,7 @@ namespace GGJ2025
             {
                 if(enemy.target == null)
                 {
-                    enemy.ChangeAIState(EnemyAIState.Patrol);
+                    enemy.ChangeAIState(AIState.Patrol);
                     enemy.StopBehaviourCoroutine();
                     break;
                 }
