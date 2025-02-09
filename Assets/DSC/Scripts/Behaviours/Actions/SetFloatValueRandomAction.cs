@@ -9,7 +9,7 @@ namespace GGJ2025
     [Serializable, GeneratePropertyBag]
     [NodeDescription(
         name: "Set Float Value Random",
-        story: "Set [Variable] value random by [RandomRange] range",
+        story: "Set [Variable] value random by [RandomRange]",
         category: "Action/DSC",
         id: "eec950928afa88326260920256a54888")]
     public partial class SetFloatValueRandomAction : Action

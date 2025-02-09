@@ -9,7 +9,7 @@ namespace GGJ2025
         #region Variable
 
         [SerializeField] EnemyController[] m_EnemyPrefabs;
-        [SerializeField] BehaviorGraphAgent[] m_EnemyAgents;
+        [SerializeField] AICoreMB[] m_AIPrefabs;
 
         [Min(1)]
         [SerializeField] int m_SpawnCountPerRound = 1;
@@ -25,7 +25,7 @@ namespace GGJ2025
 
         [Header("Events")]
         [SerializeField] UnityEvent<EnemyController> m_OnSpawnEnemy;
-        [SerializeField] UnityEvent<BehaviorGraphAgent> m_OnSpwnEnemyNew;
+        [SerializeField] UnityEvent<AICoreMB> m_OnSpawnAI;
 
         float m_NextSpawnTime;
 
@@ -76,18 +76,18 @@ namespace GGJ2025
             m_OnSpawnEnemy?.Invoke(enemy);
         }
 
-        void NewRandomSpawnEnemyInList()
+        void RandomSpawnAIInList()
         {
-            if (m_EnemyAgents.Length <= 0)
+            if (m_AIPrefabs.Length <= 0)
                 return;
 
-            var randomID = Random.Range(0, m_EnemyAgents.Length);
+            var randomID = Random.Range(0, m_AIPrefabs.Length);
 
-            var prefab = m_EnemyAgents[randomID];
+            var prefab = m_AIPrefabs[randomID];
 
-            var enemy = Instantiate(prefab, GetRandomSpawnLocation(), prefab.transform.rotation);
+            var ai = Instantiate(prefab, GetRandomSpawnLocation(), prefab.transform.rotation);
 
-            m_OnSpwnEnemyNew?.Invoke(enemy);
+            m_OnSpawnAI?.Invoke(ai);
         }
 
         Vector3 GetRandomSpawnLocation()
@@ -107,7 +107,7 @@ namespace GGJ2025
             {
                 RandomSpawnEnemyInList();
 
-                NewRandomSpawnEnemyInList();
+                RandomSpawnAIInList();
             }
         }
 

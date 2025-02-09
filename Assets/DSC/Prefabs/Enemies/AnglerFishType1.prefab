@@ -200,6 +200,7 @@ GameObject:
   - component: {fileID: 967493706345282856}
   - component: {fileID: 6263766455704027074}
   - component: {fileID: 8134724861820481952}
+  - component: {fileID: 1008738542508851780}
   - component: {fileID: 4214060191791472904}
   m_Layer: 31
   m_Name: AnglerFishType1
@@ -380,6 +381,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.8, y: 1.25}
   m_EdgeRadius: 0
+--- !u!114 &1008738542508851780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8547989439724115206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7a307bed892a04291d6a9b27efb8a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4214060191791472904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -394,7 +407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Status:
     hp: 0
-    maxHp: 10
+    maxHp: 5
   m_DamageIFrameDuration: 0.2
   m_DamageParticle: {fileID: 1728697658925164743, guid: d6999ad59a145794f806fd660c5ebf21, type: 3}
   m_DestroyOnDeath: 1
@@ -407,4 +420,16 @@ MonoBehaviour:
       m_Calls: []
   m_OnDeadEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1008738542508851780}
+        m_TargetAssemblyTypeName: GGJ2025.AIController, Assembly-CSharp
+        m_MethodName: OnDead
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

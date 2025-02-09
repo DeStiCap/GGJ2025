@@ -20,7 +20,6 @@ namespace GGJ2025
         [SerializeReference] public BlackboardVariable<AnimationCurveSO> Curve;
         [SerializeReference] public BlackboardVariable<float> MoveSpeed;
         [SerializeReference] public BlackboardVariable<Vector2> MoveDirection;
-        [SerializeReference] public BlackboardVariable<SpriteRenderer> Body;
 
         float m_MoveStartTime;
 
@@ -55,19 +54,8 @@ namespace GGJ2025
             move += Agent.Value.position;
             Agent.Value.MovePosition(move);
 
-            if(Body.ObjectValue != null)
-            {
-                if(direction.x > 0)
-                {
-                    Body.Value.flipX = true;
-                }
-                else if(direction.x < 0)
-                {
-                    Body.Value.flipX = false;
-                }
-            }
+            Agent.Value.transform.FacingDirection(direction);
 
-           
             if(Time.time >= endTime)
             {
                 return Status.Success;

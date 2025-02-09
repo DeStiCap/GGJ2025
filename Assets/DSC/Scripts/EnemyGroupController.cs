@@ -15,7 +15,7 @@ namespace GGJ2025
         [SerializeField] bool m_RegisterGroupCount = true;
 
         List<EnemyController> m_EnemyList = new List<EnemyController>();
-        List<BehaviorGraphAgent> m_AIList = new List<BehaviorGraphAgent>();
+        List<AICoreMB> m_AIList = new List<AICoreMB>();
 
         public override Vector2 areaRangeX
         {
@@ -66,10 +66,8 @@ namespace GGJ2025
             enemy.RegisterGroup(this);
         }
 
-        public void OnAISpawn(BehaviorGraphAgent ai)
+        public void OnAISpawn(AICoreMB ai)
         {
-            
-
             if(m_AIList.Count <= 0 && m_RegisterGroupCount)
             {
                 EnemyManager.aiGroupCount++;
@@ -77,7 +75,7 @@ namespace GGJ2025
 
             m_AIList.Add(ai);
 
-            ai.SetVariableValue("AIGroupMB", (AIGroupMB)this);
+            ai.RegisterGroup(this);
         }
 
         public void EnemyDead(EnemyController enemy)
@@ -94,6 +92,16 @@ namespace GGJ2025
                 }
 
                 EnemyManager.enemyGroupCount--;
+            }
+        }
+
+        public override void AIDead(AICoreMB ai)
+        {
+            m_AIList.Remove(ai);
+
+            if(m_AIList.Count <= 0)
+            {
+                EnemyManager.aiGroupCount--;
             }
         }
 

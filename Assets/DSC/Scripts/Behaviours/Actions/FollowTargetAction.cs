@@ -9,7 +9,7 @@ namespace GGJ2025
     [Serializable, GeneratePropertyBag]
     [NodeDescription(
         name: "Follow Target",
-        story: "[Agent] follow [Target] at [MoveSpeed]",
+        story: "[Agent] follow [Target] at [MoveSpeed] for [FollowDuration]",
         category: "Action/Physics",
         id: "c4a90a7fb82376da437ab81f1ec5125e")]
     public partial class FollowTargetAction : Action
@@ -18,7 +18,6 @@ namespace GGJ2025
         [SerializeReference] public BlackboardVariable<Transform> Target;
         [SerializeReference] public BlackboardVariable<float> MoveSpeed = new BlackboardVariable<float>(5f);
         [SerializeReference] public BlackboardVariable<float> FollowDuration = new BlackboardVariable<float>(3f);
-        [SerializeReference] public BlackboardVariable<SpriteRenderer> Body;
 
         float m_StartTime;
 
@@ -53,19 +52,11 @@ namespace GGJ2025
             move += Agent.Value.position;
             Agent.Value.MovePosition(move);
 
-            if(Body.ObjectValue != null)
-            {
-                if(direction.x > 0)
-                {
-                    Body.Value.flipX = true;
-                }
-                else if(direction.x < 0)
-                {
-                    Body.Value.flipX = false;
-                }
-            }
 
-            if(Time.time >= m_StartTime + FollowDuration.Value)
+            Agent.Value.transform.FacingDirection(direction);
+
+
+            if (Time.time >= m_StartTime + FollowDuration.Value)
             {
                 return Status.Success;
             }

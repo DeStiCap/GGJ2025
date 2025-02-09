@@ -6,17 +6,6 @@ namespace GGJ2025
     [CreateAssetMenu(fileName = "AnglerFishBehaviourType2", menuName = "DSC/Enemy Behaviour/Angler Fish Behaviour Type 2")]
     public class AnglerFishBehaviourType2 : EnemyBehaviourSO
     {
-        #region Enum
-
-        public enum RushAttackState
-        {
-            Ready,
-            Attack
-        }
-
-        #endregion
-
-
         #region Data
         public class AnglerFishTypeData : BehaviourData
         {

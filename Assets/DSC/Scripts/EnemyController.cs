@@ -4,7 +4,7 @@ using System;
 
 namespace GGJ2025
 {
-    public class EnemyController : Enemy
+    public class EnemyController : AICoreMB
     {
         #region Variable
 
@@ -82,6 +82,8 @@ namespace GGJ2025
 
         public Vector2? patrolLimitX { get { return m_PatrolLimitX; } }
         public Vector2? patrolLimitY { get { return m_PatrolLimitY; } }
+
+        public override AIGroupMB aiGroup { get => throw new NotImplementedException(); protected set => throw new NotImplementedException(); }
 
         Rigidbody2D m_Rigidbody;
        

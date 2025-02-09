@@ -8,39 +8,31 @@ namespace GGJ2025
 {
     [Serializable, GeneratePropertyBag]
     [NodeDescription(
-        name: "FacingToTarget",
-        description: "No facing to any direction if no target assigned.",
-        story: "[Agent] facing to [Target]", 
+        name: "Set Direction to Target", 
+        story: "Set [Direction] from [Agent] to [Target]", 
         category: "Action/DSC", 
-        id: "51b6925d2f5d506a6584965afe45e559")]
-    public partial class FacingToTargetAction : Action
+        id: "268a4caa2fdad48caf38d48089a5e771")]
+    public partial class SetDirectionToTargetAction : Action
     {
         [SerializeReference] public BlackboardVariable<Transform> Agent;
+        [SerializeReference] public BlackboardVariable<Vector2> Direction;
         [SerializeReference] public BlackboardVariable<Transform> Target;
 
         protected override Status OnStart()
         {
-            if(Agent == null || Agent.ObjectValue == null)
+            if(Agent.ObjectValue == null)
             {
                 LogFailure("No agent assigned.");
                 return Status.Failure;
             }
 
-            if(Target == null)
+            if(Target.ObjectValue == null)
             {
                 LogFailure("No target assigned.");
                 return Status.Failure;
             }
 
-            if(Target.ObjectValue == null)
-            {
-                return Status.Success;
-            }
-
-            var direction = (Target.Value.position - Agent.Value.transform.position).normalized;
-
-            Agent.Value.FacingDirection(direction);
-
+            Direction.Value = (Target.Value.position - Agent.Value.position).normalized;
             return Status.Success;
         }
     }

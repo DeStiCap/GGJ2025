@@ -8,5 +8,7 @@ namespace GGJ2025
         
 
         public abstract Vector2 areaRangeY { get; }
+
+        public abstract void AIDead(AICoreMB ai);
     }
 }

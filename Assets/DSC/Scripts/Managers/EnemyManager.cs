@@ -53,19 +53,19 @@ namespace GGJ2025
 
             set
             {
-                if(m_Instance == null)
+                if (m_Instance == null)
+                    return;
+
+                if (value < 0)
+                    value = 0;
+
+                if (value <= 0
+                    && value < m_Instance.m_AIGroupCount)
                 {
-                    if (value < 0)
-                        value = 0;
-
-                    if(value <= 0
-                        && value < m_Instance.m_AIGroupCount)
-                    {
-                        m_Instance.AllEnemyGroupAreDead();
-                    }
-
-                    m_Instance.m_AIGroupCount = value;
+                    m_Instance.AllEnemyGroupAreDead();
                 }
+
+                m_Instance.m_AIGroupCount = value;
             }
         }
 
@@ -112,7 +112,7 @@ namespace GGJ2025
         Action m_OnAllEnemyGroupDead;
 
         int m_EnemyGroupCount;
-        int m_AIGroupCount;
+        [SerializeField] int m_AIGroupCount;
 
         #endregion
 

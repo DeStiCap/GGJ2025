@@ -45,8 +45,12 @@ namespace GGJ2025
 
         public void TakeDamage(float damage)
         {
-            if (m_IsDead 
-                || damage <= 0
+            TakeDamage(damage, null);
+        }
+
+        public void TakeDamage(float damage, GameObject damageParticle)
+        {
+            if (m_IsDead
                 || Time.time < m_CanTakeDamageTime)
                 return;
 
@@ -58,19 +62,21 @@ namespace GGJ2025
 
             if (healthBar != null)
             {
-                
+
                 healthBar.value = m_Status.hp * (healthBar.maxValue / m_Status.maxHp);
             }
 
             m_CanTakeDamageTime = Time.time + m_DamageIFrameDuration;
             m_OnTakeDamageEvent?.Invoke(damage);
 
-            if(m_DamageParticle != null)
+            var particle = damageParticle != null ? damageParticle : m_DamageParticle;
+
+            if (particle != null)
             {
-                Instantiate(m_DamageParticle, transform.position, Quaternion.identity);
+                Instantiate(particle, transform.position, Quaternion.identity);
             }
 
-            if(m_Status.hp <= 0)
+            if (m_Status.hp <= 0)
             {
                 m_Status.hp = 0;
 
@@ -93,6 +99,8 @@ namespace GGJ2025
         {
             m_OnDeadEvent?.RemoveListener(callback);
         }
+
+        
 
         #endregion
     }

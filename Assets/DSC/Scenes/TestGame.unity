@@ -1100,6 +1100,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
+      propertyPath: m_AIPrefabs.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_EnemyPrefabs.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -1112,8 +1116,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8997323929155471417, guid: 76c3e00e1f3641b4d808034c2b8695af, type: 3}
     - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
+      propertyPath: m_OnSpawnAI.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_OnSpawnEnemy.m_PersistentCalls.m_Calls.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
+      propertyPath: m_OnSpawnAI.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7275585436522311576, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_LocalPosition.x

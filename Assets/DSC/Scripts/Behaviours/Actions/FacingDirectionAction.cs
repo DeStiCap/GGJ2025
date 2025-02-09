@@ -14,26 +14,19 @@ namespace GGJ2025
         id: "8bcd74443e8dd38282c282ca92c996a8")]
     public partial class FacingDirectionAction : Action
     {
-        [SerializeReference] public BlackboardVariable<SpriteRenderer> Agent;
+        [SerializeReference] public BlackboardVariable<Transform> Agent;
         [SerializeReference] public BlackboardVariable<Vector2> Direction;
 
         protected override Status OnStart()
         {
             if(Agent.ObjectValue == null)
             {
-                LogFailure("No agent SpriteRenderer assigned.");
+                LogFailure("No agent assigned.");
                 return Status.Failure;
             }
 
-            if(Direction.Value.x > 0)
-            {
-                Agent.Value.flipX = true;
-            }
-            else if(Direction.Value.x < 0)
-            {
-                Agent.Value.flipX = false;
-            }
-            
+            Agent.Value.FacingDirection(Direction.Value);
+
             return Status.Success;
         }
     }

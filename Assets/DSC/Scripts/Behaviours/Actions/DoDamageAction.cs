@@ -16,6 +16,7 @@ namespace GGJ2025
     {
         [SerializeReference] public BlackboardVariable<float> Damage;
         [SerializeReference] public BlackboardVariable<GameObject> Target;
+        [SerializeReference] public BlackboardVariable<GameObject> DamageParticle;
 
         protected override Status OnStart()
         {
@@ -31,8 +32,9 @@ namespace GGJ2025
                 LogFailure("Can't do damage to this target");
                 return Status.Failure;
             }
-            
-            damageable.TakeDamage(Damage.Value);
+
+            GameObject damageParticle = DamageParticle != null ? DamageParticle.Value : null;
+            damageable.TakeDamage(Damage.Value, damageParticle);
             
             return Status.Success;
         }

@@ -27,8 +27,8 @@ namespace GGJ2025
                 return Status.Failure;
             }
 
-            float centerX = (AreaRangeX.Value.x + AreaRangeX.Value.y) * 0.5f;
-            float centerY = (AreaRangeY.Value.x + AreaRangeY.Value.y) * 0.5f;
+            float centerX = AreaRangeX.Value.x + (AreaRangeX.Value.y - AreaRangeX.Value.x) * 0.5f;
+            float centerY = AreaRangeY.Value.x + (AreaRangeY.Value.y - AreaRangeY.Value.x) * 0.5f;
 
             Vector2 position = Target.Value.position;
             var center = new Vector2(centerX, centerY);

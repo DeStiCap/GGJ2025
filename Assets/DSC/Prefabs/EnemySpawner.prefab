@@ -45,10 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b80c64c2dcc0b439531478342784ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EnemyPrefabs:
-  - {fileID: 497028632918206495, guid: 5f9799c9b5b22d54bb67a68680263c32, type: 3}
-  - {fileID: 818224165109555161, guid: 39246083693fcea4baf1516ccd39b68d, type: 3}
-  - {fileID: 8997323929155471417, guid: 76c3e00e1f3641b4d808034c2b8695af, type: 3}
+  m_EnemyPrefabs: []
+  m_AIPrefabs:
+  - {fileID: 1008738542508851780, guid: eaef3f2ce8aa168488fdca52a73b0acc, type: 3}
+  - {fileID: 4100496960222379038, guid: 138420cc04a7b3a4ab57f6794ec1edf0, type: 3}
+  - {fileID: 8431770855489296667, guid: 60bf56e93476a8e43bc7d9d35b09ac2c, type: 3}
   m_SpawnCountPerRound: 10
   m_InitSpawn: 1
   m_RandomAreaSize: {x: 1, y: 1}
@@ -56,10 +57,13 @@ MonoBehaviour:
   m_LoopSpawn: 0
   m_OnSpawnEnemy:
     m_PersistentCalls:
+      m_Calls: []
+  m_OnSpawnAI:
+    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9110639671282009978}
         m_TargetAssemblyTypeName: GGJ2025.EnemyGroupController, Assembly-CSharp
-        m_MethodName: OnEnemySpawn
+        m_MethodName: OnAISpawn
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -83,3 +87,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PatrolOffsetLimitX: {x: -4, y: 4}
   m_PatrolOffsetLimitY: {x: -4, y: 4}
+  m_RegisterGroupCount: 1
