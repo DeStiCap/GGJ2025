@@ -20,7 +20,7 @@ namespace GGJ2025
 
         protected override Status OnStart()
         {
-            if(Target.ObjectValue == null)
+            if(Target.Value == null)
             {
                 LogFailure("No target assigned for do damage.");
                 return Status.Failure;

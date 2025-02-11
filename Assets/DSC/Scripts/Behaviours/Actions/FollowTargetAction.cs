@@ -23,13 +23,13 @@ namespace GGJ2025
 
         protected override Status OnStart()
         {
-            if(Agent.ObjectValue == null)
+            if(Agent.Value == null)
             {
                 LogFailure("No rigidbody2D in agent to assigned.");
                 return Status.Failure;
             }
 
-            if(Target.ObjectValue == null)
+            if(Target.Value == null)
             {
                 LogFailure("No target assigned.");
                 return Status.Failure;
@@ -41,7 +41,7 @@ namespace GGJ2025
 
         protected override Status OnUpdate()
         {
-            if(Target.ObjectValue == null)
+            if(Target.Value == null)
             {
                 return Status.Failure;
             }

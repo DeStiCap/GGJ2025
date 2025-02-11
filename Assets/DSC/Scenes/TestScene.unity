@@ -181,8 +181,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_EnemyPrefabs: []
   m_AIPrefabs:
-  - {fileID: 8431770855489296667, guid: 60bf56e93476a8e43bc7d9d35b09ac2c, type: 3}
-  m_SpawnCountPerRound: 5
+  - {fileID: 5515964680987663542, guid: 0543606ff4787ef46a3943e4831876a3, type: 3}
+  m_SpawnCountPerRound: 1
   m_InitSpawn: 1
   m_RandomAreaSize: {x: 0, y: 0}
   m_LoopDelay: {x: 0, y: 0}

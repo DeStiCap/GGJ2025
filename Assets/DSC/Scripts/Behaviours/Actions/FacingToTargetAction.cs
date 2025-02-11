@@ -20,7 +20,7 @@ namespace GGJ2025
 
         protected override Status OnStart()
         {
-            if(Agent == null || Agent.ObjectValue == null)
+            if(Agent == null || Agent.Value == null)
             {
                 LogFailure("No agent assigned.");
                 return Status.Failure;
@@ -32,7 +32,7 @@ namespace GGJ2025
                 return Status.Failure;
             }
 
-            if(Target.ObjectValue == null)
+            if(Target.Value == null)
             {
                 return Status.Success;
             }

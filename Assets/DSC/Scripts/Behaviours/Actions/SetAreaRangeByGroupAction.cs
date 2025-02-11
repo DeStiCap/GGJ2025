@@ -21,7 +21,7 @@ namespace GGJ2025
 
         protected override Status OnStart()
         {
-            if(AIGroupMB == null || AIGroupMB.ObjectValue == null)
+            if(AIGroupMB == null || AIGroupMB.Value == null)
             {
                 return Status.Success;
             }

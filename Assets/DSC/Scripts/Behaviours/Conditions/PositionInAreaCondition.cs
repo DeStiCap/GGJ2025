@@ -18,7 +18,7 @@ namespace GGJ2025
 
         public override bool IsTrue()
         {
-            if(Target.ObjectValue == null)
+            if(Target.Value == null)
             {                
                 return false;
             }

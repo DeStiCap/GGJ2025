@@ -23,7 +23,7 @@ namespace GGJ2025
 
         protected override Status OnStart()
         {
-            if (Agent.ObjectValue == null)
+            if (Agent.Value == null)
             {
                 LogFailure("No agent rigidbody2D assigned.");
                 return Status.Failure;

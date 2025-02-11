@@ -8,31 +8,30 @@ namespace GGJ2025
 {
     [Serializable, GeneratePropertyBag]
     [NodeDescription(
-        name: "Set Direction to Target", 
-        story: "Set [Direction] from [Agent] to [Target]", 
+        name: "Set Parent", 
+        story: "Set [Transform] parent to [Target]", 
         category: "Action/DSC", 
-        id: "268a4caa2fdad48caf38d48089a5e771")]
-    public partial class SetDirectionToTargetAction : Action
+        id: "2d15d1de6412d1494ea7ccc9d957cd90")]
+    public partial class SetParentAction : Action
     {
-        [SerializeReference] public BlackboardVariable<Transform> Agent;
-        [SerializeReference] public BlackboardVariable<Vector2> Direction;
+        [SerializeReference] public BlackboardVariable<Transform> Transform;
         [SerializeReference] public BlackboardVariable<Transform> Target;
 
         protected override Status OnStart()
         {
-            if(Agent.Value == null)
+            if(Transform == null || Transform.Value == null)
             {
-                LogFailure("No agent assigned.");
+                LogFailure("No transform assigned.");
                 return Status.Failure;
             }
 
-            if(Target.Value == null)
+            if(Target == null || Target.Value == null)
             {
                 LogFailure("No target assigned.");
                 return Status.Failure;
             }
 
-            Direction.Value = (Target.Value.position - Agent.Value.position).normalized;
+            Transform.Value.SetParent(Target.Value);
             return Status.Success;
         }
     }
