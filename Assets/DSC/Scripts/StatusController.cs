@@ -1,3 +1,4 @@
+using Unity.Entities;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -8,27 +9,59 @@ namespace GGJ2025
     {
         #region Variable
 
-        [SerializeField] Status m_Status;
+        [SerializeField] float m_InitMaxHp = 10f;
 
         [Min(0.01f)]
         [SerializeField] float m_DamageIFrameDuration = 0.2f;
 
         [SerializeField] GameObject m_DamageParticle;
         [SerializeField] bool m_DestroyOnDeath = true;
-        [SerializeField] private GameObject m_healthBarUi;
+        [SerializeField] Slider m_HpBar;
 
         [Header("Events")]
         [SerializeField] UnityEvent<float, float> m_OnHpChanged;
         [SerializeField] UnityEvent<float> m_OnTakeDamageEvent;
         [SerializeField] UnityEvent m_OnDeadEvent;
 
-        public float currentHp { get { return m_Status.hp; } }
-        public float maxHp { get { return m_Status.maxHp; } }
+        public float currentHp
+        {
+            get
+            {
+                if (m_EntityController == null
+                    || !m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
+                    return default;
+
+                if (entityManager.TryGetComponentData(entity, out HpData hpData))
+                {
+                    return hpData.hp;
+                }
+
+                return default;
+            }
+        }
+
+        public float maxHp
+        {
+            get
+            {
+                if (m_EntityController == null
+                    || !m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
+                    return default;
+
+                if(entityManager.TryGetComponentData(entity, out HpData hpData))
+                {
+                    return hpData.maxHp;
+                }
+
+                return default;
+            }
+        }
 
         bool m_IsDead;
 
         float m_CanTakeDamageTime;
-        Slider healthBar;
+
+        EntityController m_EntityController;
 
         #endregion
 
@@ -36,10 +69,26 @@ namespace GGJ2025
 
         private void Awake()
         {
-            m_Status.hp = m_Status.maxHp;
-            if (m_healthBarUi != null)
+            m_EntityController = GetComponent<EntityController>();
+        }
+
+        private void Start()
+        {
+
+            if (m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
             {
-                healthBar = m_healthBarUi.GetComponent<Slider>();
+                entityManager.AddComponentData(entity, new HpData
+                {
+                    hp = m_InitMaxHp,
+                    maxHp = m_InitMaxHp,
+                });
+
+
+                if (m_HpBar != null)
+                {
+                    m_HpBar.maxValue = m_InitMaxHp;
+                    m_HpBar.value = m_InitMaxHp;
+                }
             }
         }
 
@@ -50,16 +99,24 @@ namespace GGJ2025
                 || Time.time < m_CanTakeDamageTime)
                 return;
 
-            var previousHp = m_Status.hp;
 
-            m_Status.hp -= damage;
+            if (!m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
+                return;
 
-            m_OnHpChanged?.Invoke(previousHp, m_Status.hp);
+            var hpData = entityManager.GetComponentData<HpData>(entity);
 
-            if (healthBar != null)
+            
+
+            var previousHp = hpData.hp;
+
+            hpData.hp -= damage;
+
+            m_OnHpChanged?.Invoke(previousHp, hpData.hp);
+
+            if (m_HpBar != null)
             {
-                
-                healthBar.value = m_Status.hp * (healthBar.maxValue / m_Status.maxHp);
+
+                m_HpBar.value = hpData.hp;
             }
 
             m_CanTakeDamageTime = Time.time + m_DamageIFrameDuration;
@@ -70,9 +127,9 @@ namespace GGJ2025
                 Instantiate(m_DamageParticle, transform.position, Quaternion.identity);
             }
 
-            if(m_Status.hp <= 0)
+            if(hpData.hp <= 0)
             {
-                m_Status.hp = 0;
+                hpData.hp = 0;
 
                 if (m_DestroyOnDeath)
                 {
@@ -82,6 +139,8 @@ namespace GGJ2025
                 m_IsDead = true;
                 m_OnDeadEvent?.Invoke();
             }
+
+            entityManager.SetComponentData(entity, hpData);
         }
 
         public void AddOnDeadCallBack(UnityAction callback)

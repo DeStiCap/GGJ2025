@@ -1628,6 +1628,7 @@ GameObject:
   - component: {fileID: 6511530500841103917}
   - component: {fileID: 4667833962037336166}
   - component: {fileID: 3875722529204969920}
+  - component: {fileID: 3819472224522209340}
   m_Layer: 31
   m_Name: MainCharacter
   m_TagString: Player
@@ -1750,8 +1751,6 @@ MonoBehaviour:
   stunSpeedDebuff: 0.4
   randomSpeedRange: 0.6
   invulnerableTime: 5
-  maxHealth: 100
-  healthBar: {fileID: 544757443855554490}
   buffProtectStunBar: {fileID: 4927474207315766054}
   buffAtkBar: {fileID: 5922438002999669180}
   debuffDefBar: {fileID: 6303367344491781964}
@@ -1862,6 +1861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DarkMaskPrefab: {fileID: 6992522317299079736, guid: 63ea2c92605342945bef858ae4f0e5ee, type: 3}
+  m_PlayerCanvas: {fileID: 0}
 --- !u!114 &4667833962037336166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1880,6 +1880,7 @@ MonoBehaviour:
   m_DamageIFrameDuration: 0.2
   m_DamageParticle: {fileID: 1728697658925164743, guid: db7cbd2940c88aa468610f4b53ae2086, type: 3}
   m_DestroyOnDeath: 0
+  m_HpBar: {fileID: 4615193102379799888}
   m_OnHpChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1998,6 +1999,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3819472224522209340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5286601639352114984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c3ee2b2b78b3a488e33867b02b3271, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5922438002999669180
 GameObject:
   m_ObjectHideFlags: 0

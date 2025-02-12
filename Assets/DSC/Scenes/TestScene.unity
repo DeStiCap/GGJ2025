@@ -624,7 +624,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_LoopSpawn
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_LoopDelay.x
@@ -684,7 +684,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8175061691581336400, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1037,12 +1037,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6807639282900732331, guid: a30e94941ef17f1439cf942cbb221847, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7970264939092584979, guid: a30e94941ef17f1439cf942cbb221847, type: 3}
-      propertyPath: m_BehaviourTypeSO
-      value: 
-      objectReference: {fileID: 11400000, guid: 6017698162c18da4cb7c117a1f6c7dc2, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -116,7 +116,12 @@ namespace GGJ2025
             DontDestroyOnLoad(this);
         }
 
-        private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
+        private void OnDestroy()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             m_EnemyGroupCount = 0;
         }

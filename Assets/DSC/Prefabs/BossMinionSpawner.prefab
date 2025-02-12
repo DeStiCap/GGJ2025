@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
+      propertyPath: m_InitSpawn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_RandomAreaSize.x
       value: 5
       objectReference: {fileID: 0}

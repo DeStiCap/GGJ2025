@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 2141774783501989049}
   - component: {fileID: 8772048084508808051}
   - component: {fileID: 6373027599477464779}
+  - component: {fileID: 3408505514630078293}
   m_Layer: 31
   m_Name: EnemyMockup
   m_TagString: Untagged
@@ -251,13 +252,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c945e9e1e52caa419f28cb5f12da352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Status:
-    hp: 0
-    maxHp: 5
+  m_InitMaxHp: 5
   m_DamageIFrameDuration: 0.2
   m_DamageParticle: {fileID: 1728697658925164743, guid: d6999ad59a145794f806fd660c5ebf21, type: 3}
   m_DestroyOnDeath: 1
-  m_healthBarUi: {fileID: 0}
+  m_HpBar: {fileID: 0}
   m_OnHpChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -279,6 +278,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3408505514630078293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5285278892559249611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c3ee2b2b78b3a488e33867b02b3271, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6649839871546056861
 GameObject:
   m_ObjectHideFlags: 0

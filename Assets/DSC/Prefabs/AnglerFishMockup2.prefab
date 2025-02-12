@@ -65,6 +65,10 @@ PrefabInstance:
       value: AnglerFishMockup2
       objectReference: {fileID: 0}
     - target: {fileID: 6373027599477464779, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
+      propertyPath: m_InitMaxHp
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6373027599477464779, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
       propertyPath: m_Status.maxHp
       value: 3
       objectReference: {fileID: 0}

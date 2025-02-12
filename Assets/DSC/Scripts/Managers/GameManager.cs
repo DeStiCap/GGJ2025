@@ -1,5 +1,7 @@
 using UnityEngine;
 using System;
+using Unity.Entities;
+using UnityEngine.SceneManagement;
 
 namespace GGJ2025
 {
@@ -50,7 +52,7 @@ namespace GGJ2025
         Action m_OnGameOver;
 
         Action m_OnGameWin;
-        
+
         #endregion
 
         #region Main
@@ -78,7 +80,30 @@ namespace GGJ2025
                 return;
             }
 
+            SceneManager.sceneLoaded += OnSceneLoaded;
             DontDestroyOnLoad(this);
+        }
+
+        private void OnDestroy()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+
+        }
+
+        public static bool TryGetEntityManager(out EntityManager entityManager)
+        {
+            if(World.DefaultGameObjectInjectionWorld == null)
+            {
+                entityManager = default;
+                return false;
+            }
+
+            entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+            return true;
         }
 
         public static void GameWin()
