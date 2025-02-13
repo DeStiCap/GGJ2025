@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace GGJ2025
 {
-    public enum EnemyAIState
+    public enum AIState
     {
         Patrol,
         Alert,

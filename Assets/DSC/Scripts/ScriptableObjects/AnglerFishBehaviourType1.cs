@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Entities;
 using UnityEngine;
 
 namespace GGJ2025
@@ -42,7 +43,7 @@ namespace GGJ2025
 
             enemy.ChangeBehaviourData(new AnglerFishTypeData());
 
-            enemy.ChangeAIState(EnemyAIState.Chase);
+            enemy.ChangeAIState(AIState.Chase);
         }
 
         public override void UpdateBehaviour(EnemyController enemy)
@@ -55,7 +56,7 @@ namespace GGJ2025
 
             switch (enemy.aiState)
             {
-                case EnemyAIState.Patrol:
+                case AIState.Patrol:
                     if (!enemy.hasBehaviourCoroutine)
                     {
                         
@@ -63,6 +64,32 @@ namespace GGJ2025
                         behaviourData.moveStartTime = Time.time;
                         behaviourData.moveEndTime = Time.time + m_PatrolMoveCurve.keys[m_PatrolMoveCurve.length - 1].time;
                         var direction = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
+
+                        if(enemy.entityController != null
+                            && enemy.entityController.TryGetEntity(out Entity entity, out EntityManager entityManager)
+                            && entityManager.TryGetComponentData(entity, out AIGroupData groupData))
+                        {
+                            var groupEntity = groupData.groupEntity;
+                            if (groupEntity != Entity.Null
+                                && entityManager.TryGetComponentData(groupEntity, out PositionData positionData)
+                                && entityManager.TryGetComponentData(groupEntity, out AreaRangeData areaRangeData))
+                            {
+                                Vector3 position = enemy.transform.position;
+                                Vector2 limit = positionData.value;
+                                Vector2 limitX = new Vector2(limit.x - areaRangeData.value.x, limit.x + areaRangeData.value.x);
+                                Vector2 limitY = new Vector2(limit.y - areaRangeData.value.y, limit.y + areaRangeData.value.y);
+
+                                if(position.x < limitX.x
+                                    || position.x > limitX.y
+                                    || position.y < limitY.x
+                                    || position.y > limitY.y)
+                                {
+                                    direction = (limit - (Vector2)position).normalized;
+                                }
+                                
+                            }
+                        }
+                        
 
                         behaviourData.direction = direction;
 
@@ -72,7 +99,7 @@ namespace GGJ2025
                     }
                     break;
 
-                case EnemyAIState.Chase:
+                case AIState.Chase:
                     if (!enemy.hasBehaviourCoroutine)
                     {
                         behaviourData.endAttackPatternTime = Time.time + 3f;
@@ -117,7 +144,7 @@ namespace GGJ2025
                 {
                     var move = behaviourData.direction * m_PatrolMoveCurve.Evaluate(Time.time - behaviourData.moveStartTime) * enemy.moveSpeed * Time.fixedDeltaTime;
 
-                    enemy.MoveLimit(move);
+                    enemy.Move(move);
                                    
 
                     if (Time.time >= behaviourData.searchNextTime)
@@ -127,7 +154,7 @@ namespace GGJ2025
                         if (EnemyManager.TrySearchPlayerNearby(enemy.transform.position, enemy.searchDistance, out var player))
                         {
                             enemy.SetTarget(player);
-                            enemy.ChangeAIState(EnemyAIState.Chase);
+                            enemy.ChangeAIState(AIState.Chase);
                             enemy.StopBehaviourCoroutine();
                             break;
                         }
@@ -149,10 +176,11 @@ namespace GGJ2025
         {
             do
             {
-                if(enemy.target == null
+                if(!enemy.hasTarget
                     || enemy.IsTargetOutOfRange())
                 {
-                    enemy.ChangeAIState(EnemyAIState.Patrol);
+                    enemy.SetTarget(null);
+                    enemy.ChangeAIState(AIState.Patrol);
                     enemy.StopBehaviourCoroutine();
                     break;
                 }
@@ -169,7 +197,7 @@ namespace GGJ2025
 
         void AttackPattern(EnemyController enemy, AnglerFishTypeData behaviourData)
         {
-            var direction = (enemy.target.position - enemy.transform.position).normalized;
+            var direction = (enemy.targetPosition.ToVector3() - enemy.transform.position).normalized;
             var move = direction * enemy.moveSpeed * Time.fixedDeltaTime;
 
             enemy.Move(move);

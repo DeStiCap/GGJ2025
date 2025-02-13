@@ -7,5 +7,8 @@ namespace GGJ2025
     {
         public GameObject gameObject;
         public EntityController controller;
+
+        public Animator animator;
+        public Rigidbody2D rigidbody;
     }
 }

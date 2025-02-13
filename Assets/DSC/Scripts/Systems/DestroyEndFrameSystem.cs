@@ -1,9 +1,11 @@
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
 namespace GGJ2025
 {
+    [BurstCompile]
     [UpdateInGroup(typeof(LateSimulationSystemGroup))]
     public partial struct DestroyEndFrameSystem : ISystem
     {

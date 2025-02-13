@@ -1,5 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
+using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace GGJ2025
@@ -8,16 +10,34 @@ namespace GGJ2025
     {
         #region Variable
 
-        [SerializeField] Vector2 m_PatrolOffsetLimitX = new Vector2(-1,1);
-        [SerializeField] Vector2 m_PatrolOffsetLimitY = new Vector2(-1,1);
+        [SerializeField] Vector2 m_AreaRange = new Vector2(1, 1);
 
         [SerializeField] bool m_RegisterGroupCount = true;
 
         List<EnemyController> m_EnemyList = new List<EnemyController>();
 
+        EntityController m_EntityController;
+
         #endregion
 
         #region Main
+
+        private void Awake()
+        {
+            m_EntityController = GetComponent<EntityController>();
+        }
+
+        private void Start()
+        {
+            if(m_EntityController != null
+                && m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
+            {
+                entityManager.AddComponentData(entity, new AreaRangeData
+                {
+                    value = m_AreaRange
+                });
+            }
+        }
 
         public void OnEnemySpawn(EnemyController enemy)
         {
@@ -27,11 +47,6 @@ namespace GGJ2025
             }
 
             m_EnemyList.Add(enemy);
-
-            var limitX = new Vector2(transform.position.x + m_PatrolOffsetLimitX.x, transform.position.x + m_PatrolOffsetLimitX.y);
-            var limitY = new Vector2(transform.position.y + m_PatrolOffsetLimitY.x, transform.position.y + m_PatrolOffsetLimitY.y);
-
-            enemy.SetPatrolLimit(limitX, limitY);
 
             enemy.RegisterGroup(this);
         }

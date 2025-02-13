@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using System;
+using Unity.Entities;
+using Unity.Mathematics;
 
 namespace GGJ2025
 {
@@ -9,37 +11,142 @@ namespace GGJ2025
         #region Variable
 
         [SerializeField] Animator m_Animator;
+
         [Min(0)]
-        [SerializeField] float m_MoveSpeed = 5f;
+        [SerializeField] float m_InitMoveSpeed = 5f;
 
         [Min(0.01f)]
-        [SerializeField] float m_SearchDistance = 15f;
+        [SerializeField] float m_InitDetectRange = 15f;
 
         [Min(0.01f)]
-        [SerializeField] float m_GiveUpDistance = 40f;
+        [SerializeField] float m_InitGiveUpRange = 30f;
 
         [SerializeField] EnemyBehaviourSO m_BehaviourTypeSO;
 
         [SerializeField] SpriteRenderer m_SpriteRenderer;
 
-        [SerializeField] EnemyAIState m_AIState;
+        [SerializeField] AIState m_InitAIState;
 
-        public float moveSpeed { get { return m_MoveSpeed; } }
+        public float moveSpeed
+        {
+            get
+            {
+                if (m_EntityController == null
+                    || !m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
+                    return default;
 
-        public float searchDistance { get { return m_SearchDistance; } }
+                if(entityManager.TryGetComponentData(entity, out MoveSpeedData moveSpeedData))
+                {
+                    return moveSpeedData.value;
+                }
 
-        public float giveUpDistance { get { return m_GiveUpDistance; } }
+                return default;
+            }
+        }
 
-        public Transform target { get { return m_Target; } }
+        public float searchDistance
+        {
+            get
+            {
+                if (m_EntityController == null
+                    || !m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
+                    return default;
 
-        public EnemyAIState aiState { get { return m_AIState; } }
+                if(entityManager.TryGetComponentData(entity, out DetectRangeData detectRangeData))
+                {
+                    return detectRangeData.value;
+                }
+
+                return default;
+            }
+        }
+
+        public bool hasTarget
+        {
+            get
+            {
+                if(m_EntityController != null
+                    && m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager)
+                    && entityManager.TryGetComponentData(entity, out TargetData targetData))
+                {
+                    return targetData.value != Entity.Null;
+                }
+
+                return false;
+            }
+        }
+
+        public float2 targetPosition
+        {
+            get
+            {
+                if(m_EntityController != null
+                    && m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager)
+                    && entityManager.TryGetComponentData(entity,out TargetData targetData)
+                    && targetData.value != Entity.Null
+                    && entityManager.TryGetComponentData(targetData.value, out PositionData positionData))
+                {
+                    return positionData.value;
+                }
+
+                return default;
+            }
+        }
+
+        public AIState aiState
+        {
+            get
+            {
+                if (m_EntityController == null
+                    || !m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
+                    return default;
+
+                if(entityManager.TryGetComponentData(entity,out AIStateData aiStateData))
+                {
+                    return aiStateData.value;
+                }
+
+                return default;
+            }
+        }
 
         public bool hasBehaviourCoroutine { get { return m_BehaviourCoroutine != null; } }
 
         public BehaviourData behaviourData { get { return m_BehaviourData; } }
 
-        public Animator animator { get { return m_Animator; } }
-        public new Rigidbody2D rigidbody { get { return m_Rigidbody; } }
+        public Animator animator
+        {
+            get
+            {
+                if (m_EntityController == null
+                    || !m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
+                    return null;
+
+                if(entityManager.TryGetComponentObject(entity, out GameObjectData gameObjectData))
+                {
+                    return gameObjectData.animator;
+                }
+
+                return null;
+            }
+        }
+
+        public new Rigidbody2D rigidbody
+        {
+            get
+            {
+                if (m_EntityController == null
+                    || !m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
+                    return null;
+
+                if(entityManager.TryGetComponentObject(entity, out GameObjectData gameObjectData))
+                {
+                    return gameObjectData.rigidbody;
+                }
+
+                return null;
+            }
+        }
 
         public event Action<EnemyController, Collider2D> onTriggerEnterEvent
         {
@@ -80,13 +187,9 @@ namespace GGJ2025
             }
         }
 
-        public Vector2? patrolLimitX { get { return m_PatrolLimitX; } }
-        public Vector2? patrolLimitY { get { return m_PatrolLimitY; } }
+        public EntityController entityController { get { return m_EntityController; } }
 
         Rigidbody2D m_Rigidbody;
-       
-
-        Transform m_Target;
 
         Coroutine m_BehaviourCoroutine;
 
@@ -98,8 +201,7 @@ namespace GGJ2025
         Action<EnemyController, Collider2D> m_OnTriggerStayEvent;
         Action<EnemyController, Collider2D> m_OnTriggerExitEvent;
 
-        Vector2? m_PatrolLimitX;
-        Vector2? m_PatrolLimitY;
+        EntityController m_EntityController;
 
         #endregion
 
@@ -107,19 +209,61 @@ namespace GGJ2025
 
         private void Awake()
         {
-            m_Animator = GetComponent<Animator>();
             m_Rigidbody = GetComponent<Rigidbody2D>();
             
+            m_EntityController = GetComponent<EntityController>();
 
-            var playerGO = GameObject.FindGameObjectWithTag("Player");
-            if (playerGO)
-            {
-                m_Target = playerGO.transform;
-            }
+            
         }
 
         private void Start()
         {
+            if(m_EntityController != null
+                && m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
+            {
+                entityManager.AddComponentData(entity, new MoveData());
+
+                entityManager.AddComponentData(entity, new MoveSpeedData
+                {
+                    value = m_InitMoveSpeed,
+                });
+
+                entityManager.AddComponentData(entity, new DetectRangeData
+                {
+                    value = m_InitDetectRange,
+                });
+
+                entityManager.AddComponentData(entity, new GiveUpRangeData
+                {
+                    value = m_InitGiveUpRange,
+                });
+
+                entityManager.AddComponentData(entity, new AIStateData
+                {
+                    value = m_InitAIState,
+                });
+
+                var groupEntity = Entity.Null;
+                if (m_GroupController
+                    && m_GroupController.TryGetComponent(out EntityController entityController))
+                {
+                    groupEntity = entityController.entity;
+                }
+
+                entityManager.AddComponentData(entity, new AIGroupData
+                {
+                    groupEntity = groupEntity,
+                });
+
+                entityManager.AddComponentData(entity, new TargetData());
+
+                if(entityManager.TryGetComponentObject(entity, out GameObjectData gameObjectData))
+                {
+                    gameObjectData.animator = m_Animator;
+                    gameObjectData.rigidbody = m_Rigidbody;
+                }
+            }
+
             if (m_BehaviourTypeSO)
             {
                 m_BehaviourTypeSO.InitBehaviour(this);
@@ -146,7 +290,7 @@ namespace GGJ2025
 
         private void FixedUpdate()
         {
-            if (m_Target == null || m_BehaviourTypeSO == null)
+            if (m_BehaviourTypeSO == null)
                 return;
 
             m_BehaviourTypeSO.UpdateBehaviour(this);
@@ -172,9 +316,18 @@ namespace GGJ2025
             Destroy(gameObject);
         }
 
-        public void ChangeAIState(EnemyAIState aiState)
+        public void ChangeAIState(AIState aiState)
         {
-            m_AIState = aiState;
+            if (m_EntityController == null
+                || !m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
+                return;
+
+            if(entityManager.TryGetComponentData(entity, out AIStateData aiStateData))
+            {
+                aiStateData.value = aiState;
+
+                entityManager.SetComponentData(entity, aiStateData);
+            }
         }
 
         public void ChangeBehaviourData(BehaviourData behaviourData)
@@ -184,12 +337,12 @@ namespace GGJ2025
 
         public bool IsTargetOutOfRange()
         {
-            if (m_Target == null)
+            if (!hasTarget)
                 return true;
 
-            var distance = (m_Target.position - transform.position).sqrMagnitude;
+            var distance = (targetPosition.ToVector3() - transform.position).sqrMagnitude;
 
-            return distance > Mathf.Pow(m_GiveUpDistance, 2);
+            return distance > Mathf.Pow(m_InitGiveUpRange, 2);
         }
 
         public void StartBehaviourCoroutine(IEnumerator coroutine)
@@ -218,37 +371,43 @@ namespace GGJ2025
                 m_SpriteRenderer.flipX = false;
             }
 
-            move += m_Rigidbody.position;
-
-            m_Rigidbody.MovePosition(move);            
-        }
-
-        public void MoveLimit(Vector2 move)
-        {
-            var movePos = new Vector2(transform.position.x + move.x, transform.position.y + move.y);
-
-            movePos.x = patrolLimitX.HasValue ? Mathf.Clamp(movePos.x, patrolLimitX.Value.x, patrolLimitX.Value.y) : movePos.x;
-            movePos.y = patrolLimitY.HasValue ? Mathf.Clamp(movePos.y, patrolLimitY.Value.x, patrolLimitY.Value.y) : movePos.y;
-
-            move = new Vector2(movePos.x - transform.position.x, movePos.y - transform.position.y);
-
-            Move(move);
+            if(m_EntityController != null
+                && m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
+            {
+                if(entityManager.TryGetComponentData(entity, out MoveData moveData))
+                {
+                    moveData.value = move;
+                    entityManager.SetComponentData(entity, moveData);
+                    entityManager.AddComponentData(entity, new MoveTag());
+                }
+            }  
         }
 
         public void SetTarget(Transform target)
         {
-            m_Target = target;
+            if(m_EntityController != null
+                && m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager)
+                && entityManager.TryGetComponentData(entity, out TargetData targetData))
+            {
+                if(target != null)
+                {
+                    if(target.TryGetComponent(out EntityController entityController))
+                    {
+                        targetData.value = entityController.entity;                        
+                    }
+                }
+                else
+                {
+                    targetData.value = Entity.Null;
+                }
+
+                entityManager.SetComponentData(entity, targetData);
+            }
         }
 
         public void RegisterGroup(EnemyGroupController group)
         {
             m_GroupController = group;
-        }
-
-        public void SetPatrolLimit(Vector2 limitX, Vector2 limitY)
-        {
-            m_PatrolLimitX = limitX;
-            m_PatrolLimitY = limitY;
         }
 
         public void OnDead()

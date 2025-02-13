@@ -33,15 +33,15 @@ namespace GGJ2025
         {
             enemy.ChangeBehaviourData(new Type2Data());
 
-            enemy.ChangeAIState(EnemyAIState.Chase);        
+            enemy.ChangeAIState(AIState.Chase);        
         }
 
         public override void UpdateBehaviour(EnemyController enemy)
         {
             switch (enemy.aiState)
             {
-                case EnemyAIState.Chase:
-                    if(!enemy.hasBehaviourCoroutine && enemy.target != null)
+                case AIState.Chase:
+                    if(!enemy.hasBehaviourCoroutine && enemy.hasTarget)
                     {
                         if (!enemy.behaviourData.TryGetType(out Type2Data behaviourData))
                             return;
@@ -51,7 +51,7 @@ namespace GGJ2025
 
                         behaviourData.endAttackTime = Time.time + m_ChaseMoveDuration + m_AttackDuration;
 
-                        behaviourData.direction = (enemy.target.position - enemy.transform.position).normalized;
+                        behaviourData.direction = (enemy.targetPosition.ToVector3() - enemy.transform.position).normalized;
 
                         enemy.StartBehaviourCoroutine(ChaseBehaviourCoroutine(enemy));
                     }
@@ -75,10 +75,10 @@ namespace GGJ2025
         {
             do
             {
-                if(enemy.target == null)
+                if(!enemy.hasTarget)
                 {
                     enemy.StopBehaviourCoroutine();
-                    enemy.ChangeAIState(EnemyAIState.Patrol);
+                    enemy.ChangeAIState(AIState.Patrol);
                     break;
                 }
 

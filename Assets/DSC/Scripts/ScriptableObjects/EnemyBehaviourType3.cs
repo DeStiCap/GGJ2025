@@ -73,21 +73,21 @@ namespace GGJ2025
         {
             switch (enemy.aiState)
             {
-                case EnemyAIState.Patrol:
+                case AIState.Patrol:
                     if (!enemy.hasBehaviourCoroutine)
                     {
                         enemy.StartBehaviourCoroutine(PatrolBehaviourCoroutine(enemy));
                     }
                     break;
 
-                case EnemyAIState.Chase:
+                case AIState.Chase:
                     if (!enemy.hasBehaviourCoroutine)
                     {
                         if (!enemy.behaviourData.TryGetType(out AnglerFishTypeData behaviourData))
                             break;
 
                         behaviourData.darkRayNextTime = Time.time + m_DarkRayDelay;
-                        behaviourData.direction = (enemy.target.position - enemy.transform.position).normalized;
+                        behaviourData.direction = (enemy.targetPosition.ToVector3() - enemy.transform.position).normalized;
                         behaviourData.rushAttackState = RushAttackState.Ready;
                         behaviourData.darkMask.SetActive(false);
 
@@ -118,7 +118,7 @@ namespace GGJ2025
                 if (EnemyManager.TrySearchPlayerNearby(enemy.transform.position, enemy.searchDistance, out var player))
                 {
                     enemy.SetTarget(player);
-                    enemy.ChangeAIState(EnemyAIState.Chase);
+                    enemy.ChangeAIState(AIState.Chase);
                     enemy.StopBehaviourCoroutine();
                     break;
                 }
@@ -130,11 +130,11 @@ namespace GGJ2025
         {
             do
             {
-                if (enemy.target == null
+                if (!enemy.hasTarget
                     || (enemy.IsTargetOutOfRange()))
                 {
                     enemy.StopBehaviourCoroutine();
-                    enemy.ChangeAIState(EnemyAIState.Patrol);
+                    enemy.ChangeAIState(AIState.Patrol);
                     break;
                 }
 
@@ -173,7 +173,7 @@ namespace GGJ2025
                                 else if (Time.time >= behaviourData.darkRushAttackAlertTime)
                                 {
                                     behaviourData.darkMask.SetActive(true);
-                                    behaviourData.direction = (enemy.target.position - enemy.transform.position).normalized;
+                                    behaviourData.direction = (enemy.targetPosition.ToVector3() - enemy.transform.position).normalized;
                                 }
                                 break;
                         }
@@ -186,7 +186,7 @@ namespace GGJ2025
 
                         behaviourData.darkRay = Instantiate(m_DarkRayPrefab, enemy.transform.position, m_DarkRayPrefab.transform.rotation);
 
-                        var direction = (enemy.target.position - enemy.transform.position).normalized;
+                        var direction = (enemy.targetPosition.ToVector3() - enemy.transform.position).normalized;
 
                         behaviourData.darkRay.SetMoveDirection(direction);
 

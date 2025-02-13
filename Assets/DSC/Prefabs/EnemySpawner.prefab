@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7275585436522311576}
   - component: {fileID: 5210486311498418531}
   - component: {fileID: 9110639671282009978}
+  - component: {fileID: 7275104736896229407}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -83,3 +84,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PatrolOffsetLimitX: {x: -4, y: 4}
   m_PatrolOffsetLimitY: {x: -4, y: 4}
+  m_AreaRange: {x: 4, y: 4}
+  m_RegisterGroupCount: 1
+--- !u!114 &7275104736896229407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8175061691581336400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17c3ee2b2b78b3a488e33867b02b3271, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

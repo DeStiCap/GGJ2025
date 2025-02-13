@@ -121,6 +121,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8772048084508808051, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
+      propertyPath: m_InitMoveSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8772048084508808051, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
       propertyPath: m_BehaviourTypeSO
       value: 
       objectReference: {fileID: 11400000, guid: 68d4a98143e93c34dbeae23c7563dae3, type: 2}

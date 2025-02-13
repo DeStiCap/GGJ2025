@@ -6,6 +6,14 @@ namespace GGJ2025
 {
     public class EntityController : MonoBehaviour
     {
+        #region Variable
+
+        [SerializeField] PositionUpdateMode m_PositionUpdateMode = PositionUpdateMode.GameObjectToEntity;
+
+        #endregion
+
+        #region Main
+
         public Entity entity { get { return m_Entity; } }
 
         Entity m_Entity;
@@ -21,6 +29,16 @@ namespace GGJ2025
                 {
                     gameObject = gameObject,
                     controller = this,
+                });
+
+                entityManager.AddComponentData(entity, new PositionData
+                {
+                    value = (Vector2)transform.position
+                });
+
+                entityManager.AddComponentData(entity, new PositionUpdateModeData
+                {
+                    value = m_PositionUpdateMode,
                 });
             }
         }
@@ -57,5 +75,6 @@ namespace GGJ2025
             m_Entity = Entity.Null;
         }
 
+        #endregion
     }
 }

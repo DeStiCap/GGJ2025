@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Entities;
 using UnityEngine;
 
 namespace GGJ2025
@@ -40,7 +41,17 @@ namespace GGJ2025
             // Test only
             Instantiate(m_AuraParticlePrefab, enemy.transform);
 
-            enemy.ChangeAIState(EnemyAIState.Chase);
+
+            // Temp
+            var playerGO = GameObject.FindGameObjectWithTag("Player");
+            if (playerGO != null)
+            {
+                enemy.SetTarget(playerGO.transform);
+                enemy.ChangeAIState(AIState.Chase);
+            }
+            
+
+            
 
             enemy.ChangeBehaviourData(new AnglerBossData());
 
@@ -57,7 +68,7 @@ namespace GGJ2025
 
             switch (enemy.aiState)
             {
-                case EnemyAIState.Chase:
+                case AIState.Chase:
                     if (!enemy.hasBehaviourCoroutine)
                     {
                         behaviourData.nextAuraDamageTime = Time.time + m_AuraDamageInterval;
@@ -97,9 +108,9 @@ namespace GGJ2025
         {
             do
             {
-                if(enemy.target == null)
+                if(!enemy.hasTarget)
                 {
-                    enemy.ChangeAIState(EnemyAIState.Patrol);
+                    enemy.ChangeAIState(AIState.Patrol);
                     enemy.StopBehaviourCoroutine();
                     break;
                 }
@@ -114,16 +125,22 @@ namespace GGJ2025
 
                     if (Time.time >= behaviourData.nextAuraDamageTime)
                     {
-                        if(enemy.target.TryGetComponent(out StatusController statusController))
+                        if(enemy.entityController != null
+                            && enemy.entityController.TryGetEntity(out Entity entity, out EntityManager entityManager)
+                            && entityManager.TryGetComponentData(entity, out TargetData targetData)
+                            && targetData.value != Entity.Null
+                            && entityManager.TryGetComponentData(targetData.value, out HpData hpData)
+                            && entityManager.TryGetComponentObject(targetData.value, out GameObjectData gameObjectData)
+                            && gameObjectData.gameObject.TryGetComponent(out StatusController statusController))
                         {
-
-                            var maxHp = statusController.maxHp;
+                            var maxHp = hpData.maxHp;
                             var damage = maxHp * behaviourData.nextAuraDamage / 100;
                             statusController.TakeDamage(damage);
 
                             behaviourData.nextAuraDamageTime = Time.time + m_AuraDamageInterval;
                             behaviourData.nextAuraDamage = behaviourData.nextAuraDamage + m_AuraDamageHpPer;
                         }
+   
                     }
                 }
                     
@@ -135,7 +152,7 @@ namespace GGJ2025
 
         void MovePattern(EnemyController enemy, AnglerBossData behaviourData)
         {
-            var direction = (enemy.target.position - enemy.transform.position).normalized;
+            var direction = (enemy.targetPosition.ToVector3() - enemy.transform.position).normalized;
             var move = direction * enemy.moveSpeed * Time.fixedDeltaTime;
 
             enemy.Move(move);

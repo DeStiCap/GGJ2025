@@ -14,10 +14,10 @@ namespace GGJ2025
 
         public override void UpdateBehaviour(EnemyController enemy)
         {
-            if (enemy.target == null)
+            if (!enemy.hasTarget)
                 return;
 
-            var targetPos = enemy.target.position;
+            var targetPos = enemy.targetPosition.ToVector3();
             var position = enemy.transform.position;
             
             var direction = (targetPos - position).normalized;
