@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GGJ2025
 {
-    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+    [UpdateInGroup(typeof(LateFixedUpdateSystemGroup))]
     public partial struct MoveSystem : ISystem
     {
         #region Main

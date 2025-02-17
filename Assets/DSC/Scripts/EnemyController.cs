@@ -3,6 +3,7 @@ using UnityEngine;
 using System;
 using Unity.Entities;
 using Unity.Mathematics;
+using static UnityEngine.EventSystems.EventTrigger;
 
 namespace GGJ2025
 {
@@ -52,9 +53,9 @@ namespace GGJ2025
                     || !m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
                     return default;
 
-                if(entityManager.TryGetComponentData(entity, out DetectRangeData detectRangeData))
+                if(entityManager.TryGetComponentData(entity, out DetectData detectRangeData))
                 {
-                    return detectRangeData.value;
+                    return detectRangeData.range;
                 }
 
                 return default;
@@ -228,9 +229,11 @@ namespace GGJ2025
                     value = m_InitMoveSpeed,
                 });
 
-                entityManager.AddComponentData(entity, new DetectRangeData
+                entityManager.AddComponentData(entity, new MoveDirectionData());
+
+                entityManager.AddComponentData(entity, new DetectData
                 {
-                    value = m_InitDetectRange,
+                    range = m_InitDetectRange,
                 });
 
                 entityManager.AddComponentData(entity, new GiveUpRangeData
@@ -327,6 +330,8 @@ namespace GGJ2025
                 aiStateData.value = aiState;
 
                 entityManager.SetComponentData(entity, aiStateData);
+
+                entityManager.AddComponentData(entity, new AIMoveStartTag());
             }
         }
 
@@ -358,6 +363,24 @@ namespace GGJ2025
             m_BehaviourTypeSO.OnStopCoroutine(this);
             StopCoroutine(m_BehaviourCoroutine);
             m_BehaviourCoroutine = null;
+        }
+
+        public void StopBehaviourCoroutine(EntityCommandBuffer ecb)
+        {
+            var cooldownTime = Time.time + UnityEngine.Random.Range(0.25f, 1f);
+
+            if (m_EntityController != null
+                && m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager)
+                && entityManager.TryGetComponentData(entity, out MoveCooldownData moveCooldownData))
+            {
+                moveCooldownData.endTime = cooldownTime;
+
+                ecb.RemoveComponent<AIMoveTag>(entity);
+                ecb.AddComponent(entity, new MoveCooldownTag());
+                ecb.SetComponent(entity, moveCooldownData);
+            }
+
+            StopBehaviourCoroutine();
         }
 
         public void Move(Vector2 move)
@@ -415,6 +438,18 @@ namespace GGJ2025
             if (m_GroupController)
             {
                 m_GroupController.EnemyDead(this);
+            }
+        }
+
+        public void FlipCharacter(bool toRight)
+        {
+            if (toRight)
+            {
+                m_SpriteRenderer.flipX = true;
+            }
+            else if (!toRight)
+            {
+                m_SpriteRenderer.flipX = false;
             }
         }
 

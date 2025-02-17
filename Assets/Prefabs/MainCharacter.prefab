@@ -1629,6 +1629,7 @@ GameObject:
   - component: {fileID: 4667833962037336166}
   - component: {fileID: 3875722529204969920}
   - component: {fileID: 3819472224522209340}
+  - component: {fileID: 2433333044333982033}
   m_Layer: 31
   m_Name: MainCharacter
   m_TagString: Player
@@ -1874,9 +1875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c945e9e1e52caa419f28cb5f12da352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Status:
-    hp: 0
-    maxHp: 10
+  m_InitMaxHp: 10
   m_DamageIFrameDuration: 0.2
   m_DamageParticle: {fileID: 1728697658925164743, guid: db7cbd2940c88aa468610f4b53ae2086, type: 3}
   m_DestroyOnDeath: 0
@@ -2009,6 +2008,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17c3ee2b2b78b3a488e33867b02b3271, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PositionUpdateMode: 1
+--- !u!114 &2433333044333982033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5286601639352114984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62dfeacc082b6c746b09a7b24f762034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &5922438002999669180
