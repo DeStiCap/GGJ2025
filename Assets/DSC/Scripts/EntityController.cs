@@ -9,6 +9,7 @@ namespace GGJ2025
         #region Variable
 
         [SerializeField] PositionUpdateMode m_PositionUpdateMode = PositionUpdateMode.GameObjectToEntity;
+        [SerializeField] EntityInitSO[] m_EntityInits;
 
         #endregion
 
@@ -40,6 +41,17 @@ namespace GGJ2025
                 {
                     value = m_PositionUpdateMode,
                 });
+
+                if(m_EntityInits != null)
+                {
+                    foreach(var entityInit in m_EntityInits)
+                    {
+                        if (entityInit == null)
+                            continue;
+
+                        entityInit.Init(entity, entityManager);
+                    }
+                }
             }
         }
 

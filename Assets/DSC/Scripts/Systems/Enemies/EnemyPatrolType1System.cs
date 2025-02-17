@@ -58,15 +58,6 @@ namespace GGJ2025
 
                     ecb.AddComponent(entity, new MoveTag());
                 }
-
-                if(time >= moveTimeData.ValueRO.endTime)
-                {
-                    if(gameObjectData.gameObject != null
-                        && gameObjectData.gameObject.TryGetComponent(out EnemyController enemyController))
-                    {
-                        enemyController.StopBehaviourCoroutine(ecb);
-                    }
-                }
             }
 
             ecb.Playback(state.EntityManager);

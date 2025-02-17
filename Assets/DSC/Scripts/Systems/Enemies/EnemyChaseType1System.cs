@@ -19,7 +19,6 @@ namespace GGJ2025
 
                 ComponentType.ReadOnly<PositionData>(),
                 ComponentType.ReadOnly<MoveSpeedData>(),
-                ComponentType.ReadOnly<MoveTimeData>(),
                 ComponentType.ReadOnly<TargetData>(),
                 ComponentType.ReadWrite<MoveData>(),
 
@@ -37,8 +36,8 @@ namespace GGJ2025
 
             var ecb = new EntityCommandBuffer(Allocator.Temp);
 
-            foreach(var (gameObjectData, moveData, moveSpeedData, moveTimeData, targetData, positionData, entity) 
-                in SystemAPI.Query<GameObjectData, RefRW<MoveData>, RefRO<MoveSpeedData>, RefRO<MoveTimeData>, RefRO<TargetData>, RefRO<PositionData>>()
+            foreach(var (gameObjectData, moveData, moveSpeedData, targetData, positionData, entity) 
+                in SystemAPI.Query<GameObjectData, RefRW<MoveData>, RefRO<MoveSpeedData>, RefRO<TargetData>, RefRO<PositionData>>()
                 .WithAll<EnemyChaseType1Tag, AIMoveTag>()
                 .WithEntityAccess())
             {
@@ -52,13 +51,6 @@ namespace GGJ2025
                 moveData.ValueRW.value = direction * moveSpeedData.ValueRO.value * deltaTime;
 
                 ecb.AddComponent<MoveTag>(entity);
-
-                if(time >= moveTimeData.ValueRO.endTime
-                    && gameObjectData.gameObject != null
-                    && gameObjectData.gameObject.TryGetComponent(out EnemyController enemyController))
-                {
-                    enemyController.StopBehaviourCoroutine(ecb);
-                }
             }
 
             ecb.Playback(state.EntityManager);
