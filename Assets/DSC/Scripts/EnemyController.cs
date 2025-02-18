@@ -385,25 +385,7 @@ namespace GGJ2025
 
         public void Move(Vector2 move)
         {
-            if (move.x > 0)
-            {
-                m_SpriteRenderer.flipX = true;
-            }
-            else if (move.x < 0)
-            {
-                m_SpriteRenderer.flipX = false;
-            }
 
-            if(m_EntityController != null
-                && m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
-            {
-                if(entityManager.TryGetComponentData(entity, out MoveData moveData))
-                {
-                    moveData.value = move;
-                    entityManager.SetComponentData(entity, moveData);
-                    entityManager.AddComponentData(entity, new MoveTag());
-                }
-            }  
         }
 
         public void SetTarget(Transform target)

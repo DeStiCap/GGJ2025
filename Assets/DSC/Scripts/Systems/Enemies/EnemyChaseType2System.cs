@@ -65,7 +65,6 @@ namespace GGJ2025
 
                 moveData.value = moveDirectionData.value * chargeAttackData.chargeSpeed * fixedDeltaTime;
                 ecb.SetComponent(entity, moveData);
-                ecb.AddComponent(entity, new MoveTag());
             }
 
 

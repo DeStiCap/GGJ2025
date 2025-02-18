@@ -15,8 +15,7 @@ namespace GGJ2025
         public void OnCreate(ref SystemState state)
         {
             m_Query = state.GetEntityQuery(
-                ComponentType.ReadOnly<MoveData>(), 
-                ComponentType.ReadOnly<MoveTag>(),
+                ComponentType.ReadWrite<MoveData>(), 
                 ComponentType.ReadOnly<GameObjectData>());
         }
 
@@ -27,17 +26,22 @@ namespace GGJ2025
 
             var ecb = new EntityCommandBuffer(Allocator.Temp);
 
-            foreach(var (gameObjectData, moveData, entity) in SystemAPI.Query<GameObjectData, RefRO<MoveData>>().WithAll<MoveTag>().WithEntityAccess())
-            {
-                ecb.RemoveComponent<MoveTag>(entity);
+            foreach(var (gameObjectData, moveData, entity) in SystemAPI.Query<GameObjectData, RefRW<MoveData>>()
+                .WithEntityAccess())
+            {                
+                var move = moveData.ValueRO.value;
+                if (math.all(move == float2.zero))
+                    continue;
+
+                moveData.ValueRW.value = float2.zero;
 
                 var rigidbody = gameObjectData.rigidbody;
                 if (rigidbody == null)
                     continue;
 
-                Vector2 move = moveData.ValueRO.value;
-                move += rigidbody.position;
+                move += (float2)rigidbody.position;
                 rigidbody.MovePosition(move);
+                
             }
 
             ecb.Playback(state.EntityManager);

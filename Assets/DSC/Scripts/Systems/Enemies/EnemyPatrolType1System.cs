@@ -40,8 +40,6 @@ namespace GGJ2025
             float time = Time.time;
             float fixedDeltaTime = Time.fixedDeltaTime;
 
-            var ecb = new EntityCommandBuffer(Allocator.Temp);
-
             foreach(var (gameObjectData, moveCurveData, moveData, aiState, moveDirectionData, moveSpeedData, moveTimeData, entity)
                 in SystemAPI.Query<GameObjectData, MoveCurveData, RefRW<MoveData>, RefRO<AIStateData>, RefRO<MoveDirectionData>, RefRO<MoveSpeedData>, RefRO<MoveTimeData>>()
                 .WithAll<EnemyPatrolType1Tag, AIMoveTag>()
@@ -56,12 +54,8 @@ namespace GGJ2025
                     moveData.ValueRW.value = moveDirectionData.ValueRO.value * moveCurveData.value.Evaluate(time - moveTimeData.ValueRO.startTime) * moveSpeedData.ValueRO.value * fixedDeltaTime;
 
 
-                    ecb.AddComponent(entity, new MoveTag());
                 }
             }
-
-            ecb.Playback(state.EntityManager);
-            ecb.Dispose();
         }
 
         #endregion
