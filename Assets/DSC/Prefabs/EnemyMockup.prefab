@@ -234,12 +234,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Animator: {fileID: 4181345100855503001}
-  m_MoveSpeed: 5
-  m_SearchDistance: 15
-  m_GiveUpDistance: 30
+  m_InitMoveSpeed: 5
+  m_InitDetectRange: 15
+  m_InitGiveUpRange: 30
   m_BehaviourTypeSO: {fileID: 11400000, guid: 092812c8ebe091e4b9b514414b83d8d0, type: 2}
   m_SpriteRenderer: {fileID: 1536454710437960452}
-  m_AIState: 0
+  m_InitAIState: 1
 --- !u!114 &6373027599477464779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,6 +290,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17c3ee2b2b78b3a488e33867b02b3271, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_PositionUpdateMode: 1
+  m_EntityInits: []
 --- !u!1 &6649839871546056861
 GameObject:
   m_ObjectHideFlags: 0

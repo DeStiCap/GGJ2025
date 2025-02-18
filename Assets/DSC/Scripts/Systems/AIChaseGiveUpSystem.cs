@@ -7,6 +7,7 @@ using UnityEngine;
 namespace GGJ2025
 {
     [BurstCompile]
+    [UpdateInGroup(typeof(UpdateSystemGroup))]
     public partial struct AIChaseGiveUpSystem : ISystem
     {
         public void OnUpdate(ref SystemState state)
@@ -50,7 +51,7 @@ namespace GGJ2025
                 if(distanceSq > math.mul(giveUpRange, giveUpRange))
                 {
                     targetData.value = Entity.Null;
-                    aiStateData.value = AIState.Patrol;
+                    aiStateData.nextValue = AIState.Patrol;
 
                     ecb.SetComponent(entity, targetData);
                     ecb.SetComponent(entity, aiStateData);

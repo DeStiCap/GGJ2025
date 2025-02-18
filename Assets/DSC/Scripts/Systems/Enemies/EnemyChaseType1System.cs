@@ -1,42 +1,26 @@
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
 namespace GGJ2025
 {
+    [BurstCompile]
     [UpdateInGroup(typeof(AIUpdateSystemGroup))]
     public partial struct EnemyChaseType1System : ISystem
     {
-        #region Main
-
-        EntityQuery m_Query;
-
-        public void OnCreate(ref SystemState state)
-        {
-            m_Query = state.GetEntityQuery(
-                ComponentType.ReadOnly<EnemyChaseType1Tag>(),
-                ComponentType.ReadOnly<AIMoveTag>(),
-
-                ComponentType.ReadOnly<PositionData>(),
-                ComponentType.ReadOnly<MoveSpeedData>(),
-                ComponentType.ReadOnly<TargetData>(),
-                ComponentType.ReadWrite<MoveData>(),
-
-                
-                ComponentType.ReadOnly<GameObjectData>());
-        }
-
         public void OnUpdate(ref SystemState state)
         {
-            if (m_Query.CalculateEntityCount() <= 0)
-                return;
-
             float time = Time.time;
             var deltaTime = Time.fixedDeltaTime;
 
-            foreach(var (gameObjectData, moveData, moveSpeedData, targetData, positionData, entity) 
-                in SystemAPI.Query<GameObjectData, RefRW<MoveData>, RefRO<MoveSpeedData>, RefRO<TargetData>, RefRO<PositionData>>()
-                .WithAll<EnemyChaseType1Tag, AIMoveTag>()
+            foreach(var (
+                moveData, 
+                moveSpeedData, targetData, positionData, entity) 
+                in SystemAPI.Query<
+                    RefRW<MoveData>, 
+                    RefRO<MoveSpeedData>, RefRO<TargetData>, RefRO<PositionData>>()
+                .WithAll<EnemyChaseType1Tag, AIMoveTag, ChaseTag>()
                 .WithEntityAccess())
             {
                 var targetEntity = targetData.ValueRO.value;
@@ -51,6 +35,5 @@ namespace GGJ2025
 
         }
 
-        #endregion
     }
 }

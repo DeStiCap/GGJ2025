@@ -6,8 +6,6 @@ namespace GGJ2025
 {
     public partial struct ChangeAIStateByTargetSystem : ISystem
     {
-        #region Main
-
         EntityQuery m_Query;
 
         public void OnCreate(ref SystemState state)
@@ -39,7 +37,7 @@ namespace GGJ2025
                             && gameObjectData.gameObject != null
                             && gameObjectData.gameObject.TryGetComponent(out EnemyController enemyController))
                         {
-                            aiStateData.ValueRW.value = AIState.Chase;
+                            aiStateData.ValueRW.nextValue = AIState.Chase;
                             ecb.AddComponent(entity, new AIMoveStartTag());
 
                             enemyController.StopBehaviourCoroutine();
@@ -53,7 +51,5 @@ namespace GGJ2025
 
 
         }
-
-        #endregion
     }
 }

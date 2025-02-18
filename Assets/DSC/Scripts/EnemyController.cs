@@ -243,7 +243,7 @@ namespace GGJ2025
 
                 entityManager.AddComponentData(entity, new AIStateData
                 {
-                    value = m_InitAIState,
+                    nextValue = m_InitAIState,
                 });
 
                 var groupEntity = Entity.Null;
@@ -327,7 +327,7 @@ namespace GGJ2025
 
             if(entityManager.TryGetComponentData(entity, out AIStateData aiStateData))
             {
-                aiStateData.value = aiState;
+                aiStateData.nextValue = aiState;
 
                 entityManager.SetComponentData(entity, aiStateData);
 

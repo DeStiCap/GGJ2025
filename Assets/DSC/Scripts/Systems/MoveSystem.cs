@@ -8,8 +8,6 @@ namespace GGJ2025
     [UpdateInGroup(typeof(LateFixedUpdateSystemGroup))]
     public partial struct MoveSystem : ISystem
     {
-        #region Main
-
         EntityQuery m_Query;
 
         public void OnCreate(ref SystemState state)
@@ -47,7 +45,5 @@ namespace GGJ2025
             ecb.Playback(state.EntityManager);
             ecb.Dispose();
         }
-
-        #endregion
     }
 }
