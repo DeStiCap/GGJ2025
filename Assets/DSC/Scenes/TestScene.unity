@@ -638,10 +638,6 @@ PrefabInstance:
       propertyPath: m_SpawnCountPerRound
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 5210486311498418531, guid: f365d85e1d264d44099d042afc313963, type: 3}
-      propertyPath: m_EnemyPrefabs.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7275585436522311576, guid: f365d85e1d264d44099d042afc313963, type: 3}
       propertyPath: m_LocalPosition.x
       value: 22.55

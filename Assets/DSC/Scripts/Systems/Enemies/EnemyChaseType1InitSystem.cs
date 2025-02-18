@@ -7,10 +7,8 @@ namespace GGJ2025
 {
     [BurstCompile]
     [UpdateInGroup(typeof(InitializationSystemGroup))]
-    public partial struct InitEnemyChaseType1System : ISystem
+    public partial struct EnemyChaseType1InitSystem : ISystem
     {
-        #region Main
-
         EntityQuery m_Query;
 
         public void OnCreate(ref SystemState state)
@@ -61,7 +59,5 @@ namespace GGJ2025
             moveTimeDatas.Dispose();
             aiStateDatas.Dispose();
         }
-
-        #endregion
     }
 }

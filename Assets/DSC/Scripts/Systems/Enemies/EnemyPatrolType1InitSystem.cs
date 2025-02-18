@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 namespace GGJ2025
 {
     [UpdateInGroup(typeof(InitializationSystemGroup))]
-    public partial struct InitEnemyPatrolType1System : ISystem
+    public partial struct EnemyPatrolType1InitSystem : ISystem
     {
         #region Main
 
