@@ -84,6 +84,26 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 3408505514630078293, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
+      propertyPath: m_EntityInits.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3408505514630078293, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
+      propertyPath: 'm_EntityInits.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: d8849be3af39cda4d904242a7232fab3, type: 2}
+    - target: {fileID: 3408505514630078293, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
+      propertyPath: 'm_EntityInits.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 262b1768db68c1543bf0eab337c1d760, type: 2}
+    - target: {fileID: 3408505514630078293, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
+      propertyPath: 'm_EntityInits.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: f0dcb74c42003ac429bce43ade87b9ef, type: 2}
+    - target: {fileID: 3408505514630078293, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
+      propertyPath: 'm_EntityInits.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 851c4c0519ecd484786fc6c4868c5ba8, type: 2}
     - target: {fileID: 5285278892559249611, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
       propertyPath: m_Name
       value: AnglerFishBoss

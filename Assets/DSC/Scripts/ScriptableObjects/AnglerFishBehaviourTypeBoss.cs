@@ -11,8 +11,6 @@ namespace GGJ2025
 
         [SerializeField] EnemySpawnerController m_GroupSpawner;
         [SerializeField] GameObject m_AuraParticlePrefab;
-        [SerializeField] float m_AuraDamageInterval = 10f;
-        [SerializeField] float m_AuraDamageHpPer = 5f;
 
 
         #endregion
@@ -63,23 +61,7 @@ namespace GGJ2025
 
         public override void UpdateBehaviour(EnemyController enemy)
         {
-            if (!enemy.behaviourData.TryGetType(out AnglerBossData behaviourData))
-                return;
 
-            switch (enemy.aiState)
-            {
-                case AIState.Chase:
-                    if (!enemy.hasBehaviourCoroutine)
-                    {
-                        behaviourData.nextAuraDamageTime = Time.time + m_AuraDamageInterval;
-                        behaviourData.nextAuraDamage = m_AuraDamageHpPer;
-
-                        enemy.StartBehaviourCoroutine(ChaseBehaviourCoroutine(enemy));
-                    }
-
-
-                    break;
-            }
         }
 
         public override void DestroyBehaviour(EnemyController enemy)
@@ -103,60 +85,6 @@ namespace GGJ2025
             }
         }
 
-
-        IEnumerator ChaseBehaviourCoroutine(EnemyController enemy)
-        {
-            do
-            {
-                if(!enemy.hasTarget)
-                {
-                    enemy.ChangeAIState(AIState.Patrol);
-                    enemy.StopBehaviourCoroutine();
-                    break;
-                }
-
-                if (enemy.IsTargetOutOfRange())
-                    continue;
-
-
-                if (enemy.behaviourData.TryGetType(out AnglerBossData behaviourData))
-                {
-                    MovePattern(enemy, behaviourData);
-
-                    if (Time.time >= behaviourData.nextAuraDamageTime)
-                    {
-                        if(enemy.entityController != null
-                            && enemy.entityController.TryGetEntity(out Entity entity, out EntityManager entityManager)
-                            && entityManager.TryGetComponentData(entity, out TargetData targetData)
-                            && targetData.value != Entity.Null
-                            && entityManager.TryGetComponentData(targetData.value, out HpData hpData)
-                            && entityManager.TryGetComponentObject(targetData.value, out GameObjectData gameObjectData)
-                            && gameObjectData.gameObject.TryGetComponent(out StatusController statusController))
-                        {
-                            var maxHp = hpData.maxHp;
-                            var damage = maxHp * behaviourData.nextAuraDamage / 100;
-                            statusController.TakeDamage(damage);
-
-                            behaviourData.nextAuraDamageTime = Time.time + m_AuraDamageInterval;
-                            behaviourData.nextAuraDamage = behaviourData.nextAuraDamage + m_AuraDamageHpPer;
-                        }
-   
-                    }
-                }
-                    
-
-                yield return null;
-
-            } while (enemy.hasBehaviourCoroutine);
-        }
-
-        void MovePattern(EnemyController enemy, AnglerBossData behaviourData)
-        {
-            var direction = (enemy.targetPosition.ToVector3() - enemy.transform.position).normalized;
-            var move = direction * enemy.moveSpeed * Time.fixedDeltaTime;
-
-            enemy.Move(move);
-        }
 
         void OnDead()
         {
