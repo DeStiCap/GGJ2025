@@ -291,7 +291,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PositionUpdateMode: 1
-  m_EntityInits: []
+  m_EntityInits:
+  - {fileID: 11400000, guid: d8849be3af39cda4d904242a7232fab3, type: 2}
+  - {fileID: 11400000, guid: 0fba6e1c9d0175c438e337d1d8ea6efa, type: 2}
 --- !u!1 &6649839871546056861
 GameObject:
   m_ObjectHideFlags: 0

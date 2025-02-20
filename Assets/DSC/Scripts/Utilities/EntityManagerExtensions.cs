@@ -28,5 +28,17 @@ namespace GGJ2025
             data = entityManager.GetComponentObject<T>(entity);
             return true;
         }
+
+        public static bool TryGetBuffer<T>(this EntityManager entityManager, Entity entity, out DynamicBuffer<T> buffer) where T : unmanaged, IBufferElementData
+        {
+            if (entityManager.HasBuffer<T>(entity))
+            {
+                buffer = entityManager.GetBuffer<T>(entity);
+                return true;
+            }
+
+            buffer = default;
+            return false;
+        }
     }
 }

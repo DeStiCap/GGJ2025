@@ -6,21 +6,8 @@ namespace GGJ2025
 {
     public partial struct ChangeAIStateByTargetSystem : ISystem
     {
-        EntityQuery m_Query;
-
-        public void OnCreate(ref SystemState state)
-        {
-            m_Query = state.GetEntityQuery(
-                ComponentType.ReadOnly<TargetData>(),
-                ComponentType.ReadOnly<GameObjectData>(),
-                ComponentType.ReadWrite<AIStateData>(),
-                ComponentType.Exclude<LockAIStateTag>());
-        }
-
         public void OnUpdate(ref SystemState state)
         {
-            if (m_Query.CalculateEntityCount() <= 0)
-                return;
 
             var ecb = new EntityCommandBuffer(Allocator.Temp);
 

@@ -6,23 +6,10 @@ namespace GGJ2025
 {
     [UpdateInGroup(typeof(LateFixedUpdateSystemGroup))]
     [UpdateBefore(typeof(MoveSystem))]
-    public partial struct FacingMoveDirectionSystem : ISystem
+    public partial struct FacingDirectionByMoveSystem : ISystem
     {
-        #region Main
-
-        EntityQuery m_Query;
-
-        public void OnCreate(ref SystemState state)
-        {
-            m_Query = state.GetEntityQuery(
-                ComponentType.ReadOnly<MoveData>(),
-                ComponentType.ReadOnly<GameObjectData>());
-        }
-
         public void OnUpdate(ref SystemState state)
         {
-            if (m_Query.CalculateEntityCount() <= 0)
-                return;
 
             foreach(var (gameObjectData, moveData) 
                 in SystemAPI.Query<GameObjectData, RefRO<MoveData>>())
@@ -51,6 +38,5 @@ namespace GGJ2025
             }
         }
 
-        #endregion
     }
 }

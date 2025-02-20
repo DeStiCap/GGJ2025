@@ -11,6 +11,10 @@ namespace GGJ2025
             entityManager.AddComponentData(entity, new AIMoveStartTag());
             entityManager.AddComponentData(entity, new MoveTimeData());
             entityManager.AddComponentData(entity, new MoveCooldownData());
+            entityManager.AddComponentData(entity, new FactionData
+            {
+                id = 1,
+            });
         }
     }
 }

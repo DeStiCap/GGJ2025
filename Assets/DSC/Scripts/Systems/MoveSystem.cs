@@ -8,22 +8,8 @@ namespace GGJ2025
     [UpdateInGroup(typeof(LateFixedUpdateSystemGroup))]
     public partial struct MoveSystem : ISystem
     {
-        EntityQuery m_Query;
-
-        public void OnCreate(ref SystemState state)
-        {
-            m_Query = state.GetEntityQuery(
-                ComponentType.ReadWrite<MoveData>(), 
-                ComponentType.ReadOnly<GameObjectData>());
-        }
-
         public void OnUpdate(ref SystemState state)
         {
-            if (m_Query.CalculateEntityCount() <= 0)
-                return;
-
-            var ecb = new EntityCommandBuffer(Allocator.Temp);
-
             foreach(var (gameObjectData, moveData, entity) in SystemAPI.Query<GameObjectData, RefRW<MoveData>>()
                 .WithEntityAccess())
             {                
@@ -41,9 +27,6 @@ namespace GGJ2025
                 rigidbody.MovePosition(move);
                 
             }
-
-            ecb.Playback(state.EntityManager);
-            ecb.Dispose();
         }
     }
 }

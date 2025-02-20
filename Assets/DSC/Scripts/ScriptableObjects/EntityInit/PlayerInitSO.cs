@@ -9,6 +9,10 @@ namespace GGJ2025
         public override void Init(Entity entity, EntityManager entityManager)
         {
             entityManager.AddComponentData(entity, new PlayerTag());
+            entityManager.AddComponentData(entity, new FactionData
+            {
+                id = 0,
+            });
             entityManager.AddBuffer<TakeDamageBuffer>(entity);
 
         }

@@ -12,16 +12,10 @@ namespace GGJ2025
         [SerializeField] EnemySpawnerController m_GroupSpawner;
         [SerializeField] GameObject m_AuraParticlePrefab;
 
-
         #endregion
 
         #region Data
 
-        public class AnglerBossData : BehaviourData
-        {
-            public float nextAuraDamageTime;
-            public float nextAuraDamage;
-        }
 
         #endregion
 
@@ -29,8 +23,6 @@ namespace GGJ2025
 
         public override void InitBehaviour(EnemyController enemy)
         {
-            enemy.onTriggerStayEvent += OnTriggerStayEvent;
-
             if (enemy.TryGetComponent(out StatusController statusController))
             {
                 statusController.AddOnDeadCallBack(OnDead);
@@ -38,20 +30,6 @@ namespace GGJ2025
 
             // Test only
             Instantiate(m_AuraParticlePrefab, enemy.transform);
-
-
-            // Temp
-            var playerGO = GameObject.FindGameObjectWithTag("Player");
-            if (playerGO != null)
-            {
-                enemy.SetTarget(playerGO.transform);
-                enemy.ChangeAIState(AIState.Chase);
-            }
-            
-
-            
-
-            enemy.ChangeBehaviourData(new AnglerBossData());
 
             if (m_GroupSpawner)
             {
@@ -66,25 +44,13 @@ namespace GGJ2025
 
         public override void DestroyBehaviour(EnemyController enemy)
         {
-            enemy.onTriggerStayEvent -= OnTriggerStayEvent;
+
         }
 
         public override void OnStopCoroutine(EnemyController enemy)
         {
 
         }
-
-        void OnTriggerStayEvent(EnemyController enemy, Collider2D col)
-        {
-            if (col.CompareTag("Player"))
-            {
-                if (col.TryGetComponent(out StatusController statusController))
-                {
-                    statusController.TakeDamage(3);
-                }
-            }
-        }
-
 
         void OnDead()
         {
