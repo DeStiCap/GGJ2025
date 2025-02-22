@@ -53,14 +53,6 @@ namespace GGJ2025
                     }
                 }
             }
-
-            if (TryGetComponent(out Rigidbody2D rigidbody))
-            {
-                if(!TryGetComponent(out EntityPhysicController physicController))
-                {
-                    gameObject.AddComponent<EntityPhysicController>();
-                }
-            }
         }
 
         private void OnDestroy()

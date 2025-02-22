@@ -7,15 +7,23 @@ namespace GGJ2025
     {
         #region Variable
 
-        EntityController m_EntityController;
+        [SerializeField] EntityController m_EntityController;
 
+        [SerializeField] string[] m_TriggerTags;
+
+        [SerializeField] GameObject[] m_IgnoreGO;
+
+        
         #endregion
 
         #region Main
 
         private void Awake()
         {
-            m_EntityController = GetComponent<EntityController>();
+            if (m_EntityController == null)
+            {
+                m_EntityController = GetComponent<EntityController>();
+            }
         }
 
         private void Start()
@@ -31,6 +39,11 @@ namespace GGJ2025
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (IsIgnoreTarget(collision.gameObject)
+                && !IsTargetTag(collision.gameObject))
+                return;
+
+
             if (m_EntityController != null
                 && collision.gameObject.TryGetEntity(out Entity colEntity)
                 && m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager)
@@ -42,6 +55,10 @@ namespace GGJ2025
 
         private void OnTriggerStay2D(Collider2D collision)
         {
+            if (IsIgnoreTarget(collision.gameObject)
+                && !IsTargetTag(collision.gameObject))
+                return;
+
             if (m_EntityController != null
                 && collision.gameObject.TryGetEntity(out Entity colEntity)
                 && m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager)
@@ -53,6 +70,11 @@ namespace GGJ2025
 
         private void OnTriggerExit2D(Collider2D collision)
         {
+            if (IsIgnoreTarget(collision.gameObject)
+                && !IsTargetTag(collision.gameObject))
+                return;
+
+
             if (m_EntityController != null
                 && collision.gameObject.TryGetEntity(out Entity colEntity)
                 && m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager)
@@ -60,6 +82,42 @@ namespace GGJ2025
             {
                 enterBuffer.Add(new OnTriggerExitBuffer { entity = colEntity });
             }
+        }
+
+        bool IsTargetTag(GameObject target)
+        {
+            if (m_TriggerTags == null
+                || m_TriggerTags.Length <= 0)
+                return true;
+
+            foreach(var tag in m_TriggerTags)
+            {
+                if (tag == null)
+                    continue;
+
+                if (target.CompareTag(tag))
+                {
+                    return true;
+                }
+            }
+
+
+            return false;
+        }
+
+        bool IsIgnoreTarget(GameObject target)
+        {
+            if (m_IgnoreGO == null
+                || m_IgnoreGO.Length <= 0)            
+                return false;
+            
+            foreach(var go in m_IgnoreGO)
+            {
+                if(go == target) 
+                    return true;
+            }
+
+            return false;
         }
 
         #endregion

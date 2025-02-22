@@ -1,7 +1,9 @@
+using Unity.Burst;
 using Unity.Entities;
 
 namespace GGJ2025
 {
+    [BurstCompile]
     [UpdateInGroup(typeof(UpdateSystemGroup))]
     public partial struct TriggerDamageSystem : ISystem
     {

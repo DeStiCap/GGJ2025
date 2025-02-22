@@ -10,9 +10,6 @@ namespace GGJ2025
     [UpdateInGroup(typeof(LateSimulationSystemGroup))]
     public partial struct AIMoveEndSystem : ISystem
     {
-        #region Main
-
-
         public void OnUpdate(ref SystemState state)
         {
             var query = SystemAPI.QueryBuilder()
@@ -59,7 +56,5 @@ namespace GGJ2025
             moveTimeDatas.Dispose();
             moveCooldownDatas.Dispose();
         }
-
-        #endregion
     }
 }

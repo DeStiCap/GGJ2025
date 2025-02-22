@@ -6,7 +6,6 @@ namespace GGJ2025
     [CreateAssetMenu(fileName = "EnemyChaseType2InitSO", menuName = "DSC/Entity Init/Enemy Chase Type 2")]
     public class EnemyChaseType2InitSO : EntityInitSO
     {
-
         public override void Init(Entity entity, EntityManager entityManager)
         {
             entityManager.AddComponentData(entity, new EnemyChaseType2Tag());
@@ -16,6 +15,13 @@ namespace GGJ2025
                 chargeDuration = 1f,
                 chargeSpeed = 30f,
             });
+
+            entityManager.AddComponentData(entity, new TriggerBlindData
+            {
+                duration = 2f,
+            });
+
+            entityManager.SetComponentEnabled<TriggerBlindData>(entity, false);
         }
     }
 }

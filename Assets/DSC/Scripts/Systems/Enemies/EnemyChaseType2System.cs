@@ -1,4 +1,5 @@
 using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ namespace GGJ2025
             float time = Time.time;
             float fixedDeltaTime = Time.fixedDeltaTime;
 
+            var ecb = new EntityCommandBuffer(Allocator.Temp);
 
             foreach(var (
                 moveData, moveDirectionData, 
@@ -34,11 +36,20 @@ namespace GGJ2025
                         moveDirectionData.ValueRW.value = (targetPosition - positionData.ValueRO.value).Normalize();
                     }
 
+                    ecb.AddComponent(entity, new TriggerBlindDisableTag());
+                    ecb.AddComponent(entity, new TriggerDamageEnableTag());
                     continue;
                 }
 
+                ecb.AddComponent(entity, new TriggerBlindEnableTag());
+                ecb.AddComponent(entity, new EndMoveTriggerBlindDisableTag());
+                ecb.AddComponent(entity, new TriggerDamageDisableTag());
+                ecb.AddComponent(entity, new EndMoveTriggerDamageEnableTag());
                 moveData.ValueRW.value = moveDirectionData.ValueRO.value * chargeAttackData.ValueRO.chargeSpeed * fixedDeltaTime;
             }
+
+            ecb.Playback(state.EntityManager);
+            ecb.Dispose();
 
         }
     }
