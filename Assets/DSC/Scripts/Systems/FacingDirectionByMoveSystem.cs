@@ -21,19 +21,19 @@ namespace GGJ2025
 
                 if(move.x > 0)
                 {
-                    //gameObjectData.gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
-                    if(gameObjectData.gameObject.TryGetComponent(out EnemyController enemyController))
-                    {
-                        enemyController.FlipCharacter(true);
-                    }
+                    gameObjectData.gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
+                    //if (gameObjectData.gameObject.TryGetComponent(out EnemyController enemyController))
+                    //{
+                    //    enemyController.FlipCharacter(true);
+                    //}
                 }
                 else if(move.x < 0)
                 {
-                    //gameObjectData.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
-                    if (gameObjectData.gameObject.TryGetComponent(out EnemyController enemyController))
-                    {
-                        enemyController.FlipCharacter(false);
-                    }
+                    gameObjectData.gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+                    //if (gameObjectData.gameObject.TryGetComponent(out EnemyController enemyController))
+                    //{
+                    //    enemyController.FlipCharacter(false);
+                    //}
                 }
             }
         }

@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 6373027599477464779}
   - component: {fileID: 3408505514630078293}
   m_Layer: 31
-  m_Name: EnemyMockup
+  m_Name: BaseEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -233,12 +233,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460e7c3d2ee80944cabe39d135c43b91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Animator: {fileID: 4181345100855503001}
   m_InitMoveSpeed: 5
   m_InitDetectRange: 15
   m_InitGiveUpRange: 30
-  m_BehaviourTypeSO: {fileID: 11400000, guid: 092812c8ebe091e4b9b514414b83d8d0, type: 2}
-  m_SpriteRenderer: {fileID: 1536454710437960452}
   m_InitAIState: 1
 --- !u!114 &6373027599477464779
 MonoBehaviour:
@@ -294,6 +291,8 @@ MonoBehaviour:
   m_EntityInits:
   - {fileID: 11400000, guid: d8849be3af39cda4d904242a7232fab3, type: 2}
   - {fileID: 11400000, guid: 0fba6e1c9d0175c438e337d1d8ea6efa, type: 2}
+  m_Animator: {fileID: 4181345100855503001}
+  m_Rigidbody: {fileID: 0}
 --- !u!1 &6649839871546056861
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,17 +1,11 @@
-using System.Collections;
 using UnityEngine;
-using System;
 using Unity.Entities;
-using Unity.Mathematics;
-using static UnityEngine.EventSystems.EventTrigger;
 
 namespace GGJ2025
 {
     public class EnemyController : Enemy
     {
         #region Variable
-
-        [SerializeField] Animator m_Animator;
 
         [Min(0)]
         [SerializeField] float m_InitMoveSpeed = 5f;
@@ -22,185 +16,10 @@ namespace GGJ2025
         [Min(0.01f)]
         [SerializeField] float m_InitGiveUpRange = 30f;
 
-        [SerializeField] EnemyBehaviourSO m_BehaviourTypeSO;
-
-        [SerializeField] SpriteRenderer m_SpriteRenderer;
-
         [SerializeField] AIState m_InitAIState;
 
-        public float moveSpeed
-        {
-            get
-            {
-                if (m_EntityController == null
-                    || !m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
-                    return default;
-
-                if(entityManager.TryGetComponentData(entity, out MoveSpeedData moveSpeedData))
-                {
-                    return moveSpeedData.value;
-                }
-
-                return default;
-            }
-        }
-
-        public float searchDistance
-        {
-            get
-            {
-                if (m_EntityController == null
-                    || !m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
-                    return default;
-
-                if(entityManager.TryGetComponentData(entity, out DetectData detectRangeData))
-                {
-                    return detectRangeData.range;
-                }
-
-                return default;
-            }
-        }
-
-        public bool hasTarget
-        {
-            get
-            {
-                if(m_EntityController != null
-                    && m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager)
-                    && entityManager.TryGetComponentData(entity, out TargetData targetData))
-                {
-                    return targetData.value != Entity.Null;
-                }
-
-                return false;
-            }
-        }
-
-        public float2 targetPosition
-        {
-            get
-            {
-                if(m_EntityController != null
-                    && m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager)
-                    && entityManager.TryGetComponentData(entity,out TargetData targetData)
-                    && targetData.value != Entity.Null
-                    && entityManager.TryGetComponentData(targetData.value, out PositionData positionData))
-                {
-                    return positionData.value;
-                }
-
-                return default;
-            }
-        }
-
-        public AIState aiState
-        {
-            get
-            {
-                if (m_EntityController == null
-                    || !m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
-                    return default;
-
-                if(entityManager.TryGetComponentData(entity,out AIStateData aiStateData))
-                {
-                    return aiStateData.value;
-                }
-
-                return default;
-            }
-        }
-
-        public bool hasBehaviourCoroutine { get { return m_BehaviourCoroutine != null; } }
-
-        public BehaviourData behaviourData { get { return m_BehaviourData; } }
-
-        public Animator animator
-        {
-            get
-            {
-                if (m_EntityController == null
-                    || !m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
-                    return null;
-
-                if(entityManager.TryGetComponentObject(entity, out GameObjectData gameObjectData))
-                {
-                    return gameObjectData.animator;
-                }
-
-                return null;
-            }
-        }
-
-        public new Rigidbody2D rigidbody
-        {
-            get
-            {
-                if (m_EntityController == null
-                    || !m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
-                    return null;
-
-                if(entityManager.TryGetComponentObject(entity, out GameObjectData gameObjectData))
-                {
-                    return gameObjectData.rigidbody;
-                }
-
-                return null;
-            }
-        }
-
-        public event Action<EnemyController, Collider2D> onTriggerEnterEvent
-        {
-            add
-            {
-                m_OnTriggerEnterEvent += value;
-            }
-
-            remove
-            {
-                m_OnTriggerEnterEvent -= value;
-            }
-        }
-
-        public event Action<EnemyController, Collider2D> onTriggerStayEvent
-        {
-            add
-            {
-                m_OnTriggerStayEvent += value;
-            }
-
-            remove
-            {
-                m_OnTriggerStayEvent -= value;
-            }
-        }
-        
-        public event Action<EnemyController, Collider2D> onTriggerExitEvent
-        {
-            add
-            {
-                m_OnTriggerExitEvent += value;
-            }
-
-            remove
-            {
-                m_OnTriggerExitEvent -= value;
-            }
-        }
-
-        public EntityController entityController { get { return m_EntityController; } }
-
-        Rigidbody2D m_Rigidbody;
-
-        Coroutine m_BehaviourCoroutine;
-
-        BehaviourData m_BehaviourData;
 
         EnemyGroupController m_GroupController;
-
-        Action<EnemyController, Collider2D> m_OnTriggerEnterEvent;
-        Action<EnemyController, Collider2D> m_OnTriggerStayEvent;
-        Action<EnemyController, Collider2D> m_OnTriggerExitEvent;
 
         EntityController m_EntityController;
 
@@ -210,8 +29,6 @@ namespace GGJ2025
 
         private void Awake()
         {
-            m_Rigidbody = GetComponent<Rigidbody2D>();
-            
             m_EntityController = GetComponent<EntityController>();
 
             
@@ -259,17 +76,6 @@ namespace GGJ2025
                 });
 
                 entityManager.AddComponentData(entity, new TargetData());
-
-                if(entityManager.TryGetComponentObject(entity, out GameObjectData gameObjectData))
-                {
-                    gameObjectData.animator = m_Animator;
-                    gameObjectData.rigidbody = m_Rigidbody;
-                }
-            }
-
-            if (m_BehaviourTypeSO)
-            {
-                m_BehaviourTypeSO.InitBehaviour(this);
             }
         }
 
@@ -283,131 +89,9 @@ namespace GGJ2025
             EnemyManager.onBossDead -= OnBossDead;
         }
 
-        private void OnDestroy()
-        {
-            if (m_BehaviourTypeSO)
-            {
-                m_BehaviourTypeSO.DestroyBehaviour(this);
-            }
-        }
-
-        private void FixedUpdate()
-        {
-            if (m_BehaviourTypeSO == null)
-                return;
-
-            m_BehaviourTypeSO.UpdateBehaviour(this);
-        }
-
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            m_OnTriggerEnterEvent?.Invoke(this, collision);
-        }
-
-        private void OnTriggerStay2D(Collider2D collision)
-        {
-            m_OnTriggerStayEvent?.Invoke(this, collision);
-        }
-
-        private void OnTriggerExit2D(Collider2D collision)
-        {
-            m_OnTriggerExitEvent?.Invoke(this, collision);
-        }
-
         void OnBossDead()
         {
             Destroy(gameObject);
-        }
-
-        public void ChangeAIState(AIState aiState)
-        {
-            if (m_EntityController == null
-                || !m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager))
-                return;
-
-            if(entityManager.TryGetComponentData(entity, out AIStateData aiStateData))
-            {
-                aiStateData.nextValue = aiState;
-
-                entityManager.SetComponentData(entity, aiStateData);
-
-                entityManager.AddComponentData(entity, new AIMoveStartTag());
-            }
-        }
-
-        public void ChangeBehaviourData(BehaviourData behaviourData)
-        {
-            m_BehaviourData = behaviourData;
-        }
-
-        public bool IsTargetOutOfRange()
-        {
-            if (!hasTarget)
-                return true;
-
-            var distance = (targetPosition.ToVector3() - transform.position).sqrMagnitude;
-
-            return distance > Mathf.Pow(m_InitGiveUpRange, 2);
-        }
-
-        public void StartBehaviourCoroutine(IEnumerator coroutine)
-        {
-            m_BehaviourCoroutine = StartCoroutine(coroutine);
-        }
-
-        public void StopBehaviourCoroutine()
-        {
-            if (m_BehaviourCoroutine == null)
-                return;
-
-            m_BehaviourTypeSO.OnStopCoroutine(this);
-            StopCoroutine(m_BehaviourCoroutine);
-            m_BehaviourCoroutine = null;
-        }
-
-        public void StopBehaviourCoroutine(EntityCommandBuffer ecb)
-        {
-            var cooldownTime = Time.time + UnityEngine.Random.Range(0.25f, 1f);
-
-            if (m_EntityController != null
-                && m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager)
-                && entityManager.TryGetComponentData(entity, out MoveCooldownData moveCooldownData))
-            {
-                moveCooldownData.endTime = cooldownTime;
-
-                ecb.RemoveComponent<AIMoveTag>(entity);
-                ecb.AddComponent(entity, new MoveCooldownTag());
-                ecb.SetComponent(entity, moveCooldownData);
-            }
-
-            StopBehaviourCoroutine();
-        }
-
-        public void Move(Vector2 move)
-        {
-
-        }
-
-        public void SetTarget(Transform target)
-        {
-            if(m_EntityController != null
-                && m_EntityController.TryGetEntity(out Entity entity, out EntityManager entityManager)
-                && entityManager.TryGetComponentData(entity, out TargetData targetData))
-            {
-                if(target != null)
-                {
-                    if(target.TryGetComponent(out EntityController entityController))
-                    {
-                        targetData.value = entityController.entity;                        
-                    }
-                }
-                else
-                {
-                    targetData.value = Entity.Null;
-                }
-
-                entityManager.SetComponentData(entity, targetData);
-            }
         }
 
         public void RegisterGroup(EnemyGroupController group)
@@ -420,18 +104,6 @@ namespace GGJ2025
             if (m_GroupController)
             {
                 m_GroupController.EnemyDead(this);
-            }
-        }
-
-        public void FlipCharacter(bool toRight)
-        {
-            if (toRight)
-            {
-                m_SpriteRenderer.flipX = true;
-            }
-            else if (!toRight)
-            {
-                m_SpriteRenderer.flipX = false;
             }
         }
 

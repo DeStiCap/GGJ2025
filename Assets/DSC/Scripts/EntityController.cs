@@ -1,6 +1,5 @@
 using Unity.Entities;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 namespace GGJ2025
 {
@@ -10,6 +9,10 @@ namespace GGJ2025
 
         [SerializeField] PositionUpdateMode m_PositionUpdateMode = PositionUpdateMode.GameObjectToEntity;
         [SerializeField] EntityInitSO[] m_EntityInits;
+
+        [Header("Hybrid")]
+        [SerializeField] Animator m_Animator;
+        [SerializeField] Rigidbody2D m_Rigidbody;
 
         #endregion
 
@@ -21,6 +24,16 @@ namespace GGJ2025
 
         private void Awake()
         {
+            if(m_Animator == null)
+            {
+                m_Animator = GetComponent<Animator>();
+            }
+
+            if(m_Rigidbody == null)
+            {
+                m_Rigidbody = GetComponent<Rigidbody2D>();
+            }
+
             if(GameManager.TryGetEntityManager(out EntityManager entityManager))
             {
                 m_Entity = entityManager.CreateEntity();
@@ -30,6 +43,8 @@ namespace GGJ2025
                 {
                     gameObject = gameObject,
                     controller = this,
+                    animator = m_Animator,
+                    rigidbody = m_Rigidbody,
                 });
 
                 entityManager.AddComponentData(entity, new PositionData
