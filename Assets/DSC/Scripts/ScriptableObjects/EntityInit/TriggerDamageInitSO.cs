@@ -9,7 +9,7 @@ namespace GGJ2025
         [Min(0)]
         [SerializeField] float m_Damage = 1;
 
-        public override void Init(Entity entity, EntityManager entityManager)
+        public override void Init(EntityMB entityMB, Entity entity, EntityManager entityManager)
         {
             entityManager.AddComponentData(entity, new TriggerDamageData
             {

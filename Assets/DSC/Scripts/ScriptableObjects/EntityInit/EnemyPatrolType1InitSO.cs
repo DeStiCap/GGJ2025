@@ -8,7 +8,7 @@ namespace GGJ2025
     {
         [SerializeField] AnimationCurve m_PatrolMoveCurve;
 
-        public override void Init(Entity entity, EntityManager entityManager)
+        public override void Init(EntityMB entityMB, Entity entity, EntityManager entityManager)
         {
             entityManager.AddComponentData(entity, new EnemyPatrolType1Tag());
 

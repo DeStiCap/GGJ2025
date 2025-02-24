@@ -112,6 +112,34 @@ PrefabInstance:
       propertyPath: m_Status.maxHp
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 6373027599477464779, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
+      propertyPath: m_OnDeadEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6373027599477464779, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
+      propertyPath: m_OnDeadEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6373027599477464779, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
+      propertyPath: m_OnDeadEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 11400000, guid: 99e64c0e40ab9c84fbff44952e0c2fc2, type: 2}
+    - target: {fileID: 6373027599477464779, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
+      propertyPath: m_OnDeadEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6373027599477464779, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
+      propertyPath: m_OnDeadEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: BossDead
+      objectReference: {fileID: 0}
+    - target: {fileID: 6373027599477464779, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
+      propertyPath: m_OnDeadEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: GGJ2025.GameEventSO, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6373027599477464779, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
+      propertyPath: m_OnDeadEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7282367370759766333, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
       propertyPath: m_Size.x
       value: 3.6

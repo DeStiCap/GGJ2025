@@ -4,7 +4,7 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 namespace GGJ2025
 {
-    public class EntityController : MonoBehaviour
+    public class EntityController : EntityMB
     {
         #region Variable
 
@@ -49,7 +49,7 @@ namespace GGJ2025
                         if (entityInit == null)
                             continue;
 
-                        entityInit.Init(entity, entityManager);
+                        entityInit.Init(this, entity, entityManager);
                     }
                 }
             }

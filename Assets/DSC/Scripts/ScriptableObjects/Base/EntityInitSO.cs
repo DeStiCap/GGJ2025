@@ -5,6 +5,6 @@ namespace GGJ2025
 {
     public abstract class EntityInitSO : ScriptableObject
     {
-        public abstract void Init(Entity entity, EntityManager entityManager);
+        public abstract void Init(EntityMB entityMB, Entity entity, EntityManager entityManager);
     }
 }

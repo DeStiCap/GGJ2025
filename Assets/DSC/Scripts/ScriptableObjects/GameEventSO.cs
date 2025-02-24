@@ -16,5 +16,15 @@ namespace GGJ2025
             Time.timeScale = 1;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+        
+        public void BossDead()
+        {
+            var mainCanvas = UIManager.mainCanvas;
+            if (mainCanvas)
+            {
+                mainCanvas.ShowPopupText("GATE OPENED!", 5f);
+            }
+            EnemyManager.BossDead();
+        }
     }
 }
