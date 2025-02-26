@@ -8,7 +8,6 @@ namespace GGJ2025
         #region Variable
 
         [SerializeField] UnityEvent m_OnAllEnemyGroupDead;
-        [SerializeField] UnityEvent m_OnBossDead;
 
         #endregion
 
@@ -17,27 +16,17 @@ namespace GGJ2025
         private void OnEnable()
         {
             EnemyManager.onAllEnemyGroupDead += OnAllEnemyGroupDead;
-
-            EnemyManager.onBossDead += OnBossDead;
         }
 
         
         private void OnDisable()
         {
             EnemyManager.onAllEnemyGroupDead -= OnAllEnemyGroupDead;
-
-            EnemyManager.onBossDead -= OnBossDead;
         }
 
         private void OnAllEnemyGroupDead()
         {
             m_OnAllEnemyGroupDead?.Invoke();            
-        }
-
-
-        void OnBossDead()
-        {
-            m_OnBossDead?.Invoke();
         }
 
         #endregion

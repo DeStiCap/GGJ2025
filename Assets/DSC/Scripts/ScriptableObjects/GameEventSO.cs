@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 namespace GGJ2025
 {
-    [CreateAssetMenu(fileName = "GameEventSO", menuName = "DSC/Game Event SO")]
+    [CreateAssetMenu(fileName = "GameEventSO", menuName = "DSC/Game Event")]
     public class GameEventSO : ScriptableObject
     {
         public void GameOver()
@@ -24,7 +24,8 @@ namespace GGJ2025
             {
                 mainCanvas.ShowPopupText("GATE OPENED!", 5f);
             }
-            EnemyManager.BossDead();
+
+            GameManager.InvokeEvent("BossDead");
         }
     }
 }

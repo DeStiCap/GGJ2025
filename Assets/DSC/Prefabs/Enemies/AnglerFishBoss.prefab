@@ -86,20 +86,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3408505514630078293, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
       propertyPath: m_EntityInits.Array.size
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3408505514630078293, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
-      propertyPath: 'm_EntityInits.Array.data[2]'
+      propertyPath: 'm_EntityInits.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 262b1768db68c1543bf0eab337c1d760, type: 2}
-    - target: {fileID: 3408505514630078293, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
-      propertyPath: 'm_EntityInits.Array.data[3]'
-      value: 
-      objectReference: {fileID: 11400000, guid: f0dcb74c42003ac429bce43ade87b9ef, type: 2}
-    - target: {fileID: 3408505514630078293, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
-      propertyPath: 'm_EntityInits.Array.data[4]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 851c4c0519ecd484786fc6c4868c5ba8, type: 2}
+      objectReference: {fileID: 11400000, guid: e238970bd27266347b85348abef912a2, type: 2}
     - target: {fileID: 5285278892559249611, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
       propertyPath: m_Name
       value: AnglerFishBoss
@@ -169,9 +161,17 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8772048084508808051, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
+      propertyPath: m_TriggerDamage
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8772048084508808051, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
       propertyPath: m_BehaviourTypeSO
       value: 
       objectReference: {fileID: 11400000, guid: 68d4a98143e93c34dbeae23c7563dae3, type: 2}
+    - target: {fileID: 8772048084508808051, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
+      propertyPath: m_InitGiveUpRange
+      value: 60
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

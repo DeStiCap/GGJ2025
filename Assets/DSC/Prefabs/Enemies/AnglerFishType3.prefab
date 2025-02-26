@@ -62,19 +62,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3408505514630078293, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
       propertyPath: m_EntityInits.Array.size
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3408505514630078293, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
-      propertyPath: 'm_EntityInits.Array.data[2]'
+      propertyPath: 'm_EntityInits.Array.data[0]'
       value: 
-      objectReference: {fileID: 11400000, guid: 262b1768db68c1543bf0eab337c1d760, type: 2}
-    - target: {fileID: 3408505514630078293, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
-      propertyPath: 'm_EntityInits.Array.data[3]'
-      value: 
-      objectReference: {fileID: 11400000, guid: f0dcb74c42003ac429bce43ade87b9ef, type: 2}
+      objectReference: {fileID: 11400000, guid: 368d2ffe763682a449ce4eb9d233354e, type: 2}
     - target: {fileID: 5285278892559249611, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
       propertyPath: m_Name
-      value: AnglerFishMockup3
+      value: AnglerFishType3
       objectReference: {fileID: 0}
     - target: {fileID: 6373027599477464779, guid: 34c3ad35fbbf1f846a49ae53b26201ff, type: 3}
       propertyPath: m_InitMaxHp

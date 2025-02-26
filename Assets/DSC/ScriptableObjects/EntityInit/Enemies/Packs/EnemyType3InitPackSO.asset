@@ -9,7 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85f42772347e4f34a83fef5784295dfb, type: 3}
-  m_Name: TriggerDamageInitSO_1
+  m_Script: {fileID: 11500000, guid: 1d641b48b3c8d9a42b37cd30cf2f637d, type: 3}
+  m_Name: EnemyType3InitPackSO
   m_EditorClassIdentifier: 
-  m_Damage: 1
+  m_InitPackSO:
+  - {fileID: 11400000, guid: 262b1768db68c1543bf0eab337c1d760, type: 2}
+  - {fileID: 11400000, guid: f0dcb74c42003ac429bce43ade87b9ef, type: 2}

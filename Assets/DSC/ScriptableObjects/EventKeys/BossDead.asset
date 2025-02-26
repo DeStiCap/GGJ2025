@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85f42772347e4f34a83fef5784295dfb, type: 3}
-  m_Name: TriggerDamageInitSO_3
+  m_Script: {fileID: 11500000, guid: 88576411e99830c4db1688aca196c147, type: 3}
+  m_Name: BossDead
   m_EditorClassIdentifier: 
-  m_Damage: 3

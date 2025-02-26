@@ -1020,6 +1020,7 @@ GameObject:
   - component: {fileID: 949226576}
   - component: {fileID: 949226575}
   - component: {fileID: 949226577}
+  - component: {fileID: 949226578}
   m_Layer: 0
   m_Name: EndGate
   m_TagString: Untagged
@@ -1083,6 +1084,35 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &949226578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 949226574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e553156cbd3d0441b5a440b7dbaae20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+  - eventKey: {fileID: 11400000, guid: 9aeda463ff52e3445b3a79d83f093a7a, type: 2}
+    eventCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 949226575}
+          m_TargetAssemblyTypeName: GGJ2025.EndGateController, Assembly-CSharp
+          m_MethodName: OnBossDead
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &1027060252
 PrefabInstance:
   m_ObjectHideFlags: 0

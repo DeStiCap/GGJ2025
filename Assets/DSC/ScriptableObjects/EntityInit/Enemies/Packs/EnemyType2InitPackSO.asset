@@ -9,6 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f989ca1914112c409a9c9015885bd33, type: 3}
-  m_Name: AIBaseInitSO
+  m_Script: {fileID: 11500000, guid: 1d641b48b3c8d9a42b37cd30cf2f637d, type: 3}
+  m_Name: EnemyType2InitPackSO
   m_EditorClassIdentifier: 
+  m_InitPackSO:
+  - {fileID: 11400000, guid: 262b1768db68c1543bf0eab337c1d760, type: 2}
+  - {fileID: 11400000, guid: 656de76229230a642bb21ec842b1adb8, type: 2}

@@ -62,27 +62,7 @@ namespace GGJ2025
             }
         }
 
-        public static event Action onBossDead
-        {
-            add
-            {
-                if (m_Instance == null)
-                    return;
 
-                m_Instance.m_OnBossDead += value;
-            }
-
-            remove
-            {
-                if (m_Instance == null)
-                    return;
-
-                m_Instance.m_OnBossDead -= value;
-            }
-        }
-
-
-        Action m_OnBossDead;
         Action m_OnAllEnemyGroupDead;
 
         #endregion
@@ -176,14 +156,6 @@ namespace GGJ2025
             {
                 mainCanvas.ShowPopupText("BOSS APPEARED!!", 5f);
             }
-        }
-
-        public static void BossDead()
-        {
-            if (m_Instance == null)
-                return;
-
-            m_Instance.m_OnBossDead?.Invoke();
         }
 
         #endregion

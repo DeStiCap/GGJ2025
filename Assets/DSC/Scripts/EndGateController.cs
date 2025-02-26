@@ -17,15 +17,11 @@ namespace GGJ2025
 
         private void OnEnable()
         {
-            EnemyManager.onBossDead += OnBossDead;
-
             GameManager.onGameWin += OnGameWin;
         }
 
         private void OnDisable()
         {
-            EnemyManager.onBossDead -= OnBossDead;
-
             GameManager.onGameWin -= OnGameWin;
         }
 
@@ -39,13 +35,12 @@ namespace GGJ2025
             }
         }
 
-        void OnBossDead()
+        public void OnBossDead()
         {
             if (m_Gate)
             {
                 m_Gate.SetActive(true);
             }
-            //GameManager.GameWin();
         }
 
         void OnGameWin()

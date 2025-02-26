@@ -124,6 +124,8 @@ GameObject:
   - component: {fileID: 8772048084508808051}
   - component: {fileID: 6373027599477464779}
   - component: {fileID: 3408505514630078293}
+  - component: {fileID: 7169239782781673537}
+  - component: {fileID: 7377275356754286696}
   m_Layer: 31
   m_Name: BaseEnemy
   m_TagString: Untagged
@@ -233,10 +235,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460e7c3d2ee80944cabe39d135c43b91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_InitAIState: 1
   m_InitMoveSpeed: 5
   m_InitDetectRange: 15
   m_InitGiveUpRange: 30
-  m_InitAIState: 1
+  m_TriggerDamage: 1
 --- !u!114 &6373027599477464779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,11 +291,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_PositionUpdateMode: 1
-  m_EntityInits:
-  - {fileID: 11400000, guid: d8849be3af39cda4d904242a7232fab3, type: 2}
-  - {fileID: 11400000, guid: 0fba6e1c9d0175c438e337d1d8ea6efa, type: 2}
+  m_EntityInits: []
   m_Animator: {fileID: 4181345100855503001}
   m_Rigidbody: {fileID: 0}
+--- !u!114 &7169239782781673537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5285278892559249611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e553156cbd3d0441b5a440b7dbaae20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+  - eventKey: {fileID: 11400000, guid: 9aeda463ff52e3445b3a79d83f093a7a, type: 2}
+    eventCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7377275356754286696}
+          m_TargetAssemblyTypeName: GGJ2025.GameObjectEventController, Assembly-CSharp
+          m_MethodName: Destroy
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &7377275356754286696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5285278892559249611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd961ff2a0c8b3341adbe1da8f453775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6649839871546056861
 GameObject:
   m_ObjectHideFlags: 0
