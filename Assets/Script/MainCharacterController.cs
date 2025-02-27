@@ -85,7 +85,6 @@ public class MainCharacterController : MonoBehaviour
     private float lastHitTime;
     private bool isInvulnerable;
     
-    private Slider healthBarSlider;
     private Slider buffProtectStunBarSlider;
     private Slider buffAtkBarSlider;
     private Slider debuffDefBarSlider;
