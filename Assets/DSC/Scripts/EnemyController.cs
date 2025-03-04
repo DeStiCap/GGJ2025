@@ -61,6 +61,7 @@ namespace GGJ2025
                 entityManager.AddComponentData(entity, new MoveSpeedData
                 {
                     value = m_InitMoveSpeed,
+                    multiplier = 1f,
                 });
 
                 entityManager.AddComponentData(entity, new DetectData

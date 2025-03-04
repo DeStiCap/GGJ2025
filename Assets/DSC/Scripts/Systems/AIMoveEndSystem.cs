@@ -1,4 +1,3 @@
-using System;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Entities;
@@ -12,49 +11,33 @@ namespace GGJ2025
     {
         public void OnUpdate(ref SystemState state)
         {
-            var query = SystemAPI.QueryBuilder()
-                .WithAllRW<MoveCooldownData>()
-                .WithAll<AIMoveTag, MoveTimeData>()
-                .WithNone<MoveCooldownTag>()
-                .Build();
-
-            if (query.IsEmpty)
-                return;
+            var randomData = SystemAPI.GetSingleton<RandomData>();
 
             float time = Time.time;
 
-            var random = new Unity.Mathematics.Random((uint)DateTime.UtcNow.Ticks & 0x00000000FFFFFFFF);
+            var random = randomData.randomArr[0];
 
             var ecb = new EntityCommandBuffer(Allocator.Temp);
 
-            var entities = query.ToEntityArray(Allocator.Temp);
-            var moveTimeDatas = query.ToComponentDataArray<MoveTimeData>(Allocator.Temp);
-            var moveCooldownDatas = query.ToComponentDataArray<MoveCooldownData>(Allocator.Temp);
-
-
-            for (int i = 0; i < entities.Length; i++)
+            foreach(var (moveCooldownData, moveTimeData, entity) 
+                in SystemAPI.Query<
+                    RefRW<MoveCooldownData>,
+                    RefRO<MoveTimeData>>()
+                    .WithAll<AIMoveTag>()
+                    .WithNone<MoveCooldownTag>()
+                    .WithEntityAccess())
             {
-                var entity = entities[i];
-                var moveTimeData = moveTimeDatas[i];
-                var moveCooldownData = moveCooldownDatas[i];
-
-                if (time < moveTimeData.endTime)
+                if (time < moveTimeData.ValueRO.endTime)
                     continue;
 
                 ecb.RemoveComponent<AIMoveTag>(entity);
                 ecb.AddComponent(entity, new MoveCooldownTag());
 
-                moveCooldownData.endTime = time + random.NextFloat(0.25f, 1);
-                ecb.SetComponent(entity, moveCooldownData);
+                moveCooldownData.ValueRW.endTime = time + random.NextFloat(0.25f, 1);
             }
-
 
             ecb.Playback(state.EntityManager);
             ecb.Dispose();
-
-            entities.Dispose();
-            moveTimeDatas.Dispose();
-            moveCooldownDatas.Dispose();
         }
     }
 }

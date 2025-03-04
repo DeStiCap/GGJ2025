@@ -1,6 +1,6 @@
 namespace GGJ2025
 {
-    public enum PositionUpdateMode
+    public enum HybridUpdateMode
     {
         EntityToGameObject,
         GameObjectToEntity,

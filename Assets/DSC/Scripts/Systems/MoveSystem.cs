@@ -10,7 +10,8 @@ namespace GGJ2025
     {
         public void OnUpdate(ref SystemState state)
         {
-            foreach(var (gameObjectData, moveData, entity) in SystemAPI.Query<GameObjectData, RefRW<MoveData>>()
+            foreach(var (gameObjectData, moveData, entity) 
+                in SystemAPI.Query<GameObjectData, RefRW<MoveData>>()
                 .WithEntityAccess())
             {                
                 var move = moveData.ValueRO.value;

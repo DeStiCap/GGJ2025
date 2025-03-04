@@ -7,7 +7,7 @@ namespace GGJ2025
     {
         #region Variable
 
-        [SerializeField] PositionUpdateMode m_PositionUpdateMode = PositionUpdateMode.GameObjectToEntity;
+        [SerializeField] HybridUpdateMode m_HybridUpdateMode = HybridUpdateMode.GameObjectToEntity;
         [SerializeField] EntityInitSO[] m_EntityInits;
 
         [Header("Hybrid")]
@@ -34,7 +34,7 @@ namespace GGJ2025
                 m_Rigidbody = GetComponent<Rigidbody2D>();
             }
 
-            if(GameManager.TryGetEntityManager(out EntityManager entityManager))
+            if(HybridManager.TryGetEntityManager(out EntityManager entityManager))
             {
                 m_Entity = entityManager.CreateEntity();
                 entityManager.SetName(m_Entity, gameObject.name);
@@ -52,9 +52,9 @@ namespace GGJ2025
                     value = (Vector2)transform.position
                 });
 
-                entityManager.AddComponentData(entity, new PositionUpdateModeData
+                entityManager.AddComponentData(entity, new HybridUpdateModeData
                 {
-                    value = m_PositionUpdateMode,
+                    value = m_HybridUpdateMode,
                 });
 
                 if(m_EntityInits != null)
@@ -73,7 +73,7 @@ namespace GGJ2025
         private void OnDestroy()
         {
             if(m_Entity != Entity.Null
-                && GameManager.TryGetEntityManager(out EntityManager entityManager))
+                && HybridManager.TryGetEntityManager(out EntityManager entityManager))
             {
                 entityManager.DestroyEntity(m_Entity);
                 ClearEntity();
@@ -94,7 +94,7 @@ namespace GGJ2025
                 return false;
             }
 
-            return GameManager.TryGetEntityManager(out entityManager);
+            return HybridManager.TryGetEntityManager(out entityManager);
         }
 
         public void ClearEntity()

@@ -98,18 +98,6 @@ namespace GGJ2025
 
         }
 
-        public static bool TryGetEntityManager(out EntityManager entityManager)
-        {
-            if(World.DefaultGameObjectInjectionWorld == null)
-            {
-                entityManager = default;
-                return false;
-            }
-
-            entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
-            return true;
-        }
-
         public static void GameWin()
         {
             if (m_Instance == null)

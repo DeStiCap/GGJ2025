@@ -3,7 +3,6 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace GGJ2025
 {
@@ -12,38 +11,23 @@ namespace GGJ2025
     {
         #region Main
 
-        EntityQuery m_Query;
-
         ComponentLookup<PositionData> m_LookupPositionData;
         ComponentLookup<AreaRangeData> m_LookupAreaRangeData;
 
         public void OnCreate(ref SystemState state)
         {
-            m_Query = state.GetEntityQuery(
-                ComponentType.ReadOnly<EnemyPatrolType1Tag>(), 
-                ComponentType.ReadOnly<AIMoveStartTag>(),
-                ComponentType.ReadOnly<AIGroupData>(),
-                ComponentType.ReadOnly<PositionData>(),
-                ComponentType.ReadOnly<AIStateData>(),
-                ComponentType.ReadOnly<MoveCurveData>(),
-                ComponentType.ReadWrite<MoveDirectionData>(),
-                ComponentType.ReadWrite<MoveTimeData>(),
-                
-                ComponentType.Exclude<MoveCooldownTag>());
-
             m_LookupPositionData = state.GetComponentLookup<PositionData>(true);
             m_LookupAreaRangeData = state.GetComponentLookup<AreaRangeData>(true);
         }
 
         public void OnUpdate(ref SystemState state)
         {
-            if (m_Query.CalculateEntityCount() <= 0)
-                return;
-
             m_LookupPositionData.Update(ref state);
             m_LookupAreaRangeData.Update(ref state);
 
-            var random = new Unity.Mathematics.Random((uint)DateTime.UtcNow.Ticks & 0x00000000FFFFFFFF);
+            var randomData = SystemAPI.GetSingleton<RandomData>();
+
+            var random = randomData.randomArr[0];
 
             var ecb = new EntityCommandBuffer(Allocator.Temp);
 
